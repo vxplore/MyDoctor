@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:my_doctor/view_models/login_view_model.dart';
-
 import '../view_models/intro_view_model.dart';
 import '../view_models/splash_view_model.dart';
 Logo() {

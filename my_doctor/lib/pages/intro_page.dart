@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
-
 import '../view_models/intro_view_model.dart';
 import '../view_models/splash_view_model.dart';
 
