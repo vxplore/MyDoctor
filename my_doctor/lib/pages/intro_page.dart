@@ -15,7 +15,7 @@ class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
   final vm = IntroViewModel();
   List<ReactionDisposer> _disposers = [];
   IntroImage() {
-    return Image.asset("assets/introimage.png");
+    return Image.asset("assets/images/introimage.png");
   }
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
                 padding: const EdgeInsets.only(left:36,right: 36),
                 child: Column(
                   children: [
-                    Text.rich(
+                    const Text.rich(
                         TextSpan(
                             text: 'Welcome to ',
                             style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold, color: Color(0xff41CFD9)),
@@ -49,7 +49,7 @@ class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
                     Container(
                       height: 8,
                     ),
-                    Text(
+                    const Text(
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac vestibulum mi.",
                         style: TextStyle(
                           fontSize: 12,
@@ -65,17 +65,17 @@ class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
                       height: 62,
                       child: ElevatedButton(
                           onPressed: (){},
-                          child: Text(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xff1468B3),
+                          foregroundColor: Colors.white// Background color
+                        ),
+                          child: const Text(
                               "Get Started",
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold
                             ),
-                          ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xff1468B3),
-                          foregroundColor: Colors.white// Background color
-                        )
+                          )
                       ),
                     ),
                   ],

@@ -12,7 +12,7 @@ Logo() {
       child: SizedBox(
           width: 90,
           height: 90,
-          child: Image.asset("assets/instadoclogo.png")
+          child: Image.asset("assets/images/instadoclogo.png")
       ),
     ),
   );
@@ -107,7 +107,7 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
             const Align(
               alignment: Alignment.topLeft,
               child: Text(
-                "Welcome back, you've been missed",
+                "Welcome back, you've been missed!",
                 style: TextStyle(
                   color: Color(0xffBBBBBB)
                 ),
@@ -119,7 +119,7 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
             MyTextField(
               vm.emailController,
               "Email Address",
-              "assets/email_icon.png"
+              "assets/images/email_icon.png"
             ),
             Container(
               height: 18,
@@ -127,15 +127,17 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
             MyTextField(
                 vm.passwordController,
                 "Password",
-                "assets/password_icon.png",
+                "assets/images/password_icon.png",
                 obscureText: true
+            ),
+            Container(
+              height: 18,
             ),
             Container(
               width: double.infinity,
               height: 55,
               child: ElevatedButton(
                   onPressed: (){},
-                  child: Text("Sign In"),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xff1468B3),
                   foregroundColor: Colors.white,
@@ -143,8 +145,48 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                     borderRadius: BorderRadius.circular(4)
                   )
                 ),
+                  child: const Text("Sign In"),
               ),
-            )
+            ),
+            Container(
+              height: 18,
+            ),
+            const Align(
+                alignment: Alignment.topRight,
+                child: Text(
+                  "Forget Password!",
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal
+                  ),
+                )
+            ),
+            Container(
+              height: 28,
+            ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Don't have an account?",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal
+                  ),
+                ),
+                SizedBox(width: 5,),
+                Text(
+                  "Create Account",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal,
+                    color: Color(0xff1468B3),
+                    decoration: TextDecoration.underline
+
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),

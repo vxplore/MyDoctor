@@ -11,7 +11,7 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 SplashLogo() {
-  return Image.asset("assets/instadoclogo.png");
+  return Image.asset("assets/images/instadoclogo.png");
 }
 class _SplashPageState extends State<SplashPage> with WidgetsBindingObserver {
 
