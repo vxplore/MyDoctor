@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_doctor/pages/addPatient_page.dart';
 import 'package:my_doctor/pages/intro_page.dart';
 import 'package:my_doctor/pages/login_page.dart';
+import 'package:my_doctor/pages/myPatient_page.dart';
 import 'package:my_doctor/pages/registration_page.dart';
 import 'package:my_doctor/pages/splash_page.dart';
 
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const RegistrationPage(),
+      home: const AddPatientPage(),
     );
   }
 }

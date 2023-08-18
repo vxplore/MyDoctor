@@ -92,16 +92,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(top: 5),
+                            margin: EdgeInsets.only(top: 12),
                             child: const Text(
                               "Dr.",
                               style: TextStyle(
-                                  fontSize: 40,
+                                  fontSize: 30,
                                   fontWeight: FontWeight.bold,
                                   color: Color(0xff707070)),
                             ),
                           ),
-                          const SizedBox(width: 5),
+                          Spacer(),
                           Container(
                             height: 70,
                             width: 300,
@@ -132,8 +132,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           Container(
                               margin: const EdgeInsets.only(top: 15),
                               child:
-                                  Image.asset("assets/images/email_icon.png")),
-                          const SizedBox(width: 5),
+                                  Image.asset("assets/images/mobile_icon.png")),
+                          Spacer(),
                           Container(
                             height: 70,
                             width: 300,
@@ -162,10 +162,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                              margin: const EdgeInsets.only(top: 15),
+                              margin: const EdgeInsets.only(top: 23),
                               child:
-                                  Image.asset("assets/images/email_icon.png")),
-                          const SizedBox(width: 5),
+                                  Image.asset("assets/images/regEmail_icon.png")),
+                          Spacer(),
                           Container(
                             height: 70,
                             width: 300,
@@ -196,8 +196,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           Container(
                               margin: const EdgeInsets.only(top: 15),
                               child:
-                                  Image.asset("assets/images/email_icon.png")),
-                          const SizedBox(width: 5),
+                                  Image.asset("assets/images/regPassword_icon.png")),
+                          Spacer(),
                           Container(
                             height: 70,
                             width: 300,
@@ -233,8 +233,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           Container(
                               margin: const EdgeInsets.only(top: 15),
                               child:
-                                  Image.asset("assets/images/email_icon.png")),
-                          const SizedBox(width: 5),
+                                  Image.asset("assets/images/regPassword_icon.png")),
+                          Spacer(),
                           Container(
                             height: 70,
                             width: 300,

@@ -9,14 +9,6 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  /* int pageIndex = 0;
-
-  final pages = [
-    const Page1(),
-    const Page2(),
-    const Page3(),
-    const Page4(),
-  ];*/
   @override
   int _selectedIndex = 0;
 
@@ -96,10 +88,13 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
       ),
       ///////////////end Dashboard//////////////////////
+
+      ////////////// My Patient ///////////////////////
       Icon(
         Icons.camera,
         size: 150,
       ),
+      ////////////// end My Patient ///////////////////
       Icon(
         Icons.chat,
         size: 150,
@@ -140,38 +135,42 @@ class _DashboardPageState extends State<DashboardPage> {
           )
         ],
       ),
-      body: Center(
-        child: _pages.elementAt(_selectedIndex), //New
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pages,
       ),
+      /*Center(
+        child: _pages.elementAt(_selectedIndex), //New
+      ),*/
       // pages[pageIndex],
       bottomNavigationBar:
-          // buildMyNavBar(context),
-          BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            selectedFontSize: 15,
-            selectedIconTheme: IconThemeData(color: Colors.cyan, size: 40),
-            selectedItemColor: Colors.cyan,
-            selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-        items:  <BottomNavigationBarItem>[
+      // buildMyNavBar(context),
+      BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        selectedFontSize: 15,
+        selectedIconTheme: IconThemeData(color: Color(0xff98CCFD), size: 40),
+        selectedItemColor: Color(0xff98CCFD),
+        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon( Icons.dashboard, ),
+            icon: Icon(Icons.dashboard,),
             label: 'Dashboard',
           ),
           BottomNavigationBarItem(
-            icon: Icon( Icons.person_add_alt_1, ),
+            icon: Icon(Icons.person_add_alt_1,),
             label: 'My Patient',
           ),
           BottomNavigationBarItem(
-            icon: Icon( Icons.calendar_today, ),
+            icon: Icon(Icons.calendar_today,),
             label: 'Appointment',
           ),
 
           BottomNavigationBarItem(
-            icon: Icon( Icons.ondemand_video, ),
+            icon: Icon(Icons.ondemand_video,),
             label: 'Video Consult',
           ),
           BottomNavigationBarItem(
-            icon: Icon( Icons.receipt, ),
+            icon: Icon(Icons.receipt,),
             label: 'Billing',
           ),
         ],
@@ -186,186 +185,4 @@ class _DashboardPageState extends State<DashboardPage> {
       _selectedIndex = index;
     });
   }
-/*buildMyNavBar(BuildContext context) {
-    return Container(
-      height: 65,
-      decoration: BoxDecoration(
-        color: Colors.red
-
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Container(
-            height: 65,
-            width: 50,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  enableFeedback: false,
-                  onPressed: () {
-                    setState(() {
-                      pageIndex = 0;
-                    });
-                  },
-                  icon: pageIndex == 0
-                      ? const Icon( Icons.dashboard,
-                    color: Colors.cyan,
-                    size: 35,
-                  )
-                      : const Icon( Icons.dashboard,
-                    color: Colors.white,
-                    size: 35,
-                  ),
-                ),
-                Text("Dashboard")
-              ],
-            ),
-          ),
-          IconButton(
-            enableFeedback: false,
-            onPressed: () {
-              setState(() {
-                pageIndex = 1;
-              });
-            },
-            icon: pageIndex == 1
-                ? const Icon(
-              Icons.work_rounded,
-              color: Colors.white,
-              size: 35,
-            )
-                : const Icon(
-              Icons.work_outline_outlined,
-              color: Colors.white,
-              size: 35,
-            ),
-          ),
-          IconButton(
-            enableFeedback: false,
-            onPressed: () {
-              setState(() {
-                pageIndex = 2;
-              });
-            },
-            icon: pageIndex == 2
-                ? const Icon(
-              Icons.widgets_rounded,
-              color: Colors.white,
-              size: 35,
-            )
-                : const Icon(
-              Icons.widgets_outlined,
-              color: Colors.white,
-              size: 35,
-            ),
-          ),
-          IconButton(
-            enableFeedback: false,
-            onPressed: () {
-              setState(() {
-                pageIndex = 3;
-              });
-            },
-            icon: pageIndex == 3
-                ? const Icon(
-              Icons.person,
-              color: Colors.white,
-              size: 35,
-            )
-                : const Icon(
-              Icons.person_outline,
-              color: Colors.white,
-              size: 35,
-            ),
-          ),
-        ],
-      ),
-    );
-  }*/
 }
-
-/*class Page1 extends StatelessWidget {
-  const Page1({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: const Color(0xffC4DFCB),
-      child: Center(
-        child: Text(
-          "Page Number 1",
-          style: TextStyle(
-            color: Colors.green[900],
-            fontSize: 45,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class Page2 extends StatelessWidget {
-  const Page2({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: const Color(0xffC4DFCB),
-      child: Center(
-        child: Text(
-          "Page Number 2",
-          style: TextStyle(
-            color: Colors.green[900],
-            fontSize: 45,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class Page3 extends StatelessWidget {
-  const Page3({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: const Color(0xffC4DFCB),
-      child: Center(
-        child: Text(
-          "Page Number 3",
-          style: TextStyle(
-            color: Colors.green[900],
-            fontSize: 45,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class Page4 extends StatelessWidget {
-  const Page4({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: const Color(0xffC4DFCB),
-      child: Center(
-        child: Text(
-          "Page Number 4",
-          style: TextStyle(
-            color: Colors.green[900],
-            fontSize: 45,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-    );
-  }
-}*/
