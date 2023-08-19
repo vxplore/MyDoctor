@@ -51,7 +51,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
           leading: InkWell(
             onTap: () {},
             child: Icon(
-              Icons.close,
+              Icons.highlight_off,
               color: Colors.white,
               size: 45,
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_doctor/custom%20widget/button.dart';
+import 'package:my_doctor/pages/patient_prescription_page.dart';
 
 class PersonalInfopage extends StatefulWidget {
   const PersonalInfopage({super.key});
@@ -254,13 +255,20 @@ class _PersonalInfopageState extends State<PersonalInfopage> {
             SizedBox(
               height: 20,
             ),
-            Text(
-              "More",
-              style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff4273A4)),
+            InkWell(onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PatientPrescriptionPage()),
+              );
+            },
+              child: Text(
+                "More",
+                style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xff4273A4)),
+              ),
             ),
           ],
         ),
