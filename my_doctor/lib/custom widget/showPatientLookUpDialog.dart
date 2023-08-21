@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_doctor/pages/recommandedLabTest_page.dart';
 
+import '../pages/addMedication_page.dart';
+
 class ShowPatientLookUpDialog extends StatefulWidget {
   const ShowPatientLookUpDialog({super.key});
 
@@ -49,11 +51,19 @@ class _ShowPatientLookUpDialogState extends State<ShowPatientLookUpDialog> {
                             Icons.add_circle,
                             color: Colors.red,
                           ),
-                          Text(
-                            "Add Medication",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 18, color: Color(0xff787878)),
+                          InkWell(onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AddMedicationPage()),
+                            );
+                          },
+                            child: Text(
+                              "Add Medication",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 18, color: Color(0xff787878)),
+                            ),
                           ),
                         ],
                       ),
@@ -213,10 +223,11 @@ class _ShowPatientLookUpDialogState extends State<ShowPatientLookUpDialog> {
                   borderRadius: BorderRadius.all(Radius.circular(80)),
                 ),
                 child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Icon(Icons.close, color: Colors.black, size: 60)),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.close, color: Colors.black, size: 60),
+                ),
               ),
             ),
           ],

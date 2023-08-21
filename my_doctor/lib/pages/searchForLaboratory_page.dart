@@ -1,20 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_doctor/pages/searchForLaboratory_page.dart';
 
-import '../custom widget/button.dart';
-
-class RecomandedLabTestPage extends StatefulWidget {
-  const RecomandedLabTestPage({super.key});
+class SearchForLaboratoryPage extends StatefulWidget {
+  const SearchForLaboratoryPage({super.key});
 
   @override
-  State<RecomandedLabTestPage> createState() => _RecomandedLabTestPageState();
+  State<SearchForLaboratoryPage> createState() =>
+      _SearchForLaboratoryPageState();
 }
 
-class _RecomandedLabTestPageState extends State<RecomandedLabTestPage> {
+class _SearchForLaboratoryPageState extends State<SearchForLaboratoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xffF6F6F6),
       appBar: AppBar(
         backgroundColor: Color(0xff1468B3),
@@ -25,7 +24,7 @@ class _RecomandedLabTestPageState extends State<RecomandedLabTestPage> {
           size: 35,
         ),
         title: Text(
-          "Recommend LAB TEST",
+          "Search for Laboratory",
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 24, color: Color(0xffDBDBDB)),
         ),
@@ -76,76 +75,30 @@ class _RecomandedLabTestPageState extends State<RecomandedLabTestPage> {
               ),
             ),
           ),
-          Container(
-            height: 70,
-            width: 500,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 19, top: 25),
-              child: Text(
-                "Lipid Profile",
-                style: TextStyle(fontSize: 18, color: Color(0xff9F9F9F)),
-              ),
-            ),
-          ),
-          Divider(
-            color: Color(0xffCBCBCB),
-            thickness: 0.5,
-          ),
-          Container(
-            height: 70,
-            width: 500,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 19, top: 25),
-              child: Text(
-                "Stool Analysis",
-                style: TextStyle(fontSize: 18, color: Color(0xff9F9F9F)),
-              ),
-            ),
-          ),
-          Divider(
-            color: Color(0xffCBCBCB),
-            thickness: 0.5,
-          ),
-          Container(
-            height: 70,
-            width: 500,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 19, top: 25),
-              child: Text(
-                "HbA1c (Glycosylated Hemoglobin)",
-                style: TextStyle(fontSize: 18, color: Color(0xff9F9F9F)),
-              ),
-            ),
-          ),
-          Divider(
-            color: Color(0xffCBCBCB),
-            thickness: 0.5,
-          ),
           SizedBox(
-            height: 280,
+            height: 100,
           ),
-          Align(
-            alignment: Alignment.center,
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SearchForLaboratoryPage()),
-                );
-              },
-              child: Text(
-                textAlign: TextAlign.center,
-                "+ Suggest Laboratory",
-                style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
+          Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.medication,
+                  color: Color(0xffC9C9C9),
+                  size: 250,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 125,right: 120),
+                  child: Text(textAlign: TextAlign.center,
+                    "No Laboratory available",
+                    style: TextStyle(fontSize: 23, color: Color(0xffC5C5C5)),
+                  ),
+                ),
+              ],
             ),
           ),
           SizedBox(
-            height: 9,
+            height: 160,
           ),
           Align(
             alignment: Alignment.center,
@@ -178,8 +131,6 @@ class _RecomandedLabTestPageState extends State<RecomandedLabTestPage> {
     );
   }
 }
-
-/*Lipid Profile Stool Analysis HbA1c (Glycosylated Hemoglobin)*/
 
 class CustomSearchDelegate extends SearchDelegate {
 // Demo list to show querying
