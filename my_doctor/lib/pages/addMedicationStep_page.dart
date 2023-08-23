@@ -17,9 +17,17 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
     with SingleTickerProviderStateMixin {
   // We need a TabController to control the selected tab programmatically
   late final _tabController = TabController(length: 5, vsync: this);
+  bool isNameButtonClicked = false;
+  bool isDoseButtonClicked = false;
+  bool isDoseRegimenButtonClicked = false;
+  bool isDurationsBUttonClicked = false;
 
   @override
   Widget build(BuildContext context) {
+    var tabControllers = 0;
+    setState(() {
+      tabControllers = _tabController.index.toInt();
+    });
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -177,193 +185,277 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
           ),
           Container(
             color: Colors.white, // Tab Bar color change
-            child: ReadOnlyTabBar(
-              child: TabBar(
-                padding: EdgeInsets.only(left: 19),
-                indicatorColor: Colors.transparent,
-                isScrollable: true,
-                labelPadding: EdgeInsets.only(left: 0),
-                physics: AlwaysScrollableScrollPhysics(),
-                controller: _tabController,
-                tabs: <Widget>[
-                  Tab(
-                    child: Container(
-                      height: 50,
-                      width: 190,
-                      // color: Colors.red,
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 50,
-                            width: 160,
-                            decoration: BoxDecoration(
-                                color: Colors.green,
-                                border: Border.all(color: Colors.green),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                'Dosage Form',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 16),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Container(
+                width: 420,
+                child: TabBar(
+                  padding: EdgeInsets.only(left: 19),
+                  indicatorColor: Colors.transparent,
+                  isScrollable: true,
+                  labelPadding: EdgeInsets.only(left: 0),
+                  physics: AlwaysScrollableScrollPhysics(),
+                  controller: _tabController,
+                  tabs: <Widget>[
+                    InkWell(
+                      onTap: () => setState(() {
+                        _tabController.index = 0;
+                      }),
+                      child: Tab(
+                        // text: "Dosage Form",
+                        child: Container(
+                          height: 50,
+                          width: 190,
+                          // color: Colors.red,
+                          child: Row(
+                            children: [
+                              Container(
+                                height: 50,
+                                width: 160,
+                                decoration: BoxDecoration(
+                                    color: tabControllers == 0
+                                        ? Colors.green
+                                        : Colors.green,
+                                    border: Border.all(color: Colors.green),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20))),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text(
+                                    'Dosages Form',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 16),
+                                  ),
+                                ),
                               ),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                color: Colors.black,
+                                size: 30,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () => setState(() {
+                        _tabController.index = 1;
+                        isNameButtonClicked = true;
+                      }),
+                      child: Tab(
+                        child: Container(
+                          height: 50,
+                          width: 130,
+                          // color: Colors.cyan,
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 50,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                      color: tabControllers == 1 ||
+                                              tabControllers == 2 ||
+                                              tabControllers == 3 ||
+                                              tabControllers == 4
+                                          ? Colors.green
+                                          : Color(0xff0065D7),
+                                      border: Border.all(
+                                        color: tabControllers == 1 ||
+                                                tabControllers == 2 ||
+                                                tabControllers == 3 ||
+                                                tabControllers == 4
+                                            ? Colors.green
+                                            : Color(0xff0065D7),
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Name',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.black,
+                                  size: 30,
+                                ),
+                              ],
                             ),
                           ),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            color: Colors.black,
-                            size: 30,
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () => setState(() {
+                        if (isNameButtonClicked == true) {
+                          _tabController.index = 2;
+                        } else {}
+                        isDoseButtonClicked = true;
+                      }),
+                      child: Tab(
+                        child: Container(
+                          height: 50,
+                          width: 130,
+                          // color: Colors.cyan,
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 50,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                      color: tabControllers == 2 ||
+                                              tabControllers == 3 ||
+                                              tabControllers == 4 ||
+                                              isDoseButtonClicked
+                                          ? Colors.green
+                                          : Color(0xff0065D7),
+                                      border: Border.all(
+                                        color: tabControllers == 2 ||
+                                                tabControllers == 3 ||
+                                                tabControllers == 4
+                                            ? Colors.green
+                                            : Color(0xff0065D7),
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Dose',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.black,
+                                  size: 30,
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Tab(
-                    child: Container(
-                      height: 50,
-                      width: 130,
-                      // color: Colors.cyan,
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 50,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff0065D7),
-                                  border: Border.all(color: Color(0xff0065D7)),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  'Name',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 16),
-                                ),
-                              ),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.black,
-                              size: 30,
-                            ),
-                          ],
                         ),
                       ),
                     ),
-                  ),
-                  Tab(
-                    child: Container(
-                      height: 50,
-                      width: 130,
-                      // color: Colors.cyan,
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 50,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff0065D7),
-                                  border: Border.all(color: Color(0xff0065D7)),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  'Dose',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 16),
+                    InkWell(
+                      onTap: () => setState(() {
+                        if (isNameButtonClicked == true) {
+                          _tabController.index = 3;
+                        } else {}
+                        isDoseRegimenButtonClicked = true;
+                      }),
+                      child: Tab(
+                        child: Container(
+                          height: 50,
+                          width: 170,
+                          // color: Colors.cyan,
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 50,
+                                  width: 140,
+                                  decoration: BoxDecoration(
+                                      color: tabControllers == 3 ||
+                                              tabControllers == 4 ||
+                                              isDoseRegimenButtonClicked
+                                          ? Colors.green
+                                          : Color(0xff0065D7),
+                                      border: Border.all(
+                                        color: tabControllers == 3 ||
+                                                tabControllers == 4 ||
+                                                isDoseRegimenButtonClicked
+                                            ? Colors.green
+                                            : Color(0xff0065D7),
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Dose Regimen',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.black,
+                                  size: 30,
+                                ),
+                              ],
                             ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.black,
-                              size: 30,
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Tab(
-                    child: Container(
-                      height: 50,
-                      width: 170,
-                      // color: Colors.cyan,
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 50,
-                              width: 140,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff0065D7),
-                                  border: Border.all(color: Color(0xff0065D7)),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  'Dose Regimen',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 16),
+                    InkWell(
+                      onTap: () => setState(() {
+                        if (isNameButtonClicked == true) {
+                          _tabController.index = 4;
+                        } else {}
+                        isDurationsBUttonClicked = true;
+                      }),
+                      child: Tab(
+                        child: Container(
+                          height: 50,
+                          width: 170,
+                          // color: Colors.cyan,
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 50,
+                                  width: 140,
+                                  decoration: BoxDecoration(
+                                      color: tabControllers == 4 ||
+                                              isDurationsBUttonClicked
+                                          ? Colors.green
+                                          : Color(0xff0065D7),
+                                      border: Border.all(
+                                        color: tabControllers == 4 ||
+                                                isDurationsBUttonClicked
+                                            ? Colors.green
+                                            : Color(0xff0065D7),
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Durations',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.black,
-                              size: 30,
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Tab(
-                    child: Container(
-                      height: 50,
-                      width: 170,
-                      // color: Colors.cyan,
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 50,
-                              width: 140,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff0065D7),
-                                  border: Border.all(color: Color(0xff0065D7)),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  'Durations',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 16),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -375,24 +467,31 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
               controller: _tabController,
               children: [
                 DosageFormPage(
-                  onNext: () => _tabController.index = 1,
-                ),
+                    onNext: () => setState(() {
+                          _tabController.index = 1;
+                        })),
                 NamePage(
-                  onNext: () => _tabController.index = 2,
+                  onNext: () => setState(() {
+                    _tabController.index = 2;
+                  }),
                 ),
                 DosePage(
-                  onNext: () => _tabController.index = 3,
+                  onNext: () => setState(() {
+                    _tabController.index = 3;
+                  }),
                 ),
                 DoseRegimenPage(
-                  onNext: () => _tabController.index = 4,
+                  onNext: () => setState(() {
+                    _tabController.index = 4;
+                  }),
                 ),
                 DurationPage(
                   onSubmit: () => showCupertinoDialog(
                     context: context,
                     builder: (_) {
                       return CupertinoAlertDialog(
-                        title: const Text('Thank you'),
-                        content: const Text('Your application was submitted.'),
+                        title: const Text('Success'),
+                        content: const Text('Medicine Added Successfully'),
                         actions: [
                           CupertinoDialogAction(
                             child: const Text('OK'),
@@ -428,17 +527,13 @@ class ReadOnlyTabBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IgnorePointer(child: child);
+    return IgnorePointer(
+      child: child,
+    );
   }
 
   @override
   Size get preferredSize => child.preferredSize;
-}
-
-enum Experience {
-  tablet,
-  capsule,
-  syrup,
 }
 
 class DosageFormPage extends StatefulWidget {
@@ -450,7 +545,7 @@ class DosageFormPage extends StatefulWidget {
 }
 
 class _DosageFormPageState extends State<DosageFormPage> {
-  String? _dosageform;
+  String? dosageform;
 
   /*final _experienceTitles = {
     Experience.tablet: 'Tablet',
@@ -529,10 +624,10 @@ class _DosageFormPageState extends State<DosageFormPage> {
                   InkWell(
                     onTap: () {
                       setState(() {
-                        _dosageform = "Tablet";
+                        dosageform = "Tablet";
                         widget.onNext();
                       });
-                      print("button pressed: ${_dosageform}");
+                      print("button pressed: ${dosageform}");
                     },
                     child: Container(
                       height: 50,
@@ -569,10 +664,10 @@ class _DosageFormPageState extends State<DosageFormPage> {
                   InkWell(
                     onTap: () {
                       setState(() {
-                        _dosageform = "Capsule";
+                        dosageform = "Capsule";
                         widget.onNext();
                       });
-                      print("button pressed: ${_dosageform}");
+                      print("button pressed: ${dosageform}");
                     },
                     child: Container(
                       height: 50,
@@ -609,10 +704,10 @@ class _DosageFormPageState extends State<DosageFormPage> {
                   InkWell(
                     onTap: () {
                       setState(() {
-                        _dosageform = "Syrup";
+                        dosageform = "Syrup";
                         widget.onNext();
                       });
-                      print("button pressed: ${_dosageform}");
+                      print("button pressed: ${dosageform}");
                     },
                     child: Container(
                       height: 50,
@@ -1334,13 +1429,16 @@ class DurationPage extends StatefulWidget {
 
 class _DurationPageState extends State<DurationPage> {
   String? _durations;
-  // String? _dataFromDialogduration;
 
+  // String? _dataFromDialogduration;
+  String? startMediactionFrom;
+  String? selectedLanguage;
 
   @override
   Widget build(BuildContext context) {
     // Map _dataFromDialogduration = ModalRoute.of(context)?.settings.arguments as Map;
-    var _dataFromDialogduration = ModalRoute.of(context)?.settings.arguments as Map<String,String>;
+    Map? dataFromDialogduration =
+        ModalRoute.of(context)?.settings.arguments as Map?;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -1409,15 +1507,19 @@ class _DurationPageState extends State<DurationPage> {
                 children: [
                   InkWell(
                     onTap: () async {
-                      _dataFromDialogduration = await showDialog(
+                      dataFromDialogduration = await showDialog(
                           context: context,
                           builder: (context) => StartMedicationDialog(),
                           barrierDismissible: false);
                       setState(() {
                         _durations = "To Coninue";
                       });
+                      var entryList = dataFromDialogduration?.entries.toList();
                       print("button pressed: ${_durations}");
-                      print("button pressed: ${_dataFromDialogduration}");
+                      print("${dataFromDialogduration}");
+                      print(entryList?[0].value);
+                      startMediactionFrom = entryList?[0].value;
+                      selectedLanguage = entryList?[1].value;
                     },
                     child: Container(
                       height: 50,
@@ -1453,7 +1555,7 @@ class _DurationPageState extends State<DurationPage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      _dataFromDialogduration = await showDialog(
+                      dataFromDialogduration = await showDialog(
                           context: context,
                           builder: (context) => StartMedicationDialog(),
                           barrierDismissible: false);
@@ -1461,8 +1563,12 @@ class _DurationPageState extends State<DurationPage> {
                         _durations = "SOS";
                       });
 
+                      var entryList = dataFromDialogduration?.entries.toList();
                       print("button pressed: ${_durations}");
-                      print("button pressed: ${_dataFromDialogduration}");
+                      print("${dataFromDialogduration}");
+                      print(entryList?[0].value);
+                      startMediactionFrom = entryList?[0].value;
+                      selectedLanguage = entryList?[1].value;
                     },
                     child: Container(
                       height: 50,
@@ -1498,7 +1604,7 @@ class _DurationPageState extends State<DurationPage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      _dataFromDialogduration = await showDialog(
+                      dataFromDialogduration = await showDialog(
                           context: context,
                           builder: (context) => StartMedicationDialog(),
                           barrierDismissible: false);
@@ -1506,8 +1612,12 @@ class _DurationPageState extends State<DurationPage> {
                         _durations = "1 Years";
                       });
 
+                      var entryList = dataFromDialogduration?.entries.toList();
                       print("button pressed: ${_durations}");
-                      print("button pressed: ${_dataFromDialogduration}");
+                      print("${dataFromDialogduration}");
+                      print(entryList?[0].value);
+                      startMediactionFrom = entryList?[0].value;
+                      selectedLanguage = entryList?[1].value;
                     },
                     child: Container(
                       height: 50,
@@ -1554,7 +1664,7 @@ class _DurationPageState extends State<DurationPage> {
                     color: Colors.white,
                   )
                 : Container(
-                    height: 150,
+                    height: 200,
                     width: 500,
                     child: Card(
                       shape: BeveledRectangleBorder(
@@ -1568,7 +1678,7 @@ class _DurationPageState extends State<DurationPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              "Dose Regiment",
+                              "Durations",
                               style: TextStyle(
                                   color: Colors.red,
                                   fontSize: 20,
@@ -1581,14 +1691,27 @@ class _DurationPageState extends State<DurationPage> {
                                   TextStyle(fontSize: 22, color: Colors.green),
                             ),
                             Text(
-                              "How to Consume",
+                              "Start Medicine From",
                               style: TextStyle(
                                   color: Colors.red,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              "${_dataFromDialogduration}",
+                              "${startMediactionFrom}",
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(fontSize: 22, color: Colors.green),
+                            ),
+                            Text(
+                              "Language",
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "${selectedLanguage}",
                               textAlign: TextAlign.center,
                               style:
                                   TextStyle(fontSize: 22, color: Colors.green),

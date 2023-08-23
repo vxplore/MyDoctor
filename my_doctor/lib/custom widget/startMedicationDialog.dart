@@ -299,9 +299,13 @@ class _StartMedicationDialogState extends State<StartMedicationDialog> {
                           ? () {
                               var buttonPressedValue = startmedicine;
                               var selectedLanguageValue = dropdownvalue;
-                              Map<String, String> myData = new Map();
+                             /* Map<String, String> myData = new Map();
                               myData['buttonPressedValue'] = buttonPressedValue;
-                              myData['selectedLanguageValue'] = selectedLanguageValue!;
+                              myData['selectedLanguageValue'] = selectedLanguageValue!;*/
+                              Map myData = {
+                                'buttonPressedValue' : buttonPressedValue,
+                                'selectedLanguageValue' : selectedLanguageValue!
+                              };
                               Future.delayed(Duration(seconds: 2));
                               Navigator.pop(context,myData);
                             }
