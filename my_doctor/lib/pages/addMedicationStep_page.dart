@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:my_doctor/custom%20widget/medicationConsumeDialog.dart';
 import 'package:my_doctor/pages/patient_complaints_page.dart';
+import 'package:my_doctor/service/global_variables.dart';
 
 import '../custom widget/startMedicationDialog.dart';
 import 'addMedication_page.dart';
@@ -21,6 +22,10 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
   bool isDoseButtonClicked = false;
   bool isDoseRegimenButtonClicked = false;
   bool isDurationsBUttonClicked = false;
+  bool isDosageFormPageIndexChange = false;
+  bool isNamePageIndexChange = false;
+  bool isDosePageIndexChange = false;
+  bool isDoseRegimentPageIndexChange = false;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +44,16 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
             padding: const EdgeInsets.only(right: 18),
             child: InkWell(
               onTap: () {
+                setState(() {
+                  globalVariables.dosageform = null;
+                  globalVariables.dose = null;
+                  globalVariables.names = null;
+                  globalVariables.doseregimen = null;
+                  globalVariables.dataFromDialog = null;
+                  globalVariables.durations = null;
+                  globalVariables.startMediactionFrom = null;
+                  globalVariables.selectedLanguage = null;
+                });
                 Navigator.pop(context);
               },
               child: Icon(
@@ -191,7 +206,7 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
               child: Container(
                 width: 420,
                 child: TabBar(
-                  padding: EdgeInsets.only(left: 19),
+                  padding: EdgeInsets.only(left: 19,right: 19),
                   indicatorColor: Colors.transparent,
                   isScrollable: true,
                   labelPadding: EdgeInsets.only(left: 0),
@@ -206,24 +221,58 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                         // text: "Dosage Form",
                         child: Container(
                           height: 50,
-                          width: 190,
+
                           // color: Colors.red,
                           child: Row(
                             children: [
                               Container(
                                 height: 50,
-                                width: 160,
                                 decoration: BoxDecoration(
-                                    color: tabControllers == 0
+                                    color: (tabControllers == 1 ||
+                                                tabControllers == 2 ||
+                                                tabControllers == 3 ||
+                                                tabControllers == 4 ||
+                                                tabControllers == 5 ||
+                                                globalVariables.dosageform !=
+                                                    null)
+                                            /* ||
+                                            (tabControllers == 1 ||
+                                                tabControllers == 2 ||
+                                                tabControllers == 3 ||
+                                                tabControllers == 4 ||
+                                                tabControllers == 5)  */
+                                            &&
+                                            (globalVariables.dosageform != null)
                                         ? Colors.green
-                                        : Colors.green,
-                                    border: Border.all(color: Colors.green),
+                                        : Color(0xff0065D7),
+                                    border: Border.all(
+                                      color: (tabControllers == 1 ||
+                                                  tabControllers == 2 ||
+                                                  tabControllers == 3 ||
+                                                  tabControllers == 4 ||
+                                                  tabControllers == 5 ||
+                                                  globalVariables.dosageform !=
+                                                      null)
+                                              /* ||
+                                          (tabControllers == 1 ||
+                                              tabControllers == 2 ||
+                                              tabControllers == 3 ||
+                                              tabControllers == 4 ||
+                                              tabControllers == 5)  */
+                                              &&
+                                              (globalVariables.dosageform !=
+                                                  null)
+                                          ? Colors.green
+                                          : Color(0xff0065D7),
+                                    ),
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20))),
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: Text(
-                                    'Dosages Form',
+                                    globalVariables.dosageform == null
+                                        ? 'Dosages Form'
+                                        : "${globalVariables.dosageform}",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 16),
@@ -248,7 +297,7 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                       child: Tab(
                         child: Container(
                           height: 50,
-                          width: 130,
+
                           // color: Colors.cyan,
                           child: Align(
                             alignment: Alignment.topLeft,
@@ -256,19 +305,24 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                               children: [
                                 Container(
                                   height: 50,
-                                  width: 100,
                                   decoration: BoxDecoration(
-                                      color: tabControllers == 1 ||
-                                              tabControllers == 2 ||
-                                              tabControllers == 3 ||
-                                              tabControllers == 4
+                                      color: (tabControllers == 2 ||
+                                                  tabControllers == 3 ||
+                                                  tabControllers == 4 ||
+                                                  tabControllers == 5 ||
+                                                  globalVariables.names !=
+                                                      null) &&
+                                              (globalVariables.names != null)
                                           ? Colors.green
                                           : Color(0xff0065D7),
                                       border: Border.all(
-                                        color: tabControllers == 1 ||
-                                                tabControllers == 2 ||
-                                                tabControllers == 3 ||
-                                                tabControllers == 4
+                                        color: (tabControllers == 2 ||
+                                                    tabControllers == 3 ||
+                                                    tabControllers == 4 ||
+                                                    tabControllers == 5 ||
+                                                    globalVariables.names !=
+                                                        null) &&
+                                                (globalVariables.names != null)
                                             ? Colors.green
                                             : Color(0xff0065D7),
                                       ),
@@ -277,7 +331,9 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: Text(
-                                      'Name',
+                                      globalVariables.names == null
+                                          ? 'Name'
+                                          : "${globalVariables.names}",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 16),
@@ -297,7 +353,8 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                     ),
                     InkWell(
                       onTap: () => setState(() {
-                        if (isNameButtonClicked == true) {
+                        if (isNamePageIndexChange == true ||
+                            globalVariables.names != null) {
                           _tabController.index = 2;
                         } else {}
                         isDoseButtonClicked = true;
@@ -305,7 +362,7 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                       child: Tab(
                         child: Container(
                           height: 50,
-                          width: 130,
+
                           // color: Colors.cyan,
                           child: Align(
                             alignment: Alignment.topLeft,
@@ -313,18 +370,22 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                               children: [
                                 Container(
                                   height: 50,
-                                  width: 100,
                                   decoration: BoxDecoration(
-                                      color: tabControllers == 2 ||
-                                              tabControllers == 3 ||
-                                              tabControllers == 4 ||
-                                              isDoseButtonClicked
+                                      color: (tabControllers == 3 ||
+                                                  tabControllers == 4 ||
+                                                  tabControllers == 5 ||
+                                                  globalVariables.dose !=
+                                                      null) &&
+                                              (globalVariables.dose != null)
                                           ? Colors.green
                                           : Color(0xff0065D7),
                                       border: Border.all(
-                                        color: tabControllers == 2 ||
-                                                tabControllers == 3 ||
-                                                tabControllers == 4
+                                        color: (tabControllers == 3 ||
+                                                    tabControllers == 4 ||
+                                                    tabControllers == 5 ||
+                                                    globalVariables.dose !=
+                                                        null) &&
+                                                (globalVariables.dose != null)
                                             ? Colors.green
                                             : Color(0xff0065D7),
                                       ),
@@ -333,7 +394,9 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: Text(
-                                      'Dose',
+                                      globalVariables.dose == null
+                                          ? 'Dose'
+                                          : "${globalVariables.dose}",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 16),
@@ -353,7 +416,8 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                     ),
                     InkWell(
                       onTap: () => setState(() {
-                        if (isNameButtonClicked == true) {
+                        if (isNamePageIndexChange == true ||
+                            globalVariables.names != null) {
                           _tabController.index = 3;
                         } else {}
                         isDoseRegimenButtonClicked = true;
@@ -361,7 +425,7 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                       child: Tab(
                         child: Container(
                           height: 50,
-                          width: 170,
+
                           // color: Colors.cyan,
                           child: Align(
                             alignment: Alignment.topLeft,
@@ -369,17 +433,23 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                               children: [
                                 Container(
                                   height: 50,
-                                  width: 140,
                                   decoration: BoxDecoration(
-                                      color: tabControllers == 3 ||
-                                              tabControllers == 4 ||
-                                              isDoseRegimenButtonClicked
+                                      color: (tabControllers == 4 ||
+                                                  tabControllers == 5 ||
+                                                  globalVariables.doseregimen !=
+                                                      null) &&
+                                              (globalVariables.doseregimen !=
+                                                  null)
                                           ? Colors.green
                                           : Color(0xff0065D7),
                                       border: Border.all(
-                                        color: tabControllers == 3 ||
-                                                tabControllers == 4 ||
-                                                isDoseRegimenButtonClicked
+                                        color: (tabControllers == 4 ||
+                                                    tabControllers == 5 ||
+                                                    globalVariables
+                                                            .doseregimen !=
+                                                        null) &&
+                                                (globalVariables.doseregimen !=
+                                                    null)
                                             ? Colors.green
                                             : Color(0xff0065D7),
                                       ),
@@ -388,7 +458,9 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: Text(
-                                      'Dose Regimen',
+                                      globalVariables.doseregimen == null
+                                          ? 'Dose Regimen'
+                                          : "${globalVariables.doseregimen}",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 16),
@@ -408,7 +480,8 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                     ),
                     InkWell(
                       onTap: () => setState(() {
-                        if (isNameButtonClicked == true) {
+                        if (isNamePageIndexChange == true ||
+                            globalVariables.names != null) {
                           _tabController.index = 4;
                         } else {}
                         isDurationsBUttonClicked = true;
@@ -416,7 +489,7 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                       child: Tab(
                         child: Container(
                           height: 50,
-                          width: 170,
+
                           // color: Colors.cyan,
                           child: Align(
                             alignment: Alignment.topLeft,
@@ -424,15 +497,20 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                               children: [
                                 Container(
                                   height: 50,
-                                  width: 140,
                                   decoration: BoxDecoration(
-                                      color: tabControllers == 4 ||
-                                              isDurationsBUttonClicked
+                                      color: (tabControllers == 5 ||
+                                                  globalVariables.durations !=
+                                                      null) &&
+                                              (globalVariables.durations !=
+                                                  null)
                                           ? Colors.green
                                           : Color(0xff0065D7),
                                       border: Border.all(
-                                        color: tabControllers == 4 ||
-                                                isDurationsBUttonClicked
+                                        color: (tabControllers == 5 ||
+                                                    globalVariables.durations !=
+                                                        null) &&
+                                                (globalVariables.durations !=
+                                                    null)
                                             ? Colors.green
                                             : Color(0xff0065D7),
                                       ),
@@ -441,7 +519,9 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: Text(
-                                      'Durations',
+                                      globalVariables.durations == null
+                                          ? 'Durations'
+                                          : "${globalVariables.durations}",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 16),
@@ -469,20 +549,24 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                 DosageFormPage(
                     onNext: () => setState(() {
                           _tabController.index = 1;
+                          isDosageFormPageIndexChange = true;
                         })),
                 NamePage(
                   onNext: () => setState(() {
                     _tabController.index = 2;
+                    isNamePageIndexChange = true;
                   }),
                 ),
                 DosePage(
                   onNext: () => setState(() {
                     _tabController.index = 3;
+                    isDosePageIndexChange = true;
                   }),
                 ),
                 DoseRegimenPage(
                   onNext: () => setState(() {
                     _tabController.index = 4;
+                    isDoseRegimentPageIndexChange = true;
                   }),
                 ),
                 DurationPage(
@@ -497,6 +581,16 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                             child: const Text('OK'),
                             onPressed: () {
                               // dismiss dialog
+                              setState(() {
+                                globalVariables.dosageform = null;
+                                globalVariables.dose = null;
+                                globalVariables.names = null;
+                                globalVariables.doseregimen = null;
+                                globalVariables.dataFromDialog = null;
+                                globalVariables.durations = null;
+                                globalVariables.startMediactionFrom = null;
+                                globalVariables.selectedLanguage = null;
+                              });
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -519,22 +613,7 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
   }
 }
 
-// https://stackoverflow.com/a/57354375/436422
-class ReadOnlyTabBar extends StatelessWidget implements PreferredSizeWidget {
-  final TabBar child;
 
-  const ReadOnlyTabBar({Key? key, required this.child}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: child,
-    );
-  }
-
-  @override
-  Size get preferredSize => child.preferredSize;
-}
 
 class DosageFormPage extends StatefulWidget {
   const DosageFormPage({Key? key, required this.onNext}) : super(key: key);
@@ -545,13 +624,9 @@ class DosageFormPage extends StatefulWidget {
 }
 
 class _DosageFormPageState extends State<DosageFormPage> {
-  String? dosageform;
+  // String? dosageform;
 
-  /*final _experienceTitles = {
-    Experience.tablet: 'Tablet',
-    Experience.capsule: 'Capsule',
-    Experience.syrup: 'Syrup',
-  };*/
+
 
   @override
   Widget build(BuildContext context) {
@@ -624,10 +699,12 @@ class _DosageFormPageState extends State<DosageFormPage> {
                   InkWell(
                     onTap: () {
                       setState(() {
-                        dosageform = "Tablet";
+                        // dosageform = "Tablet";
+                        globalVariables.dosageform = "Tablet";
                         widget.onNext();
                       });
-                      print("button pressed: ${dosageform}");
+                      // print("button pressed: ${dosageform}");
+                      print("button pressed: ${globalVariables.dosageform}");
                     },
                     child: Container(
                       height: 50,
@@ -664,10 +741,12 @@ class _DosageFormPageState extends State<DosageFormPage> {
                   InkWell(
                     onTap: () {
                       setState(() {
-                        dosageform = "Capsule";
+                        // dosageform = "Capsule";
+                        globalVariables.dosageform = "Capsule";
                         widget.onNext();
                       });
-                      print("button pressed: ${dosageform}");
+                      // print("button pressed: ${dosageform}");
+                      print("button pressed: ${globalVariables.dosageform}");
                     },
                     child: Container(
                       height: 50,
@@ -704,10 +783,12 @@ class _DosageFormPageState extends State<DosageFormPage> {
                   InkWell(
                     onTap: () {
                       setState(() {
-                        dosageform = "Syrup";
+                        // dosageform = "Syrup";
+                        globalVariables.dosageform = "Syrup";
                         widget.onNext();
                       });
-                      print("button pressed: ${dosageform}");
+                      // print("button pressed: ${dosageform}");
+                      print("button pressed: ${globalVariables.dosageform}");
                     },
                     child: Container(
                       height: 50,
@@ -774,7 +855,7 @@ class DosePage extends StatefulWidget {
 }
 
 class _DosePageState extends State<DosePage> {
-  String? _dose;
+  // String? _dose;
 
   /* final _experienceTitles = {
     Experience.tablet: 'Less than one year',
@@ -853,10 +934,10 @@ class _DosePageState extends State<DosePage> {
                   InkWell(
                     onTap: () {
                       setState(() {
-                        _dose = "100mg";
+                        globalVariables.dose = "100mg";
                         widget.onNext();
                       });
-                      print("button pressed: ${_dose}");
+                      print("button pressed: ${globalVariables.dose}");
                     },
                     child: Container(
                       height: 50,
@@ -893,10 +974,10 @@ class _DosePageState extends State<DosePage> {
                   InkWell(
                     onTap: () {
                       setState(() {
-                        _dose = "400mg";
+                        globalVariables.dose = "400mg";
                         widget.onNext();
                       });
-                      print("button pressed: ${_dose}");
+                      print("button pressed: ${globalVariables.dose}");
                     },
                     child: Container(
                       height: 50,
@@ -933,10 +1014,10 @@ class _DosePageState extends State<DosePage> {
                   InkWell(
                     onTap: () {
                       setState(() {
-                        _dose = "500mg";
+                        globalVariables.dose = "500mg";
                         widget.onNext();
                       });
-                      print("button pressed: ${_dose}");
+                      print("button pressed: ${globalVariables.dose}");
                     },
                     child: Container(
                       height: 50,
@@ -1003,14 +1084,7 @@ class NamePage extends StatefulWidget {
 }
 
 class _NamePageState extends State<NamePage> {
-  String? _names;
-
-  /* final _experienceTitles = {
-    Skill.flutter: 'Flutter',
-    Skill.dart: 'Dart',
-    Skill.firebase: 'Firebase',
-    Skill.cloudFunctions: 'Cloud Functions',
-  };*/
+  // String? _names;
 
   @override
   Widget build(BuildContext context) {
@@ -1083,10 +1157,10 @@ class _NamePageState extends State<NamePage> {
                   InkWell(
                     onTap: () {
                       setState(() {
-                        _names = "Paracetamol";
+                        globalVariables.names = "Paracetamol";
                         widget.onNext();
                       });
-                      print("button pressed: ${_names}");
+                      print("button pressed: ${globalVariables.names}");
                     },
                     child: Container(
                       height: 50,
@@ -1153,8 +1227,8 @@ class DoseRegimenPage extends StatefulWidget {
 }
 
 class _DoseRegimenPageState extends State<DoseRegimenPage> {
-  String? _doseregimen;
-  String? _dataFromDialog;
+  /* String? _doseregimen;
+  String? _dataFromDialog;*/
 
   /* final _experienceTitles = {
     Experience.tablet: 'Less than one year',
@@ -1232,15 +1306,16 @@ class _DoseRegimenPageState extends State<DoseRegimenPage> {
                 children: [
                   InkWell(
                     onTap: () async {
-                      _dataFromDialog = await showDialog(
+                      globalVariables.dataFromDialog = await showDialog(
                           context: context,
                           builder: (context) => MedicationConsumeDialog(),
                           barrierDismissible: false);
                       setState(() {
-                        _doseregimen = "Twice Daily (1-0-1)";
+                        globalVariables.doseregimen = "Twice Daily (1-0-1)";
                       });
-                      print("button pressed: ${_doseregimen}");
-                      print("button pressed: ${_dataFromDialog}");
+                      print("button pressed: ${globalVariables.doseregimen}");
+                      print(
+                          "button pressed: ${globalVariables.dataFromDialog}");
                     },
                     child: Container(
                       height: 50,
@@ -1276,16 +1351,18 @@ class _DoseRegimenPageState extends State<DoseRegimenPage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      _dataFromDialog = await showDialog(
+                      globalVariables.dataFromDialog = await showDialog(
                           context: context,
                           builder: (context) => MedicationConsumeDialog(),
                           barrierDismissible: false);
                       setState(() {
-                        _doseregimen = "Three Time a Day (1-1-1)";
+                        globalVariables.doseregimen =
+                            "Three Time a Day (1-1-1)";
                       });
 
-                      print("button pressed: ${_doseregimen}");
-                      print("button pressed: ${_dataFromDialog}");
+                      print("button pressed: ${globalVariables.doseregimen}");
+                      print(
+                          "button pressed: ${globalVariables.dataFromDialog}");
                     },
                     child: Container(
                       height: 50,
@@ -1325,7 +1402,7 @@ class _DoseRegimenPageState extends State<DoseRegimenPage> {
             SizedBox(
               height: 20,
             ),
-            _doseregimen == null
+            globalVariables.doseregimen == null
                 ? Container(
                     height: 1,
                     width: 1,
@@ -1353,7 +1430,7 @@ class _DoseRegimenPageState extends State<DoseRegimenPage> {
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              "${_doseregimen}",
+                              "${globalVariables.doseregimen}",
                               textAlign: TextAlign.center,
                               style:
                                   TextStyle(fontSize: 22, color: Colors.green),
@@ -1366,7 +1443,7 @@ class _DoseRegimenPageState extends State<DoseRegimenPage> {
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              "${_dataFromDialog}",
+                              "${globalVariables.dataFromDialog}",
                               textAlign: TextAlign.center,
                               style:
                                   TextStyle(fontSize: 22, color: Colors.green),
@@ -1401,7 +1478,9 @@ class _DoseRegimenPageState extends State<DoseRegimenPage> {
                       ),
                       padding: const EdgeInsets.all(12),
                       backgroundColor: Color(0xff1468B3)),
-                  onPressed: _doseregimen != null ? widget.onNext : null,
+                  onPressed: globalVariables.doseregimen != null
+                      ? widget.onNext
+                      : null,
                   child: Text(
                     "Done",
                     style: TextStyle(
@@ -1428,11 +1507,11 @@ class DurationPage extends StatefulWidget {
 }
 
 class _DurationPageState extends State<DurationPage> {
-  String? _durations;
+  // String? _durations;
 
   // String? _dataFromDialogduration;
-  String? startMediactionFrom;
-  String? selectedLanguage;
+  /* String? startMediactionFrom;
+  String? selectedLanguage;*/
 
   @override
   Widget build(BuildContext context) {
@@ -1512,14 +1591,14 @@ class _DurationPageState extends State<DurationPage> {
                           builder: (context) => StartMedicationDialog(),
                           barrierDismissible: false);
                       setState(() {
-                        _durations = "To Coninue";
+                        globalVariables.durations = "To Coninue";
                       });
                       var entryList = dataFromDialogduration?.entries.toList();
-                      print("button pressed: ${_durations}");
+                      print("button pressed: ${globalVariables.durations}");
                       print("${dataFromDialogduration}");
                       print(entryList?[0].value);
-                      startMediactionFrom = entryList?[0].value;
-                      selectedLanguage = entryList?[1].value;
+                      globalVariables.startMediactionFrom = entryList?[0].value;
+                      globalVariables.selectedLanguage = entryList?[1].value;
                     },
                     child: Container(
                       height: 50,
@@ -1560,15 +1639,15 @@ class _DurationPageState extends State<DurationPage> {
                           builder: (context) => StartMedicationDialog(),
                           barrierDismissible: false);
                       setState(() {
-                        _durations = "SOS";
+                        globalVariables.durations = "SOS";
                       });
 
                       var entryList = dataFromDialogduration?.entries.toList();
-                      print("button pressed: ${_durations}");
+                      print("button pressed: ${globalVariables.durations}");
                       print("${dataFromDialogduration}");
                       print(entryList?[0].value);
-                      startMediactionFrom = entryList?[0].value;
-                      selectedLanguage = entryList?[1].value;
+                      globalVariables.startMediactionFrom = entryList?[0].value;
+                      globalVariables.selectedLanguage = entryList?[1].value;
                     },
                     child: Container(
                       height: 50,
@@ -1609,15 +1688,15 @@ class _DurationPageState extends State<DurationPage> {
                           builder: (context) => StartMedicationDialog(),
                           barrierDismissible: false);
                       setState(() {
-                        _durations = "1 Years";
+                        globalVariables.durations = "1 Years";
                       });
 
                       var entryList = dataFromDialogduration?.entries.toList();
-                      print("button pressed: ${_durations}");
+                      print("button pressed: ${globalVariables.durations}");
                       print("${dataFromDialogduration}");
                       print(entryList?[0].value);
-                      startMediactionFrom = entryList?[0].value;
-                      selectedLanguage = entryList?[1].value;
+                      globalVariables.startMediactionFrom = entryList?[0].value;
+                      globalVariables.selectedLanguage = entryList?[1].value;
                     },
                     child: Container(
                       height: 50,
@@ -1657,7 +1736,7 @@ class _DurationPageState extends State<DurationPage> {
             SizedBox(
               height: 20,
             ),
-            _durations == null
+            globalVariables.durations == null
                 ? Container(
                     height: 1,
                     width: 1,
@@ -1685,7 +1764,7 @@ class _DurationPageState extends State<DurationPage> {
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              "${_durations}",
+                              "${globalVariables.durations}",
                               textAlign: TextAlign.center,
                               style:
                                   TextStyle(fontSize: 22, color: Colors.green),
@@ -1698,7 +1777,7 @@ class _DurationPageState extends State<DurationPage> {
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              "${startMediactionFrom}",
+                              "${globalVariables.startMediactionFrom}",
                               textAlign: TextAlign.center,
                               style:
                                   TextStyle(fontSize: 22, color: Colors.green),
@@ -1711,7 +1790,7 @@ class _DurationPageState extends State<DurationPage> {
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              "${selectedLanguage}",
+                              "${globalVariables.selectedLanguage}",
                               textAlign: TextAlign.center,
                               style:
                                   TextStyle(fontSize: 22, color: Colors.green),
@@ -1746,7 +1825,9 @@ class _DurationPageState extends State<DurationPage> {
                       ),
                       padding: const EdgeInsets.all(12),
                       backgroundColor: Color(0xff1468B3)),
-                  onPressed: _durations != null ? widget.onSubmit : null,
+                  onPressed: globalVariables.durations != null
+                      ? widget.onSubmit
+                      : null,
                   child: Text(
                     "Done",
                     style: TextStyle(
