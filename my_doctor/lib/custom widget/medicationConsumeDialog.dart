@@ -1,15 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../service/global_variables.dart';
+
 class MedicationConsumeDialog extends StatefulWidget {
   const MedicationConsumeDialog({super.key});
+
 
   @override
   State<MedicationConsumeDialog> createState() =>
       _MedicationConsumeDialogState();
 }
 
-class _MedicationConsumeDialogState extends State<MedicationConsumeDialog> {
+class _MedicationConsumeDialogState extends State<MedicationConsumeDialog>   {
+
+
   bool isBeaforeMealClicked = false;
   bool isAfterMealClicked = false;
   bool isWithMealClicked = false;
@@ -19,7 +24,8 @@ class _MedicationConsumeDialogState extends State<MedicationConsumeDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
+    return
+      Dialog(
       child: Container(
         height: 320,
         width: 400,
@@ -291,8 +297,12 @@ class _MedicationConsumeDialogState extends State<MedicationConsumeDialog> {
                     onPressed: isButtonClicked
                         ? () {
                             var buttonPressedValue = medicineConsume;
-                            Future.delayed(Duration(seconds: 2));
+                            // Future.delayed(Duration(seconds: 2));
+
                             Navigator.pop(context, buttonPressedValue);
+
+
+
                           }
                         : null,
                     child: Text(
@@ -311,4 +321,6 @@ class _MedicationConsumeDialogState extends State<MedicationConsumeDialog> {
       ),
     );
   }
+
+
 }

@@ -15,6 +15,8 @@ class GlobalVariables {
   String? durations;
   String? startMediactionFrom;
   String? selectedLanguage;
+  bool isDoseRegimentPageIndexChange = false;
+
 
 // String? get myString => _myString;
 
