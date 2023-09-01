@@ -577,7 +577,8 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                   }),
                 ),
                 DurationPage(
-                  onSubmit: () => showCupertinoDialog(
+                  onSubmit: () =>
+                      showCupertinoDialog(
                     context: context,
                     builder: (_) {
                       return CupertinoAlertDialog(

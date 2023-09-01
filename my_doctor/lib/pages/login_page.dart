@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:my_doctor/view_models/login_view_model.dart';
+import 'package:velocity_x/velocity_x.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../view_models/intro_view_model.dart';
 import '../view_models/splash_view_model.dart';
+
 Logo() {
   return Padding(
     padding: const EdgeInsets.only(top: 40),
@@ -12,38 +15,54 @@ Logo() {
       child: SizedBox(
           width: 90,
           height: 90,
-          child: Image.asset("assets/images/instadoclogo.png")
-      ),
+          child: Image.asset("assets/images/instadoclogo.png")),
     ),
   );
 }
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
-class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
 
+class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   final vm = LoginViewModel();
   List<ReactionDisposer> _disposers = [];
 
+  void showToast(String message, Color color) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.SNACKBAR,
+        timeInSecForIosWeb: 1,
+        backgroundColor: color,
+        textColor: Colors.white);
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    reaction((_) => vm.showToast, (showToasts) {
+      print(showToasts);
+      if (showToasts != null) {
+       showToast(showToasts,Colors.black);
+      }
+    });
     return Scaffold(
       backgroundColor: Color(0xffF3FBFF),
       body: SafeArea(
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(21),
-              child: LoginContent(),
-            ),
-            CopyRight(),
-            Logo(),
-          ],
-        )
-      ),
+          child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(21),
+            child: LoginContent(),
+          ),
+          CopyRight(),
+          Logo(),
+        ],
+      )),
     );
   }
 
@@ -58,8 +77,7 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    _disposers = [
-    ];
+    _disposers = [];
   }
 
   @override
@@ -72,9 +90,7 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-
-  }
+  void didChangeAppLifecycleState(AppLifecycleState state) {}
 
   Widget CopyRight() {
     return const Align(
@@ -95,41 +111,33 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const Align(
-              alignment: Alignment.topLeft,
+                alignment: Alignment.topLeft,
                 child: Text(
                   "Let's Sign You In",
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold
-                  ),
-                )
-            ),
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                )),
             const Align(
               alignment: Alignment.topLeft,
               child: Text(
                 "Welcome back, you've been missed!",
-                style: TextStyle(
-                  color: Color(0xffBBBBBB)
-                ),
+                style: TextStyle(color: Color(0xffBBBBBB)),
               ),
             ),
             Container(
               height: 31,
             ),
-            MyTextField(
-              vm.emailController,
-              "Email Address",
-              "assets/images/email_icon.png"
-            ),
+            Observer(builder: (_) {
+              return MyTextField(vm.emailController, "Email Address",
+                  "assets/images/email_icon.png");
+            }),
             Container(
               height: 18,
             ),
-            MyTextField(
-                vm.passwordController,
-                "Password",
-                "assets/images/password_icon.png",
-                obscureText: true
-            ),
+            Observer(builder: (_) {
+              return MyTextField(vm.passwordController, "Password",
+                  "assets/images/password_icon.png",
+                  obscureText: true);
+            }),
             Container(
               height: 18,
             ),
@@ -137,15 +145,15 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
               width: double.infinity,
               height: 55,
               child: ElevatedButton(
-                  onPressed: (){},
+                onPressed: () {
+                  vm.login();
+                },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xff1468B3),
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4)
-                  )
-                ),
-                  child: const Text("Sign In"),
+                    backgroundColor: Color(0xff1468B3),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4))),
+                child: const Text("Sign In"),
               ),
             ),
             Container(
@@ -155,12 +163,8 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                 alignment: Alignment.topRight,
                 child: Text(
                   "Forget Password!",
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.normal
-                  ),
-                )
-            ),
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+                )),
             Container(
               height: 28,
             ),
@@ -169,21 +173,18 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
               children: [
                 Text(
                   "Don't have an account?",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.normal
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
                 ),
-                SizedBox(width: 5,),
+                SizedBox(
+                  width: 5,
+                ),
                 Text(
                   "Create Account",
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
-                    color: Color(0xff1468B3),
-                    decoration: TextDecoration.underline
-
-                  ),
+                      color: Color(0xff1468B3),
+                      decoration: TextDecoration.underline),
                 )
               ],
             ),
@@ -194,46 +195,27 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   }
 
   Widget MyTextField(
-      TextEditingController controller,
-      String hint,
-      String image,
-      {bool obscureText = false}
-  ) {
+      TextEditingController controller, String hint, String image,
+      {bool obscureText = false}) {
     return SizedBox(
         height: 55,
-        child:TextField(
+        child: TextField(
           obscureText: obscureText,
           controller: controller,
           decoration: InputDecoration(
               prefixIcon: Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16),
-                child: SizedBox(
-                    width: 26,
-                    height: 22,
-                    child: Image.asset(image)
-                ),
+                child:
+                    SizedBox(width: 26, height: 22, child: Image.asset(image)),
               ),
               enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(
-                    width: 1,
-                    color: Color(0xffD8D8D8)
-                ),
+                borderSide: BorderSide(width: 1, color: Color(0xffD8D8D8)),
               ),
               focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                      width: 1,
-                      color: Color(0xff1468B3)
-                  )
-              ),
+                  borderSide: BorderSide(width: 1, color: Color(0xff1468B3))),
               hintText: hint,
-              hintStyle: const TextStyle(
-                  color: Color(0xffCFCFCF)
-              )
-          ),
-          style: const TextStyle(
-              color: Color(0xff1468B3)
-          ),
-        )
-    );
+              hintStyle: const TextStyle(color: Color(0xffCFCFCF))),
+          style: const TextStyle(color: Color(0xff1468B3)),
+        ));
   }
 }

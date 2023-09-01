@@ -7,6 +7,7 @@ import 'package:my_doctor/pages/login_page.dart';
 import 'package:my_doctor/pages/myPatient_page.dart';
 import 'package:my_doctor/pages/registration_page.dart';
 import 'package:my_doctor/pages/splash_page.dart';
+import 'package:my_doctor/service/navigation_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,13 +27,14 @@ class MyApp extends StatelessWidget {
       useInheritedMediaQuery: true,
       builder:  (BuildContext context, Widget? child) =>
       MaterialApp(
+        navigatorKey: NavigationService().navigationKey,
         debugShowCheckedModeBanner: false,
         title: 'My Doctor',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const RegistrationPage(),
+        home: const LoginPage(),
       ),
     );
   }
