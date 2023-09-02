@@ -6,7 +6,9 @@ import 'package:pinput/pinput.dart';
 import '../custom widget/button.dart';
 
 class OtpPage extends StatefulWidget {
-  const OtpPage({super.key});
+  String email;
+
+   OtpPage(String this.email, {super.key});
 
   @override
   State<OtpPage> createState() => _OtpPageState();
@@ -71,7 +73,7 @@ class _OtpPageState extends State<OtpPage> {
                         size: 40,
                       ),
                       border: InputBorder.none,
-                      labelText: 'abc@gmail.com',
+                      labelText: widget.email ,
                       labelStyle:
                           TextStyle(color: Color(0xffCFCFCF), fontSize: 18)),
                 ),

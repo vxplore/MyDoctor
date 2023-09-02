@@ -168,7 +168,7 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
             Container(
               height: 28,
             ),
-            const Row(
+             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -178,13 +178,17 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                 SizedBox(
                   width: 5,
                 ),
-                Text(
-                  "Create Account",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.normal,
-                      color: Color(0xff1468B3),
-                      decoration: TextDecoration.underline),
+                InkWell(onTap: (){
+                  vm.registration();
+                },
+                  child: Text(
+                    "Create Account",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        color: Color(0xff1468B3),
+                        decoration: TextDecoration.underline),
+                  ),
                 )
               ],
             ),
