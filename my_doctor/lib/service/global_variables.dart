@@ -1,3 +1,5 @@
+import 'package:image_picker/image_picker.dart';
+
 class GlobalVariables {
   static final GlobalVariables _singleton = GlobalVariables._internal();
 
@@ -16,13 +18,8 @@ class GlobalVariables {
   String? startMediactionFrom;
   String? selectedLanguage;
   bool isDoseRegimentPageIndexChange = false;
+  XFile? image;
 
-
-// String? get myString => _myString;
-
-// set myString(String? newValue) {
-//   myString = newValue;
-// }
 }
 
 // Create an instance of the singleton class
