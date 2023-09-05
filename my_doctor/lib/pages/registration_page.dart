@@ -424,7 +424,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ? () {
                               if (_formKey.currentState!.validate()) {
                                 // do the API call here
-                                print("${File(globalVariables.image!.path)}");
+                                // print("${File(globalVariables.image!.path)}");
                                 vm.nextStep();
                               }
                             }

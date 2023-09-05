@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_doctor/pages/congratulations_page.dart';
+import 'package:my_doctor/view_models/professionalDetails_view_model.dart';
 import 'package:pinput/pinput.dart';
 
 import '../custom widget/button.dart';
+import '../service/global_variables.dart';
 
 class ProfessionalDetailsPage extends StatefulWidget {
   const ProfessionalDetailsPage({super.key});
@@ -14,6 +19,112 @@ class ProfessionalDetailsPage extends StatefulWidget {
 }
 
 class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
+  final ImagePicker picker = ImagePicker();
+
+  Future fontgetImage(ImageSource media) async {
+    var fontimg = await picker.pickImage(source: media);
+    setState(() {
+      globalVariables.fontimage = fontimg;
+    });
+  }
+  Future backgetImage(ImageSource media) async {
+    var backimg = await picker.pickImage(source: media);
+    setState(() {
+      globalVariables.backimage = backimg;
+    });
+  }
+
+  void fontPic() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            title: Text('Please choose media to select'),
+            content: Container(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    //if user click this button, user can upload image from gallery
+                    onPressed: () {
+                      Navigator.pop(context);
+                      fontgetImage(ImageSource.gallery);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.image),
+                        Text('From Gallery'),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    //if user click this button. user can upload image from camera
+                    onPressed: () {
+                      Navigator.pop(context);
+                      fontgetImage(ImageSource.camera);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.camera),
+                        Text('From Camera'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  void backPic() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            title: Text('Please choose media to select'),
+            content: Container(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    //if user click this button, user can upload image from gallery
+                    onPressed: () {
+                      Navigator.pop(context);
+                      backgetImage(ImageSource.gallery);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.image),
+                        Text('From Gallery'),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    //if user click this button. user can upload image from camera
+                    onPressed: () {
+                      Navigator.pop(context);
+                      backgetImage(ImageSource.camera);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.camera),
+                        Text('From Camera'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  final vm = ProfessionalDetailsViewModel();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -77,10 +188,11 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                             Container(
                               height: 70,
                               width: 300,
-                              child: const Padding(
+                              child:  Padding(
                                 padding: EdgeInsets.all(0),
                                 child: TextField(
-                                  obscureText: true,
+                                  controller: vm.registrationNumberController,
+                                  obscureText: false,
                                   decoration: InputDecoration(
                                     labelText: 'Registration Number',
                                     labelStyle: TextStyle(
@@ -109,10 +221,11 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                             Container(
                               height: 70,
                               width: 300,
-                              child: const Padding(
+                              child:  Padding(
                                 padding: EdgeInsets.all(0),
                                 child: TextField(
-                                  obscureText: true,
+                                  controller: vm.stateMedicalCouncilController,
+                                  obscureText: false,
                                   decoration: InputDecoration(
                                     labelText: 'State Medical Council',
                                     labelStyle: TextStyle(
@@ -141,10 +254,11 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                             Container(
                               height: 70,
                               width: 300,
-                              child: const Padding(
+                              child: Padding(
                                 padding: EdgeInsets.all(0),
                                 child: TextField(
-                                  obscureText: true,
+                                  controller: vm.specialityController,
+                                  obscureText: false,
                                   decoration: InputDecoration(
                                     labelText: 'Speciality',
                                     labelStyle: TextStyle(
@@ -173,10 +287,11 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                             Container(
                               height: 70,
                               width: 300,
-                              child: const Padding(
+                              child:  Padding(
                                 padding: EdgeInsets.all(0),
                                 child: TextField(
-                                  obscureText: true,
+                                  controller: vm.yearsOfExperienceController,
+                                  obscureText: false,
                                   decoration: InputDecoration(
                                     labelText: 'Year of Experience',
                                     labelStyle: TextStyle(
@@ -225,32 +340,56 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      height: 75,
-                      width: 165,
-                      color: Colors.white,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Font",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal,
-                              color: Color(0xffCFCFCF)),
+                    InkWell(onTap: (){
+                      fontPic();
+                    },
+                      child: Container(
+                        height: 75,
+                        width: 165,
+                        color: Colors.white,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: globalVariables.fontimage == null ?Text(
+                            "Font",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.normal,
+                                color: Color(0xffCFCFCF)),
+                          ):ClipRRect(
+                            // borderRadius: BorderRadius.circular(100),
+                            child: Image.file(
+                              File(globalVariables.fontimage!.path),
+                              fit: BoxFit.cover,
+                              width: MediaQuery.of(context).size.width,
+                              height: 300,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                    Container( height: 75,
-                      width: 165,
-                      color: Colors.white,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Back",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal,
-                              color: Color(0xffCFCFCF)),
+                    InkWell(onTap: (){
+                      backPic();
+                    },
+                      child: Container( height: 75,
+                        width: 165,
+                        color: Colors.white,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child:globalVariables.backimage == null ? Text(
+                            "Back",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.normal,
+                                color: Color(0xffCFCFCF)),
+                          ):ClipRRect(
+                            // borderRadius: BorderRadius.circular(100),
+                            child: Image.file(
+                              File(globalVariables.backimage!.path),
+                              fit: BoxFit.cover,
+                              width: MediaQuery.of(context).size.width,
+                              height: 300,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -266,12 +405,15 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                     height: 70,
                     width: 500,
                     child: ourButton(
-                        onPress: () {
-                          Navigator.push(
+                        onPress:vm.isAllFieldComplete()== true ? () {
+                          print("${File(globalVariables.fontimage!.path)}");
+                          print("${File(globalVariables.backimage!.path)}");
+                          vm.onNextPageClicked();
+                          /*Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => CongratulationsPage()),
-                          );
-                        },
+                          );*/
+                        }:null,
                         color: Color(0xff1468B3),
                         title: "Next Step",
                         textColor: Colors.white)),

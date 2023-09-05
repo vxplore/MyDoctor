@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_doctor/pages/professionalDetails_page.dart';
+import 'package:my_doctor/view_models/otp_view_model.dart';
 import 'package:pinput/pinput.dart';
 
 import '../custom widget/button.dart';
@@ -8,13 +9,15 @@ import '../custom widget/button.dart';
 class OtpPage extends StatefulWidget {
   String email;
 
-   OtpPage(String this.email, {super.key});
+  OtpPage(String this.email, {super.key});
 
   @override
   State<OtpPage> createState() => _OtpPageState();
 }
 
 class _OtpPageState extends State<OtpPage> {
+  final vm = OtpViewModel();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,7 +25,7 @@ class _OtpPageState extends State<OtpPage> {
         resizeToAvoidBottomInset: false,
         backgroundColor: Color(0xffF3FBFF),
         body: Padding(
-          padding: const EdgeInsets.only(left: 21,right: 21),
+          padding: const EdgeInsets.only(left: 21, right: 21),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -59,6 +62,7 @@ class _OtpPageState extends State<OtpPage> {
               Padding(
                 padding: EdgeInsets.all(0),
                 child: TextField(
+                  enabled: false,
                   obscureText: true,
                   decoration: InputDecoration(
                       filled: true,
@@ -73,7 +77,7 @@ class _OtpPageState extends State<OtpPage> {
                         size: 40,
                       ),
                       border: InputBorder.none,
-                      labelText: widget.email ,
+                      labelText: widget.email,
                       labelStyle:
                           TextStyle(color: Color(0xffCFCFCF), fontSize: 18)),
                 ),
@@ -85,6 +89,8 @@ class _OtpPageState extends State<OtpPage> {
                 padding: EdgeInsets.only(left: 0),
                 child: IntrinsicWidth(
                   child: Pinput(
+                    controller: vm.otpController,
+                    showCursor: true,
                     length: 5,
                     androidSmsAutofillMethod:
                         AndroidSmsAutofillMethod.smsUserConsentApi,
@@ -94,7 +100,8 @@ class _OtpPageState extends State<OtpPage> {
                       textStyle:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                       decoration: BoxDecoration(
-                          border: Border.all(color: Color(0xff707070),width: 0.5),
+                          border:
+                              Border.all(color: Color(0xff707070), width: 0.5),
                           borderRadius: BorderRadius.circular(8),
                           color: Colors.white),
                     ),
@@ -109,7 +116,6 @@ class _OtpPageState extends State<OtpPage> {
                           borderRadius: BorderRadius.circular(12),
                           color: Colors.grey.shade100),
                     ),
-
                     /* onCompleted:
                     // ref.watch(enterOTPProvider.notifier).enterotp,
                     onChanged:*/
@@ -118,7 +124,9 @@ class _OtpPageState extends State<OtpPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 15,),
+              SizedBox(
+                height: 15,
+              ),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -126,18 +134,18 @@ class _OtpPageState extends State<OtpPage> {
                     "Haven't received OTP?",
                     style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.normal,color: Color(0xffCFCFCF)
-                    ),
+                        fontWeight: FontWeight.normal,
+                        color: Color(0xffCFCFCF)),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(
+                    width: 5,
+                  ),
                   Text(
                     "Resend Now",
                     style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff1468B3),
-
-
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff1468B3),
                     ),
                   )
                 ],
@@ -149,53 +157,57 @@ class _OtpPageState extends State<OtpPage> {
                     height: 70,
                     width: 500,
                     child: ourButton(
-                        onPress: () {
-                          Navigator.push(
+                        onPress:() {
+                          vm.isOtpVerified();
+                          /*Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => ProfessionalDetailsPage()),
-                          );
+                          );*/
                         },
                         color: Color(0xff1468B3),
                         title: "Verify Now",
                         textColor: Colors.white)),
               ),
-              SizedBox(height: 15,),
-               Container(margin: EdgeInsets.only(left: 2,bottom: 10),
-                 child: Row(
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 2, bottom: 10),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       "I agree with all the",
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.normal,color: Color(0xffCFCFCF)
-                      ),
+                          fontWeight: FontWeight.normal,
+                          color: Color(0xffCFCFCF)),
                     ),
-                    SizedBox(width: 2,),
+                    SizedBox(
+                      width: 2,
+                    ),
                     Text(
                       "terms and conditions",
                       style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff1468B3),
-                          decoration: TextDecoration.underline
-
-                      ),
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff1468B3),
+                          decoration: TextDecoration.underline),
                     ),
-                    SizedBox(width: 2,),
+                    SizedBox(
+                      width: 2,
+                    ),
                     Text(
                       "of eprescribe.in",
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Color(0xffCFCFCF),
-
-
                       ),
                     )
                   ],
+                ),
               ),
-               ),
             ],
           ),
         ),

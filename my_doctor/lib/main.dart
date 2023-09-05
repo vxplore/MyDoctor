@@ -5,6 +5,8 @@ import 'package:my_doctor/pages/additionalAssesment_page.dart';
 import 'package:my_doctor/pages/intro_page.dart';
 import 'package:my_doctor/pages/login_page.dart';
 import 'package:my_doctor/pages/myPatient_page.dart';
+import 'package:my_doctor/pages/otp_page.dart';
+import 'package:my_doctor/pages/professionalDetails_page.dart';
 import 'package:my_doctor/pages/registration_page.dart';
 import 'package:my_doctor/pages/splash_page.dart';
 import 'package:my_doctor/service/navigation_service.dart';
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const LoginPage(),
+        home: const RegistrationPage(),
       ),
     );
   }

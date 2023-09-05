@@ -19,6 +19,8 @@ class GlobalVariables {
   String? selectedLanguage;
   bool isDoseRegimentPageIndexChange = false;
   XFile? image;
+  XFile? fontimage;
+  XFile? backimage;
 
 }
 
