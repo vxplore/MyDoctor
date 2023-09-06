@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_doctor/service/global_variables.dart';
 
 import 'inner page/allergies_page.dart';
 import 'inner page/history_page.dart';
@@ -67,7 +68,13 @@ class _AddPatientPageState extends State<AddPatientPage> {
             Padding(
               padding: const EdgeInsets.only(right: 13),
               child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    print("before clear : ${globalVariables.patientGender}");
+                    setState(() {
+                      globalVariables.patientGender = null;
+                    });
+                    print("After clear : ${globalVariables.patientGender}");
+                  },
                   child: Icon(
                     Icons.done_outline,
                     size: 50,

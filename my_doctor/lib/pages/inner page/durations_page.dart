@@ -24,8 +24,6 @@ class _DurationPageState extends State<DurationPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
     Map? dataFromDialogduration =
     ModalRoute.of(context)?.settings.arguments as Map?;
     return Scaffold(

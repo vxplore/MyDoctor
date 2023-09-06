@@ -21,6 +21,7 @@ class GlobalVariables {
   XFile? image;
   XFile? fontimage;
   XFile? backimage;
+  String? patientGender;
 
 }
 

@@ -1,7 +1,11 @@
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_doctor/custom%20widget/button.dart';
 import 'package:my_doctor/pages/patient_prescription_page.dart';
+
+import '../../service/global_variables.dart';
 
 class PersonalInfopage extends StatefulWidget {
   const PersonalInfopage({super.key});
@@ -11,6 +15,20 @@ class PersonalInfopage extends StatefulWidget {
 }
 
 class _PersonalInfopageState extends State<PersonalInfopage> {
+  bool isMaleSelected = false;
+  bool isFemaleSelected = false;
+  bool isOthersSelected = false;
+  String dropdownvalue = "Years";
+  DateTime? seletedYear;
+  TextEditingController ageController = TextEditingController();
+  // List of items in our dropdown menu
+  var items = ['Years', 'Months'];
+  String? calculatedAge;
+
+ /* initialValue(val) {
+    return TextEditingController(text: val);
+  }*/
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,7 +146,7 @@ class _PersonalInfopageState extends State<PersonalInfopage> {
               children: [
                 Container(
                   height: 70,
-                  width: 277,
+                  width: 257,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -140,11 +158,12 @@ class _PersonalInfopageState extends State<PersonalInfopage> {
                           )),
                       Container(
                         height: 70,
-                        width: 230,
-                        child: const Padding(
+                        width: 210,
+                        child: Padding(
                           padding: EdgeInsets.all(0),
                           child: TextField(
-                            obscureText: true,
+                            controller:  ageController,
+                            obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Age*',
                               labelStyle: TextStyle(
@@ -156,7 +175,39 @@ class _PersonalInfopageState extends State<PersonalInfopage> {
                     ],
                   ),
                 ),
-                Padding(
+                Container(
+                  height: 50,
+                  width: 110,
+                  margin: EdgeInsets.only(top: 32),
+                  child: DropdownButton(
+                    iconSize: 40,
+                    isExpanded: true,
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    // Initial Value
+                    value: dropdownvalue,
+
+                    // Down Arrow Icon
+                    icon: const Icon(Icons.keyboard_arrow_down),
+
+                    // Array list of items
+                    items: items.map((String items) {
+                      return DropdownMenuItem(
+                        value: items,
+                        child: Text(items),
+                      );
+                    }).toList(),
+                    // After selecting the desired option,it will
+                    // change button value to selected value
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        dropdownvalue = newValue!;
+                      });
+                      print(dropdownvalue);
+                    },
+                  ),
+                ),
+
+                /* Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: Text(
                     "Years",
@@ -173,19 +224,34 @@ class _PersonalInfopageState extends State<PersonalInfopage> {
                     size: 40,
                     color: Color(0xff757575),
                   ),
-                ),
+                ),*/
               ],
             ),
             SizedBox(
               height: 20,
             ),
-            Text(
-              "Select Date of Birth",
-              style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff4273A4)),
+            InkWell(
+              onTap: () async {
+
+                seletedYear = await showDatePicker(
+                    initialEntryMode: DatePickerEntryMode.calendarOnly,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime.now(),
+                     context: (context));
+                int calculatedAge = DateTime.now().year - seletedYear!.year;
+                print(seletedYear?.year);
+                print(calculatedAge);
+calculateAge();
+              },
+              child: Text(
+                "Select Date of Birth",
+                style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xff4273A4)),
+              ),
             ),
             SizedBox(
               height: 20,
@@ -200,20 +266,32 @@ class _PersonalInfopageState extends State<PersonalInfopage> {
             SizedBox(
               height: 20,
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
                   height: 45,
                   width: 120,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.all(12),
-                          backgroundColor: Color(0xff4362AA)),
-                      onPressed: () {},
+                          padding: EdgeInsets.all(12),
+                          backgroundColor: isMaleSelected == true
+                              ? Color(0xff4362AA)
+                              : Colors.white),
+                      onPressed: () {
+                        setState(() {
+                          globalVariables.patientGender = "Male";
+                          isMaleSelected = true;
+                          isFemaleSelected = false;
+                          isOthersSelected = false;
+                        });
+                      },
                       child: Text(
                         "Male",
                         style: TextStyle(
-                            color: Colors.white,
+                            color: isMaleSelected == true
+                                ? Colors.white
+                                : Color(0xffAFAFAF),
                             fontWeight: FontWeight.normal,
                             fontSize: 15),
                       )),
@@ -223,13 +301,24 @@ class _PersonalInfopageState extends State<PersonalInfopage> {
                   width: 120,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.all(12),
-                          backgroundColor: Colors.white),
-                      onPressed: () {},
+                          padding: EdgeInsets.all(12),
+                          backgroundColor: isFemaleSelected == true
+                              ? Color(0xff4362AA)
+                              : Colors.white),
+                      onPressed: () {
+                        setState(() {
+                          globalVariables.patientGender = "Female";
+                          isMaleSelected = false;
+                          isFemaleSelected = true;
+                          isOthersSelected = false;
+                        });
+                      },
                       child: Text(
                         "Female",
                         style: TextStyle(
-                            color: Color(0xffAFAFAF),
+                            color: isFemaleSelected == true
+                                ? Colors.white
+                                : Color(0xffAFAFAF),
                             fontWeight: FontWeight.normal,
                             fontSize: 15),
                       )),
@@ -240,12 +329,23 @@ class _PersonalInfopageState extends State<PersonalInfopage> {
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(12),
-                          backgroundColor: Colors.white),
-                      onPressed: () {},
+                          backgroundColor: isOthersSelected == true
+                              ? Color(0xff4362AA)
+                              : Colors.white),
+                      onPressed: () {
+                        setState(() {
+                          globalVariables.patientGender = "Others";
+                          isMaleSelected = false;
+                          isFemaleSelected = false;
+                          isOthersSelected = true;
+                        });
+                      },
                       child: Text(
                         "Others",
                         style: TextStyle(
-                            color: Color(0xffAFAFAF),
+                            color: isOthersSelected == true
+                                ? Colors.white
+                                : Color(0xffAFAFAF),
                             fontWeight: FontWeight.normal,
                             fontSize: 15),
                       )),
@@ -255,12 +355,14 @@ class _PersonalInfopageState extends State<PersonalInfopage> {
             SizedBox(
               height: 20,
             ),
-            InkWell(onTap: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => PatientPrescriptionPage()),
-              );
-            },
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PatientPrescriptionPage()),
+                );
+              },
               child: Text(
                 "More",
                 style: TextStyle(
@@ -274,5 +376,12 @@ class _PersonalInfopageState extends State<PersonalInfopage> {
         ),
       ),
     );
+  }
+  calculateAge() {
+    setState(() {
+      ageController.text= calculatedAge.toString();
+      print("Textediting ::${ageController.text}");
+    });
+
   }
 }
