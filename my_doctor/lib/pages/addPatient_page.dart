@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_doctor/pages/myPatient_page.dart';
 import 'package:my_doctor/service/global_variables.dart';
+import 'package:my_doctor/service/navigation_service.dart';
 
 import 'inner page/allergies_page.dart';
 import 'inner page/history_page.dart';
@@ -46,11 +48,19 @@ class _AddPatientPageState extends State<AddPatientPage> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Color(0xffF3FBFF),
         appBar: AppBar(
           toolbarHeight: 85,
           leading: InkWell(
-            onTap: () {},
+            onTap: () {
+              print("before clear : ${globalVariables.patientGender}");
+              setState(() {
+                globalVariables.patientGender = null;
+              });
+              print("After clear : ${globalVariables.patientGender}");
+              Navigator.pop(context);
+            },
             child: Icon(
               Icons.highlight_off,
               color: Colors.white,
@@ -74,6 +84,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                       globalVariables.patientGender = null;
                     });
                     print("After clear : ${globalVariables.patientGender}");
+                    Navigator.pop(context);
                   },
                   child: Icon(
                     Icons.done_outline,
@@ -91,7 +102,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
             ),
           ),
         ),
-        body: TabBarView(
+        body: TabBarView(physics: NeverScrollableScrollPhysics(),
           children: [PersonalInfopage(), AllergiesPage(), HistoryPage()],
         ),
       ),

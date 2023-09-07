@@ -1,6 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
+import 'package:my_doctor/pages/intro_page.dart';
+import 'package:my_doctor/pages/login_page.dart';
+import 'package:my_doctor/service/navigation_service.dart';
 
 import '../view_models/splash_view_model.dart';
 
@@ -20,6 +25,11 @@ class _SplashPageState extends State<SplashPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+
+     /* Timer.periodic(Duration(seconds: 3), (timer) {
+        NavigationService().navigateToScreen(LoginPage());
+      })*/
+
     return Scaffold(
       backgroundColor: Color(0xffF3FBFF),
       body: SafeArea(
@@ -51,7 +61,21 @@ class _SplashPageState extends State<SplashPage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
 
+  Timer.periodic(Duration(seconds: 3), (timer) {
+        NavigationService().navigateToScreen(IntroPage());
+        timer.cancel();
+       /* if (timer.tick == 2)
+        {
+          print(timer.tick);
+          timer.cancel();
+
+
+// some code here once timed out
+
+        }*/
+      });
     WidgetsBinding.instance.addObserver(this);
+
   }
 
   @override

@@ -1,7 +1,6 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_doctor/custom%20widget/button.dart';
 import 'package:my_doctor/pages/patient_prescription_page.dart';
 
@@ -19,13 +18,28 @@ class _PersonalInfopageState extends State<PersonalInfopage> {
   bool isFemaleSelected = false;
   bool isOthersSelected = false;
   String dropdownvalue = "Years";
+  String? bloodGroupValue;
   DateTime? seletedYear;
   TextEditingController ageController = TextEditingController();
-  // List of items in our dropdown menu
-  var items = ['Years', 'Months'];
-  String? calculatedAge;
 
- /* initialValue(val) {
+  // List of items in our dropdown menu
+  var items = ['Years', 'Months', "Days"];
+  var bloodgroups = [
+    "A RhD positive (A+)",
+    "A RhD negative (A-)",
+    "B RhD positive (B+)",
+    "B RhD negative (B-)",
+    "O RhD positive (O+)",
+    "O RhD negative (O-)",
+    "AB RhD positive (AB+)",
+    "AB RhD negative (AB-)"
+  ];
+  String? calculatedAgeinYears;
+  String? calculatedAgeinMonths;
+  String? calculatedAgeinDays;
+  bool isMoreButtonClicked = false;
+
+  /* initialValue(val) {
     return TextEditingController(text: val);
   }*/
 
@@ -33,8 +47,10 @@ class _PersonalInfopageState extends State<PersonalInfopage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffF3FBFF),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: EdgeInsets.only(left: 20, right: 12),
+        scrollDirection: Axis.vertical,
+        physics: ScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -162,7 +178,7 @@ class _PersonalInfopageState extends State<PersonalInfopage> {
                         child: Padding(
                           padding: EdgeInsets.all(0),
                           child: TextField(
-                            controller:  ageController,
+                            controller: ageController,
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Age*',
@@ -232,17 +248,36 @@ class _PersonalInfopageState extends State<PersonalInfopage> {
             ),
             InkWell(
               onTap: () async {
-
                 seletedYear = await showDatePicker(
                     initialEntryMode: DatePickerEntryMode.calendarOnly,
                     initialDate: DateTime.now(),
                     firstDate: DateTime(1900),
                     lastDate: DateTime.now(),
-                     context: (context));
-                int calculatedAge = DateTime.now().year - seletedYear!.year;
-                print(seletedYear?.year);
-                print(calculatedAge);
-calculateAge();
+                    context: (context));
+
+                setState(() {
+                  calculatedAgeinYears =
+                      (DateTime.now().year - seletedYear!.year).toString();
+                  calculatedAgeinMonths =
+                      (DateTime.now().month - seletedYear!.month).toString();
+                  calculatedAgeinDays =
+                      (DateTime.now().day - seletedYear!.day).toString();
+                  print(seletedYear?.year);
+                  print(" Years : ${calculatedAgeinYears}");
+                  print(" Months : ${calculatedAgeinMonths}");
+                  print(" Days : ${calculatedAgeinDays}");
+                  if (calculatedAgeinYears != "0") {
+                    dropdownvalue = "Years";
+                  } else if (calculatedAgeinMonths != "0" &&
+                      calculatedAgeinYears == "0") {
+                    dropdownvalue = "Months";
+                  } else if (calculatedAgeinDays != "0" &&
+                      calculatedAgeinYears == "0" &&
+                      calculatedAgeinMonths == "0") {
+                    dropdownvalue = "Days";
+                  }
+                  calculateAge();
+                });
               },
               child: Text(
                 "Select Date of Birth",
@@ -357,14 +392,18 @@ calculateAge();
             ),
             InkWell(
               onTap: () {
-                Navigator.push(
+                setState(() {
+                  isMoreButtonClicked = !isMoreButtonClicked;
+                });
+
+                /*Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => PatientPrescriptionPage()),
-                );
+                );*/
               },
               child: Text(
-                "More",
+                isMoreButtonClicked == true ? "Less" : "More",
                 style: TextStyle(
                     decoration: TextDecoration.underline,
                     fontSize: 25,
@@ -372,16 +411,349 @@ calculateAge();
                     color: Color(0xff4273A4)),
               ),
             ),
+            isMoreButtonClicked == true
+                ? AnimatedContainer(
+                    duration: Duration(seconds: 2),
+                    child: Container(
+                      height: 1160,
+                      width: 1.sw,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Patient ID",
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.normal,
+                                color: Color(0xffC7C7C7)),
+                          ),
+                          Container(
+                            height: 70,
+                            width: 1.sw,
+                            child: const Padding(
+                              padding: EdgeInsets.all(0),
+                              child: TextField(
+                                obscureText: true,
+                                decoration: InputDecoration(),
+                              ),
+                            ),
+                          ),
+                          Divider(color: Colors.grey.shade300, thickness: 3),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Email Address",
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.normal,
+                                color: Color(0xffC7C7C7)),
+                          ),
+                          Container(
+                            height: 70,
+                            width: 1.sw,
+                            child: const Padding(
+                              padding: EdgeInsets.all(0),
+                              child: TextField(
+                                obscureText: true,
+                                decoration: InputDecoration(),
+                              ),
+                            ),
+                          ),
+                          Divider(color: Colors.grey.shade300, thickness: 3),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            height: 80,
+                            width: 1.sw,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Height",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal,
+                                          color: Color(0xffC7C7C7)),
+                                    ),
+                                    Container(
+                                      height: 50,
+                                      width: 70,
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(0),
+                                        child: TextField(
+                                          obscureText: true,
+                                          decoration: InputDecoration(),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  "cm(s)",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Color(0xffC7C7C7)),
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Weight",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal,
+                                          color: Color(0xffC7C7C7)),
+                                    ),
+                                    Container(
+                                      height: 50,
+                                      width: 70,
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(0),
+                                        child: TextField(
+                                          obscureText: true,
+                                          decoration: InputDecoration(),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  "kg(s)",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Color(0xffC7C7C7)),
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "BMI",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal,
+                                          color: Color(0xffC7C7C7)),
+                                    ),
+                                    Container(
+                                      height: 50,
+                                      width: 70,
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(0),
+                                        child: TextField(
+                                          obscureText: true,
+                                          decoration: InputDecoration(),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Blood Group",
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.normal,
+                                color: Color(0xffC7C7C7)),
+                          ),
+                          Container(
+                            height: 70,
+                            width: 1.sw,
+                            margin: EdgeInsets.only(top: 32),
+                            child: DropdownButton(hint: Text("Select Blood Group"),
+                              iconSize: 40,
+                              isExpanded: true,
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.black),
+                              // Initial Value
+                              value: bloodGroupValue,
+
+                              // Down Arrow Icon
+                              icon: const Icon(Icons.keyboard_arrow_down),
+
+                              // Array list of items
+                              items: bloodgroups.map((String items) {
+                                return DropdownMenuItem(
+                                  value: items,
+                                  child: Text(items),
+                                );
+                              }).toList(),
+                              // After selecting the desired option,it will
+                              // change button value to selected value
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  bloodGroupValue = newValue!;
+                                });
+                                print(bloodGroupValue);
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Divider(color: Colors.grey.shade300, thickness: 3),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Referred By",
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.normal,
+                                color: Color(0xffC7C7C7)),
+                          ),
+                          Container(
+                            height: 70,
+                            width: 1.sw,
+                            child: const Padding(
+                              padding: EdgeInsets.all(0),
+                              child: TextField(
+                                obscureText: true,
+                                decoration: InputDecoration(),
+                              ),
+                            ),
+                          ),
+                          Divider(color: Colors.grey.shade300, thickness: 3),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Address",
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.normal,
+                                color: Color(0xffC7C7C7)),
+                          ),
+                          Container(
+                            height: 70,
+                            width: 1.sw,
+                            child: const Padding(
+                              padding: EdgeInsets.all(0),
+                              child: TextField(
+                                obscureText: true,
+                                decoration: InputDecoration(),
+                              ),
+                            ),
+                          ),
+                          Divider(color: Colors.grey.shade300, thickness: 3),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            height: 100,
+                            width: 1.sw,
+                            child: Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Pin Code",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal,
+                                          color: Color(0xffC7C7C7)),
+                                    ),
+                                    Container(
+                                      height: 50,
+                                      width: 150,
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(0),
+                                        child: TextField(
+                                          obscureText: true,
+                                          decoration: InputDecoration(),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              Spacer(),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "City",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal,
+                                          color: Color(0xffC7C7C7)),
+                                    ),
+                                    Container(
+                                      height: 50,
+                                      width: 220,
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(0),
+                                        child: TextField(
+                                          obscureText: true,
+                                          decoration: InputDecoration(),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Country",
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.normal,
+                                color: Color(0xffC7C7C7)),
+                          ),
+                          Container(
+                            height: 70,
+                            width: 1.sw,
+                            child: const Padding(
+                              padding: EdgeInsets.all(0),
+                              child: TextField(
+                                obscureText: true,
+                                decoration: InputDecoration(),
+                              ),
+                            ),
+                          ),
+                          Divider(color: Colors.grey.shade300, thickness: 3),
+                        ],
+                      ),
+                    ),
+                  )
+                : Container(
+                    height: 0,
+                    width: 0,
+                  ),
           ],
         ),
       ),
     );
   }
-  calculateAge() {
-    setState(() {
-      ageController.text= calculatedAge.toString();
-      print("Textediting ::${ageController.text}");
-    });
 
+  calculateAge() {
+    if (calculatedAgeinYears != "0") {
+      ageController.text = calculatedAgeinYears.toString();
+    } else if (calculatedAgeinMonths != "0" && calculatedAgeinYears == "0") {
+      ageController.text = calculatedAgeinMonths.toString();
+    } else if (calculatedAgeinDays != "0" &&
+        calculatedAgeinYears == "0" &&
+        calculatedAgeinMonths == "0") {
+      ageController.text = calculatedAgeinDays.toString();
+    }
+
+    print("Textediting ::${ageController.text}");
   }
 }

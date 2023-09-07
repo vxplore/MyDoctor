@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
+import 'package:my_doctor/pages/login_page.dart';
+import 'package:my_doctor/service/navigation_service.dart';
 import '../view_models/intro_view_model.dart';
 import '../view_models/splash_view_model.dart';
 
@@ -64,7 +66,9 @@ class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
                       width: double.infinity,
                       height: 62,
                       child: ElevatedButton(
-                          onPressed: (){},
+                          onPressed: (){
+                            NavigationService().navigateToScreen(LoginPage());
+                          },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xff1468B3),
                           foregroundColor: Colors.white// Background color
