@@ -1,45 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_doctor/pages/video_consult_page.dart';
 
+import 'appointment_page.dart';
 import 'dashboardPage.dart';
 import 'myPatient_page.dart';
 
-class DashboardPage extends StatefulWidget {
-  const DashboardPage({super.key});
+class MainDashboardPage extends StatefulWidget {
+  const MainDashboardPage({super.key});
 
   @override
-  State<DashboardPage> createState() => _DashboardPageState();
+  State<MainDashboardPage> createState() => _MainDashboardPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _MainDashboardPageState extends State<MainDashboardPage> {
   @override
   int _selectedIndex = 0;
 
   Widget build(BuildContext context) {
     List<Widget> _pages = <Widget>[
-      ///////////////DashBoard///////////////////
       DashBoardPage(),
-      ///////////////end Dashboard//////////////////////
-
-      ////////////// My Patient ///////////////////////
+      MyPatientPage(),
+      AppointmentTab(),
+      VideoConsultTab(),
       /*Icon(
-        Icons.camera,
+        Icons.chat,
         size: 150,
       ),*/
-      MyPatientPage(),
-      ////////////// end My Patient ///////////////////
-      Icon(
-        Icons.chat,
-        size: 150,
-      ),
-      Icon(
-        Icons.chat,
-        size: 150,
-      ),
-      Icon(
-        Icons.chat,
-        size: 150,
-      ),
     ];
     return Scaffold(
 

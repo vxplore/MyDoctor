@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_doctor/pages/dashboard_page.dart';
+import 'package:my_doctor/pages/main_dashboard_page.dart';
 
 import '../custom widget/button.dart';
 
@@ -266,7 +266,7 @@ class _CongratulationsPageState extends State<CongratulationsPage> {
                         onPress: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => DashboardPage()),
+                            MaterialPageRoute(builder: (context) => MainDashboardPage()),
                           );
                         },
                         color: Color(0xff1468B3),

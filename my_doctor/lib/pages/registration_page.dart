@@ -5,6 +5,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:my_doctor/custom%20widget/button.dart';
 import 'package:my_doctor/service/global_variables.dart';
 import 'package:my_doctor/view_models/registration_view_model.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'dart:math';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -423,7 +427,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       onPress: vm.isAllFieldComplete() == true
                           ? () {
                               if (_formKey.currentState!.validate()) {
+                               /* var ss = urlToFile((globalVariables.image!.path));
+                                print(ss);*/
                                 // do the API call here
+                                /*vm.testImageUploadApi(globalVariables.image!.path);*/
                                 // print("${File(globalVariables.image!.path)}");
                                 vm.nextStep();
                               }
@@ -478,4 +485,5 @@ class _RegistrationPageState extends State<RegistrationPage> {
       ),
     ));
   }
+
 }

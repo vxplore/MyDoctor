@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_doctor/pages/additionalAssesment_page.dart';
 import 'package:my_doctor/pages/dashboardPage.dart';
-import 'package:my_doctor/pages/dashboard_page.dart';
+import 'package:my_doctor/pages/main_dashboard_page.dart';
 import 'package:my_doctor/pages/myPatient_page.dart';
 import 'package:my_doctor/service/navigation_service.dart';
 
@@ -20,7 +20,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: ()async{
-        NavigationService().replaceScreen(DashboardPage());
+        NavigationService().replaceScreen(MainDashboardPage());
         return false;
       },
       child: Scaffold(
