@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_doctor/pages/congratulations_page.dart';
 import 'package:my_doctor/view_models/professionalDetails_view_model.dart';
 import 'package:pinput/pinput.dart';
 
+import '../core/utilites/speciality_dropdown_data.dart';
 import '../custom widget/button.dart';
 import '../service/global_variables.dart';
 
@@ -19,6 +21,13 @@ class ProfessionalDetailsPage extends StatefulWidget {
 }
 
 class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
+  // SpecialityDropdownData? res;
+  /*@override
+  void initState(){
+    super.initState();
+     vm.getSpecialitydropdowndataApi();
+
+  }*/
   final ImagePicker picker = ImagePicker();
 
   Future fontgetImage(ImageSource media) async {
@@ -27,6 +36,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
       globalVariables.fontimage = fontimg;
     });
   }
+
   Future backgetImage(ImageSource media) async {
     var backimg = await picker.pickImage(source: media);
     setState(() {
@@ -40,7 +50,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
         builder: (BuildContext context) {
           return AlertDialog(
             shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             title: Text('Please choose media to select'),
             content: Container(
               height: MediaQuery.of(context).size.height / 6,
@@ -85,7 +95,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
         builder: (BuildContext context) {
           return AlertDialog(
             shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             title: Text('Please choose media to select'),
             content: Container(
               height: MediaQuery.of(context).size.height / 6,
@@ -124,7 +134,26 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
         });
   }
 
+  String? bloodGroupValue;
+  var bloodgroups = [
+    "A RhD positive (A+)",
+    "A RhD negative (A-)",
+    "B RhD positive (B+)",
+    "B RhD negative (B-)",
+    "O RhD positive (O+)",
+    "O RhD negative (O-)",
+    "AB RhD positive (AB+)",
+    "AB RhD negative (AB-)"
+  ];
+
+ /* List<String> myList = []; // Create an empty list
+  listadd(){
+    myList.add(res?.data.specializations.forEach((element) {
+      element.name;
+    }));
+  }*/
   final vm = ProfessionalDetailsViewModel();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -188,7 +217,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                             Container(
                               height: 70,
                               width: 300,
-                              child:  Padding(
+                              child: Padding(
                                 padding: EdgeInsets.all(0),
                                 child: TextField(
                                   controller: vm.registrationNumberController,
@@ -221,7 +250,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                             Container(
                               height: 70,
                               width: 300,
-                              child:  Padding(
+                              child: Padding(
                                 padding: EdgeInsets.all(0),
                                 child: TextField(
                                   controller: vm.stateMedicalCouncilController,
@@ -251,7 +280,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                 child: Image.asset(
                                     "assets/images/speciallity_icon.png")),
                             const SizedBox(width: 5),
-                            Container(
+                            /* Container(
                               height: 70,
                               width: 300,
                               child: Padding(
@@ -265,6 +294,40 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                         fontSize: 25, color: Color(0xffC7C7C7)),
                                   ),
                                 ),
+                              ),
+                            ),*/
+                            Container(
+                              height: 80,
+                              width: 300,
+                              margin: EdgeInsets.only(top: 22),
+                              child: DropdownButton(
+                                hint: Text("Select Speciality"),
+                                iconSize: 40,
+                                isExpanded: true,
+                                style: TextStyle(
+                                    fontSize: 25, color: Color(0xffC7C7C7)),
+                                // Initial Value
+                                value: bloodGroupValue,
+
+                                // Down Arrow Icon
+                                icon: const Icon(Icons.keyboard_arrow_down),
+
+                                // Array list of items
+                                items: globalVariables.specialityName.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    child: Text(items),
+                                  );
+                                }).toList(),
+                                // After selecting the desired option,it will
+                                // change button value to selected value
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    bloodGroupValue = newValue!;
+                                  });
+                                  print(bloodGroupValue);
+                                  // print(res?.data.specializations[index].name);
+                                },
                               ),
                             ),
                           ],
@@ -287,7 +350,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                             Container(
                               height: 70,
                               width: 300,
-                              child:  Padding(
+                              child: Padding(
                                 padding: EdgeInsets.all(0),
                                 child: TextField(
                                   controller: vm.yearsOfExperienceController,
@@ -340,56 +403,63 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    InkWell(onTap: (){
-                      fontPic();
-                    },
+                    InkWell(
+                      onTap: () {
+                        fontPic();
+                      },
                       child: Container(
                         height: 75,
                         width: 165,
                         color: Colors.white,
                         child: Align(
                           alignment: Alignment.center,
-                          child: globalVariables.fontimage == null ?Text(
-                            "Font",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.normal,
-                                color: Color(0xffCFCFCF)),
-                          ):ClipRRect(
-                            // borderRadius: BorderRadius.circular(100),
-                            child: Image.file(
-                              File(globalVariables.fontimage!.path),
-                              fit: BoxFit.cover,
-                              width: MediaQuery.of(context).size.width,
-                              height: 300,
-                            ),
-                          ),
+                          child: globalVariables.fontimage == null
+                              ? Text(
+                                  "Font",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Color(0xffCFCFCF)),
+                                )
+                              : ClipRRect(
+                                  // borderRadius: BorderRadius.circular(100),
+                                  child: Image.file(
+                                    File(globalVariables.fontimage!.path),
+                                    fit: BoxFit.cover,
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 300,
+                                  ),
+                                ),
                         ),
                       ),
                     ),
-                    InkWell(onTap: (){
-                      backPic();
-                    },
-                      child: Container( height: 75,
+                    InkWell(
+                      onTap: () {
+                        backPic();
+                      },
+                      child: Container(
+                        height: 75,
                         width: 165,
                         color: Colors.white,
                         child: Align(
                           alignment: Alignment.center,
-                          child:globalVariables.backimage == null ? Text(
-                            "Back",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.normal,
-                                color: Color(0xffCFCFCF)),
-                          ):ClipRRect(
-                            // borderRadius: BorderRadius.circular(100),
-                            child: Image.file(
-                              File(globalVariables.backimage!.path),
-                              fit: BoxFit.cover,
-                              width: MediaQuery.of(context).size.width,
-                              height: 300,
-                            ),
-                          ),
+                          child: globalVariables.backimage == null
+                              ? Text(
+                                  "Back",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Color(0xffCFCFCF)),
+                                )
+                              : ClipRRect(
+                                  // borderRadius: BorderRadius.circular(100),
+                                  child: Image.file(
+                                    File(globalVariables.backimage!.path),
+                                    fit: BoxFit.cover,
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 300,
+                                  ),
+                                ),
                         ),
                       ),
                     ),
@@ -405,15 +475,19 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                     height: 70,
                     width: 500,
                     child: ourButton(
-                        onPress:vm.isAllFieldComplete()== true ? () {
-                          print("${File(globalVariables.fontimage!.path)}");
-                          print("${File(globalVariables.backimage!.path)}");
-                          vm.onNextPageClicked();
-                          /*Navigator.push(
+                        onPress: vm.isAllFieldComplete() == true
+                            ? () {
+                                print(
+                                    "${File(globalVariables.fontimage!.path)}");
+                                print(
+                                    "${File(globalVariables.backimage!.path)}");
+                                vm.onNextPageClicked();
+                                /*Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => CongratulationsPage()),
                           );*/
-                        }:null,
+                              }
+                            : null,
                         color: Color(0xff1468B3),
                         title: "Next Step",
                         textColor: Colors.white)),
@@ -436,13 +510,17 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                     SizedBox(
                       width: 2,
                     ),
-                    Text(
-                      "terms and conditions",
-                      style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff1468B3),
-                          decoration: TextDecoration.underline),
+                    InkWell(onTap: (){
+                      vm.getSpecialitydropdowndataApi();
+                    },
+                      child: Text(
+                        "terms and conditions",
+                        style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff1468B3),
+                            decoration: TextDecoration.underline),
+                      ),
                     ),
                     SizedBox(
                       width: 2,

@@ -22,6 +22,16 @@ class GlobalVariables {
   XFile? fontimage;
   XFile? backimage;
   String? patientGender;
+  var specialityName = [
+    "A RhD positive (A+)",
+    "A RhD negative (A-)",
+    "B RhD positive (B+)",
+    "B RhD negative (B-)",
+    "O RhD positive (O+)",
+    "O RhD negative (O-)",
+    "AB RhD positive (AB+)",
+    "AB RhD negative (AB-)"
+  ];
 
 }
 

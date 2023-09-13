@@ -11,7 +11,11 @@ import 'package:my_doctor/pages/registration_page.dart';
 import 'package:my_doctor/pages/splash_page.dart';
 import 'package:my_doctor/service/navigation_service.dart';
 
-void main() {
+import 'core/di/di.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupLocator();
   runApp(const MyApp());
 }
 
@@ -35,7 +39,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const SplashPage(),
+        home: const ProfessionalDetailsPage(),
       ),
     );
   }

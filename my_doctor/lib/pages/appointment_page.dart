@@ -4,6 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 
+import '../core/di/di.dart';
+import '../core/repository/preference_repo.dart';
+
+
 class AppointmentTab extends StatefulWidget {
   const AppointmentTab({super.key});
 
@@ -12,6 +16,7 @@ class AppointmentTab extends StatefulWidget {
 }
 
 class _AppointmentTabState extends State<AppointmentTab> {
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -35,16 +40,25 @@ class _AppointmentTabState extends State<AppointmentTab> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Icon(
-                            Icons.menu,
-                            color: Colors.white,
-                            size: 50,
+                          InkWell(onTap: (){
+
+                          },
+                            child: Icon(
+                              Icons.menu,
+                              color: Colors.white,
+                              size: 50,
+                            ),
                           ),
                           Spacer(),
-                          Icon(
-                            Icons.share,
-                            color: Colors.white,
-                            size: 50,
+                          InkWell(onTap: (){
+                            final prefs = dependency<PreferenceRepo>();
+                            print("sharedpref = ${prefs.userid()}");
+                          },
+                            child: Icon(
+                              Icons.share,
+                              color: Colors.white,
+                              size: 50,
+                            ),
                           ),
                         ],
                       ),

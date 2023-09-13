@@ -3,10 +3,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
+import 'package:my_doctor/core/utilites/register_response_data.dart';
 import 'package:my_doctor/pages/otp_page.dart';
 import 'package:http/http.dart' as http;
+import '../core/di/di.dart';
+import '../core/repository/preference_repo.dart';
 import '../service/navigation_service.dart';
-
 part 'registration_view_model.g.dart';
 
 class RegistrationViewModel = _RegistrationViewModel
@@ -25,7 +27,7 @@ abstract class _RegistrationViewModel with Store {
   TextEditingController reenterpassowrdController = TextEditingController();
 
   nextStep() {
-    NavigationService().navigateToScreen(OtpPage(emailController.text));
+    NavigationService().navigateToScreen(OtpPage(mobileController.text));
   }
 
   bool isAllFieldComplete() {
@@ -44,6 +46,35 @@ abstract class _RegistrationViewModel with Store {
     return RegExp(
             r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
         .hasMatch(emails);
+  }
+  final prefs = dependency<PreferenceRepo>();
+ Future registrationApi(String img)async{
+   var request = http.MultipartRequest('POST', Uri.parse('https://www.v-xplore.com/dev/rohan/e-prescription/user/docter'));
+    request.fields.addAll({
+      'name': nameController.text,
+      'number': mobileController.text,
+      'email': emailController.text,
+      'password': passwordController.text
+    });
+    request.files.add(await http.MultipartFile.fromPath('image', img));
+
+    http.StreamedResponse response = await request.send();
+    var rr = "";
+    if (response.statusCode == 200) {
+      rr = await response.stream.bytesToString();
+      print(rr);
+      var cccaaaaq = RegisterResponseData.fromJson(rr);
+
+      if(cccaaaaq.data.isAdded == true){
+        prefs.setUserId(cccaaaaq.data.userId);
+        nextStep();
+      }
+
+      return cccaaaaq;
+    } else {
+      return null;
+    }
+
   }
 
  /* testImageUploadApi(String img) async {

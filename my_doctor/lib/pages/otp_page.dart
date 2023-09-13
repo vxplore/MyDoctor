@@ -7,9 +7,9 @@ import 'package:pinput/pinput.dart';
 import '../custom widget/button.dart';
 
 class OtpPage extends StatefulWidget {
-  String email;
+  String phnumber;
 
-  OtpPage(String this.email, {super.key});
+  OtpPage(String this.phnumber, {super.key});
 
   @override
   State<OtpPage> createState() => _OtpPageState();
@@ -77,7 +77,7 @@ class _OtpPageState extends State<OtpPage> {
                         size: 40,
                       ),
                       border: InputBorder.none,
-                      labelText: widget.email,
+                      labelText: widget.phnumber,
                       labelStyle:
                           TextStyle(color: Color(0xffCFCFCF), fontSize: 18)),
                 ),
@@ -158,7 +158,7 @@ class _OtpPageState extends State<OtpPage> {
                     width: 500,
                     child: ourButton(
                         onPress:() {
-                          vm.isOtpVerified();
+                          vm.verifyOtpApi(widget.phnumber, context);
                           /*Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => ProfessionalDetailsPage()),

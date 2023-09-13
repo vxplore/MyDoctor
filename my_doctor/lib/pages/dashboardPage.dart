@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_doctor/pages/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../service/navigation_service.dart';
 
 class DashBoardPage extends StatefulWidget {
   const DashBoardPage({super.key});
@@ -22,10 +26,16 @@ class _DashBoardPageState extends State<DashBoardPage> {
           "assets/images/instadoclogo.png",
           scale: 2.5,
         ),
-        leading: Icon(
-          Icons.menu,
-          size: 45,
-          color: Color(0xff41CFD9),
+        leading: InkWell(onTap: () async {
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          pref.remove("UserId");
+          NavigationService().navigateToScreen(LoginPage());
+        },
+          child: Icon(
+            Icons.menu,
+            size: 45,
+            color: Color(0xff41CFD9),
+          ),
         ),
         actions: [
           IconButton(

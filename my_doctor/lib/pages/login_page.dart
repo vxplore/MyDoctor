@@ -146,7 +146,7 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
               height: 55,
               child: ElevatedButton(
                 onPressed: () {
-                  vm.login();
+                  vm.loginApi(context);
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xff1468B3),

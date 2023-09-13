@@ -62,7 +62,7 @@ class _SplashPageState extends State<SplashPage> with WidgetsBindingObserver {
     super.initState();
 
   Timer.periodic(Duration(seconds: 3), (timer) {
-        NavigationService().navigateToScreen(IntroPage());
+       vm.screenSwitch();
         timer.cancel();
        /* if (timer.tick == 2)
         {

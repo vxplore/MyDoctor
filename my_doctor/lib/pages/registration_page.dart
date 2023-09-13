@@ -432,7 +432,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 // do the API call here
                                 /*vm.testImageUploadApi(globalVariables.image!.path);*/
                                 // print("${File(globalVariables.image!.path)}");
-                                vm.nextStep();
+                               vm.registrationApi(globalVariables.image!.path);
                               }
                             }
                           : null,
