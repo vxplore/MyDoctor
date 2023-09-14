@@ -19,7 +19,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ()async{
+      onWillPop: () async {
         NavigationService().replaceScreen(MainDashboardPage());
         return false;
       },
@@ -99,12 +99,14 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
             SizedBox(
               height: 20,
             ),
-            InkWell(onTap: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ChiefComplaintsDetailsPage()),
-              );
-            },
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ChiefComplaintsDetailsPage()),
+                );
+              },
               child: Container(
                 height: 65,
                 width: 420,
@@ -125,7 +127,8 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
               height: 55,
               child: ElevatedButton(
                 onPressed: () {
-                 NavigationService().navigateToScreen(AdditionalAssesmentPage());
+                  NavigationService()
+                      .navigateToScreen(AdditionalAssesmentPage());
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xff1468B3),
@@ -135,7 +138,9 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                 child: const Text("Skip"),
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),

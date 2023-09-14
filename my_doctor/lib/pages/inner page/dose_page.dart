@@ -13,14 +13,6 @@ class DosePage extends StatefulWidget {
 }
 
 class _DosePageState extends State<DosePage> {
-  // String? _dose;
-
-  /* final _experienceTitles = {
-    Experience.tablet: 'Less than one year',
-    Experience.capsule: 'One to three years',
-    Experience.syrup: 'Three to five years',
-  };*/
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +53,7 @@ class _DosePageState extends State<DosePage> {
                       child: Text(
                         "Search Dose",
                         style:
-                        TextStyle(fontSize: 21, color: Color(0xffA5A5A5)),
+                            TextStyle(fontSize: 21, color: Color(0xffA5A5A5)),
                       ),
                     ),
                     Spacer(),
@@ -103,7 +95,7 @@ class _DosePageState extends State<DosePage> {
                       child: Card(
                         shape: RoundedRectangleBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(25))),
+                                BorderRadius.all(Radius.circular(25))),
                         elevation: 5,
                         child: Container(
                           // padding: EdgeInsets.only(left: 7, right: 7),
@@ -115,7 +107,7 @@ class _DosePageState extends State<DosePage> {
                                 color: Colors.white,
                               ),
                               borderRadius:
-                              BorderRadius.all(Radius.circular(20))),
+                                  BorderRadius.all(Radius.circular(20))),
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
@@ -143,7 +135,7 @@ class _DosePageState extends State<DosePage> {
                       child: Card(
                         shape: RoundedRectangleBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(25))),
+                                BorderRadius.all(Radius.circular(25))),
                         elevation: 5,
                         child: Container(
                           padding: EdgeInsets.only(left: 7, right: 7),
@@ -155,7 +147,7 @@ class _DosePageState extends State<DosePage> {
                                 color: Colors.white,
                               ),
                               borderRadius:
-                              BorderRadius.all(Radius.circular(20))),
+                                  BorderRadius.all(Radius.circular(20))),
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
@@ -183,7 +175,7 @@ class _DosePageState extends State<DosePage> {
                       child: Card(
                         shape: RoundedRectangleBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(25))),
+                                BorderRadius.all(Radius.circular(25))),
                         elevation: 5,
                         child: Container(
                           padding: EdgeInsets.only(left: 7, right: 7),
@@ -195,7 +187,7 @@ class _DosePageState extends State<DosePage> {
                                 color: Colors.white,
                               ),
                               borderRadius:
-                              BorderRadius.all(Radius.circular(20))),
+                                  BorderRadius.all(Radius.circular(20))),
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(

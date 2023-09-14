@@ -29,7 +29,6 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
       ),*/
     ];
     return Scaffold(
-
       body: IndexedStack(
         index: _selectedIndex,
         children: _pages,
@@ -39,8 +38,8 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
       ),*/
       // pages[pageIndex],
       bottomNavigationBar:
-      // buildMyNavBar(context),
-      BottomNavigationBar(
+          // buildMyNavBar(context),
+          BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedFontSize: 15,
         selectedIconTheme: IconThemeData(color: Color(0xff98CCFD), size: 40),
@@ -48,24 +47,33 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
         selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard,),
+            icon: Icon(
+              Icons.dashboard,
+            ),
             label: 'Dashboard',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_add_alt_1,),
+            icon: Icon(
+              Icons.person_add_alt_1,
+            ),
             label: 'My Patient',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today,),
+            icon: Icon(
+              Icons.calendar_today,
+            ),
             label: 'Appointment',
           ),
-
           BottomNavigationBarItem(
-            icon: Icon(Icons.ondemand_video,),
+            icon: Icon(
+              Icons.ondemand_video,
+            ),
             label: 'Video Consult',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.receipt,),
+            icon: Icon(
+              Icons.receipt,
+            ),
             label: 'Billing',
           ),
         ],

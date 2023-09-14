@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -22,12 +23,23 @@ class ProfessionalDetailsPage extends StatefulWidget {
 
 class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
   // SpecialityDropdownData? res;
-  /*@override
-  void initState(){
+  @override
+  void initState() {
     super.initState();
-     vm.getSpecialitydropdowndataApi();
+    print("1st time : ${globalVariables.specialityName}");
+    Timer.periodic(Duration(seconds: 1), (timer) async {
+      if (timer.tick == 1) {
+        timer.cancel();
+        vm.getSpecialitydropdowndataApi();
+        await Future.delayed(Duration(seconds: 1));
+        setState(() {
+          globalVariables.specialityName = globalVariables.specialityapiName;
+        });
+        print("2nd time : ${globalVariables.specialityName}");
+      }
+    });
+  }
 
-  }*/
   final ImagePicker picker = ImagePicker();
 
   Future fontgetImage(ImageSource media) async {
@@ -134,19 +146,10 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
         });
   }
 
-  String? bloodGroupValue;
-  var bloodgroups = [
-    "A RhD positive (A+)",
-    "A RhD negative (A-)",
-    "B RhD positive (B+)",
-    "B RhD negative (B-)",
-    "O RhD positive (O+)",
-    "O RhD negative (O-)",
-    "AB RhD positive (AB+)",
-    "AB RhD negative (AB-)"
-  ];
+  String? specialityValue;
+  String? selectedObjectId;
 
- /* List<String> myList = []; // Create an empty list
+  /* List<String> myList = []; // Create an empty list
   listadd(){
     myList.add(res?.data.specializations.forEach((element) {
       element.name;
@@ -307,13 +310,14 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                 style: TextStyle(
                                     fontSize: 25, color: Color(0xffC7C7C7)),
                                 // Initial Value
-                                value: bloodGroupValue,
+                                value: specialityValue,
 
                                 // Down Arrow Icon
                                 icon: const Icon(Icons.keyboard_arrow_down),
 
                                 // Array list of items
-                                items: globalVariables.specialityName.map((String items) {
+                                items: globalVariables.specialityName
+                                    .map((String items) {
                                   return DropdownMenuItem(
                                     value: items,
                                     child: Text(items),
@@ -323,9 +327,13 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                 // change button value to selected value
                                 onChanged: (String? newValue) {
                                   setState(() {
-                                    bloodGroupValue = newValue!;
+                                    specialityValue = newValue!;
+                                    globalVariables.specialtyId =
+                                        vm.findIdByName(specialityValue!);
                                   });
-                                  print(bloodGroupValue);
+
+                                  print(specialityValue);
+                                  print(globalVariables.specialtyId);
                                   // print(res?.data.specializations[index].name);
                                 },
                               ),
@@ -481,11 +489,12 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                     "${File(globalVariables.fontimage!.path)}");
                                 print(
                                     "${File(globalVariables.backimage!.path)}");
-                                vm.onNextPageClicked();
-                                /*Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => CongratulationsPage()),
-                          );*/
+
+                                vm.addProfessionalDetailsApi(
+                                    globalVariables.specialtyId,
+                                    globalVariables.fontimage!.path,
+                                    globalVariables.backimage!.path,
+                                    context);
                               }
                             : null,
                         color: Color(0xff1468B3),
@@ -510,9 +519,10 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                     SizedBox(
                       width: 2,
                     ),
-                    InkWell(onTap: (){
-                      vm.getSpecialitydropdowndataApi();
-                    },
+                    InkWell(
+                      onTap: () {
+                        // print(vm.findIdByName(bloodGroupValue!));
+                      },
                       child: Text(
                         "terms and conditions",
                         style: TextStyle(

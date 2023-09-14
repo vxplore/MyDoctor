@@ -41,6 +41,7 @@ dependencies:
   lottie: any
   shared_preferences: any
   get_it: any
+  url_launcher: any
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
