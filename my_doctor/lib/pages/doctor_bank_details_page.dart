@@ -28,7 +28,13 @@ class _DoctorBankDetailsPageState extends State<DoctorBankDetailsPage> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 10),
-              child: Text("Provide your\nbanking details",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25,color: Colors.white),),
+              child: Text(
+                "Provide your\nbanking details",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                    color: Colors.white),
+              ),
             )
           ],
         ),
