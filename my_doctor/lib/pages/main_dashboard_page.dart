@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_doctor/pages/video_consult_page.dart';
 
 import 'appointment_page.dart';
+import 'billing_page.dart';
 import 'dashboardPage.dart';
 import 'myPatient_page.dart';
 
@@ -23,6 +24,7 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
       MyPatientPage(),
       AppointmentTab(),
       VideoConsultTab(),
+      BillingTabPage()
       /*Icon(
         Icons.chat,
         size: 150,

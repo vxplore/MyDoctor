@@ -69,8 +69,9 @@ class _MyPatientPageState extends State<MyPatientPage> {
               itemCount: patientName.length,
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
-                  onTap: (){
-NavigationService().navigateToScreen(PatientPrescriptionPage());
+                  onTap: () {
+                    NavigationService()
+                        .navigateToScreen(PatientPrescriptionPage());
                   },
                   child: Container(
                     height: 120,
@@ -105,7 +106,6 @@ NavigationService().navigateToScreen(PatientPrescriptionPage());
                                           fontWeight: FontWeight.normal,
                                           color: Colors.black),
                                     ),
-
                                     Row(
                                       children: [
                                         Text(
@@ -143,14 +143,13 @@ NavigationService().navigateToScreen(PatientPrescriptionPage());
               }),
         ),
       ),
-
       floatingActionButton: FloatingActionButton(
-       shape: CircleBorder(),
+        shape: CircleBorder(),
         // isExtended: true,
         child: Icon(Icons.add),
         backgroundColor: Color(0xffCFCFCF),
         onPressed: () {
-NavigationService().navigateToScreen(AddPatientPage());
+          NavigationService().navigateToScreen(AddPatientPage());
         },
       ),
     );

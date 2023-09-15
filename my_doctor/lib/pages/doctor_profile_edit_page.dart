@@ -1,47 +1,47 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_doctor/pages/myPatient_page.dart';
-import 'package:my_doctor/service/global_variables.dart';
-import 'package:my_doctor/service/navigation_service.dart';
+import 'package:my_doctor/pages/inner%20page/doctor_practice_page.dart';
 
 import 'inner page/allergies_page.dart';
+import 'inner page/doctor_professional_edit_page.dart';
+import 'inner page/doctorpersonalinfo_page.dart';
 import 'inner page/history_page.dart';
 import 'inner page/patientpersonalinfo_page.dart';
 
-class AddPatientPage extends StatefulWidget {
-  const AddPatientPage({super.key});
+class DoctorProfileEditPage extends StatefulWidget {
+  const DoctorProfileEditPage({super.key});
 
   @override
-  State<AddPatientPage> createState() => _AddPatientPageState();
+  State<DoctorProfileEditPage> createState() => _DoctorProfileEditPageState();
 }
 
-class _AddPatientPageState extends State<AddPatientPage> {
+class _DoctorProfileEditPageState extends State<DoctorProfileEditPage> {
   TabBar get _tabBar => TabBar(
-        indicatorColor: Color(0xff7C8DA1),
-        unselectedLabelColor: Colors.grey,
-        indicatorSize: TabBarIndicatorSize.tab,
-        tabs: [
-          Tab(
-            height: 65,
-            child: Text(
-              "Personal Info",
-              style: TextStyle(fontSize: 17, color: Color(0xff9D9D9D)),
-            ),
-          ),
-          Tab(
-            child: Text(
-              "Allergies",
-              style: TextStyle(fontSize: 17, color: Color(0xff9D9D9D)),
-            ),
-          ),
-          Tab(
-            child: Text(
-              "History",
-              style: TextStyle(fontSize: 17, color: Color(0xff9D9D9D)),
-            ),
-          ),
-        ],
-      );
+    indicatorColor: Color(0xff7C8DA1),
+    unselectedLabelColor: Colors.grey,
+    indicatorSize: TabBarIndicatorSize.tab,
+    tabs: [
+      Tab(
+        height: 65,
+        child: Text(
+          "PERSONAL",
+          style: TextStyle(fontSize: 14, color: Color(0xff9D9D9D)),
+        ),
+      ),
+      Tab(
+        child: Text(
+          "PROFESSIONAL",
+          style: TextStyle(fontSize: 14, color: Color(0xff9D9D9D)),
+        ),
+      ),
+      Tab(
+        child: Text(
+          "PRACTICE",
+          style: TextStyle(fontSize: 14, color: Color(0xff9D9D9D)),
+        ),
+      ),
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -54,11 +54,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
           toolbarHeight: 85,
           leading: InkWell(
             onTap: () {
-              print("before clear : ${globalVariables.patientGender}");
-              setState(() {
-                globalVariables.patientGender = null;
-              });
-              print("After clear : ${globalVariables.patientGender}");
+
               Navigator.pop(context);
             },
             child: Icon(
@@ -68,7 +64,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
             ),
           ),
           title: Text(
-            "Add Patient",
+            "Edit Profile",
             style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.normal,
@@ -79,11 +75,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
               padding: const EdgeInsets.only(right: 13),
               child: InkWell(
                   onTap: () {
-                    print("before clear : ${globalVariables.patientGender}");
-                    setState(() {
-                      globalVariables.patientGender = null;
-                    });
-                    print("After clear : ${globalVariables.patientGender}");
+
                     Navigator.pop(context);
                   },
                   child: Icon(
@@ -103,9 +95,10 @@ class _AddPatientPageState extends State<AddPatientPage> {
           ),
         ),
         body: TabBarView(physics: NeverScrollableScrollPhysics(),
-          children: [PatientPersonalInfopage(), AllergiesPage(), HistoryPage()],
+          children: [DoctorPersonalInfopage(), DoctorProfessionalEditPage(), DoctorPracticePage()],
         ),
       ),
     );
   }
 }
+

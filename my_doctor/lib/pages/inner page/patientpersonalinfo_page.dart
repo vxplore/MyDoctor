@@ -6,14 +6,14 @@ import 'package:my_doctor/pages/patient_prescription_page.dart';
 
 import '../../service/global_variables.dart';
 
-class PersonalInfopage extends StatefulWidget {
-  const PersonalInfopage({super.key});
+class PatientPersonalInfopage extends StatefulWidget {
+  const PatientPersonalInfopage({super.key});
 
   @override
-  State<PersonalInfopage> createState() => _PersonalInfopageState();
+  State<PatientPersonalInfopage> createState() => _PatientPersonalInfopageState();
 }
 
-class _PersonalInfopageState extends State<PersonalInfopage> {
+class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
   bool isMaleSelected = false;
   bool isFemaleSelected = false;
   bool isOthersSelected = false;
