@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_doctor/pages/addReceipt_page.dart';
+
+import '../../service/navigation_service.dart';
 
 class AllBillPage extends StatefulWidget {
   const AllBillPage({super.key});
@@ -19,7 +22,7 @@ class _AllBillPageState extends State<AllBillPage> {
         child: Icon(Icons.add,color: Colors.white,),
         backgroundColor: Color(0xff1468B3),
         onPressed: () {
-          // NavigationService().navigateToScreen(AddPatientPage());
+          NavigationService().navigateToScreen(AddReceiptPage());
         },
       ),
       backgroundColor: Colors.white,

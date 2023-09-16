@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_doctor/pages/followUpDate_page.dart';
 import 'package:my_doctor/pages/recommandedLabTest_page.dart';
 
 import '../pages/addMedication_page.dart';
@@ -51,13 +52,14 @@ class _ShowPatientLookUpDialogState extends State<ShowPatientLookUpDialog> {
                             Icons.add_circle,
                             color: Colors.red,
                           ),
-                          InkWell(onTap: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AddMedicationPage()),
-                            );
-                          },
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AddMedicationPage()),
+                              );
+                            },
                             child: Text(
                               "Add Medication",
                               textAlign: TextAlign.center,
@@ -124,20 +126,29 @@ class _ShowPatientLookUpDialogState extends State<ShowPatientLookUpDialog> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 23),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.event,
-                            color: Color(0xff33ACBF),
-                          ),
-                          Text(
-                            "Set Follow Up Date",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 18, color: Color(0xff787878)),
-                          ),
-                        ],
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FollowUpDatePage()),
+                          );
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.event,
+                              color: Color(0xff33ACBF),
+                            ),
+                            Text(
+                              "Set Follow Up Date",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 18, color: Color(0xff787878)),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(

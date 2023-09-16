@@ -17,13 +17,11 @@ class BillingTabPage extends StatefulWidget {
 
 class _BillingTabPageState extends State<BillingTabPage> {
   TabBar get _tabBar => TabBar(
-        unselectedLabelColor: Colors.redAccent,
-        // indicatorSize: TabBarIndicatorSize.label,
+        indicatorPadding: EdgeInsets.all(8),
         indicator: BoxDecoration(
             borderRadius: BorderRadius.circular(50), color: Colors.green),
         isScrollable: true,
         indicatorColor: Color(0xff7C8DA1),
-        // unselectedLabelColor: Colors.grey,
         physics: ScrollPhysics(),
         indicatorSize: TabBarIndicatorSize.tab,
         tabs: [
@@ -31,6 +29,7 @@ class _BillingTabPageState extends State<BillingTabPage> {
             height: 65,
             child: Container(
               // padding: EdgeInsets.all(8),
+
               width: 55,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50),
@@ -477,7 +476,9 @@ class _BillingTabPageState extends State<BillingTabPage> {
                                           child: Card(
                                             child: InkWell(
                                               onTap: () {
-                                                NavigationService().navigateToScreen(DoctorBankDetailsPage());
+                                                NavigationService()
+                                                    .navigateToScreen(
+                                                        DoctorBankDetailsPage());
                                               },
                                               child: Align(
                                                 alignment: Alignment.center,
@@ -495,7 +496,16 @@ class _BillingTabPageState extends State<BillingTabPage> {
                                           width: 150,
                                           child: Card(
                                             child: InkWell(
-                                              onTap: () {},
+                                              onTap: () async {
+                                                final Uri url = Uri(
+                                                    scheme: "tel",
+                                                    path: "18888888818");
+                                                if (await canLaunchUrl(url)) {
+                                                  await launchUrl(url);
+                                                } else {
+                                                  print("cannot start calling");
+                                                }
+                                              },
                                               child: Align(
                                                 alignment: Alignment.center,
                                                 child: Text(
