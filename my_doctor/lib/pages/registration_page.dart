@@ -22,7 +22,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   bool isPasswordHide = true;
   bool isrePasswordHide = true;
   String passwords = '';
-  XFile? uploadedImg;
+  var profileImagePath = '';
   final _formKey = GlobalKey<FormState>();
 
   void _togglePasswordView() {
@@ -41,9 +41,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   Future getImage(ImageSource media) async {
     var img = await picker.pickImage(source: media);
-
+    if (img == null)
+      // img = await ImagePicker().pickImage(source: ImageSource.gallery);
+      return;
     setState(() {
-      globalVariables.image = img;
+      // globalVariables.image = img;
+      profileImagePath = img.path;
     });
   }
 
@@ -427,12 +430,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       onPress: vm.isAllFieldComplete() == true
                           ? () {
                               if (_formKey.currentState!.validate()) {
-                               /* var ss = urlToFile((globalVariables.image!.path));
+                                /* var ss = urlToFile((globalVariables.image!.path));
                                 print(ss);*/
                                 // do the API call here
                                 /*vm.testImageUploadApi(globalVariables.image!.path);*/
                                 // print("${File(globalVariables.image!.path)}");
-                               vm.registrationApi(globalVariables.image!.path);
+                                vm.registrationApi(profileImagePath);
                               }
                             }
                           : null,
@@ -485,5 +488,4 @@ class _RegistrationPageState extends State<RegistrationPage> {
       ),
     ));
   }
-
 }
