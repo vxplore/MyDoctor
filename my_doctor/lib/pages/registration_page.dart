@@ -40,7 +40,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final ImagePicker picker = ImagePicker();
 
   Future getImage(ImageSource media) async {
-    var img = await picker.pickImage(source: media);
+    var img = await picker.pickImage(source: media,imageQuality: 50);
     if (img == null)
       // img = await ImagePicker().pickImage(source: ImageSource.gallery);
       return;
@@ -148,7 +148,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         border: Border.all(color: Colors.grey)),
                     child: CircleAvatar(
                       maxRadius: 80,
-                      child: globalVariables.image == null
+                      child: profileImagePath == ""
                           ? Image.asset(
                               "assets/images/instadoclogo.png",
                               fit: BoxFit.fill,
@@ -156,7 +156,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           : ClipRRect(
                               borderRadius: BorderRadius.circular(100),
                               child: Image.file(
-                                File(globalVariables.image!.path),
+                                File(profileImagePath),
                                 fit: BoxFit.cover,
                                 width: MediaQuery.of(context).size.width,
                                 height: 300,

@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_doctor/custom%20widget/button.dart';
 import 'package:my_doctor/pages/patient_prescription_page.dart';
 
@@ -10,17 +13,19 @@ class PatientPersonalInfopage extends StatefulWidget {
   const PatientPersonalInfopage({super.key});
 
   @override
-  State<PatientPersonalInfopage> createState() => _PatientPersonalInfopageState();
+  State<PatientPersonalInfopage> createState() =>
+      _PatientPersonalInfopageState();
 }
 
 class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
   bool isMaleSelected = false;
   bool isFemaleSelected = false;
   bool isOthersSelected = false;
-  String dropdownvalue = "Years";
+  // String dropdownvalue = "Years";
   String? bloodGroupValue;
   DateTime? seletedYear;
-  TextEditingController ageController = TextEditingController();
+  // var profileImagePath = '';
+  // TextEditingController ageController = TextEditingController();
 
   // List of items in our dropdown menu
   var items = ['Years', 'Months', "Days"];
@@ -38,6 +43,64 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
   String? calculatedAgeinMonths;
   String? calculatedAgeinDays;
   bool isMoreButtonClicked = false;
+
+  final ImagePicker picker = ImagePicker();
+
+  Future getImage(ImageSource media) async {
+    var img = await picker.pickImage(source: media, imageQuality: 50);
+    if (img == null)
+      // img = await ImagePicker().pickImage(source: ImageSource.gallery);
+      return;
+    setState(() {
+      // globalVariables.image = img;
+      globalVariables.profileImagePath = img.path;
+    });
+  }
+
+  void myAlert() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            title: Text('Please choose media to select'),
+            content: Container(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    //if user click this button, user can upload image from gallery
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getImage(ImageSource.gallery);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.image),
+                        Text('From Gallery'),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    //if user click this button. user can upload image from camera
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getImage(ImageSource.camera);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.camera),
+                        Text('From Camera'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
 
   /* initialValue(val) {
     return TextEditingController(text: val);
@@ -68,10 +131,20 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                         border: Border.all(color: Colors.grey)),
                     child: CircleAvatar(
                       maxRadius: 70,
-                      child: Image.asset(
-                        "assets/images/instadoclogo.png",
-                        fit: BoxFit.fill,
-                      ),
+                      child: globalVariables.profileImagePath == ""
+                          ? Image.asset(
+                              "assets/images/instadoclogo.png",
+                              fit: BoxFit.fill,
+                            )
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Image.file(
+                                File(globalVariables.profileImagePath),
+                                fit: BoxFit.cover,
+                                width: MediaQuery.of(context).size.width,
+                                height: 300,
+                              ),
+                            ),
                     ),
                   ),
                   Container(
@@ -81,7 +154,9 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                     decoration: const BoxDecoration(
                         color: Colors.white, shape: BoxShape.circle),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        myAlert();
+                      },
                       icon: const Icon(
                         Icons.edit,
                         size: 23,
@@ -178,7 +253,7 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                         child: Padding(
                           padding: EdgeInsets.all(0),
                           child: TextField(
-                            controller: ageController,
+                            controller: globalVariables.ageController,
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Age*',
@@ -200,7 +275,7 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                     isExpanded: true,
                     style: TextStyle(fontSize: 20, color: Colors.black),
                     // Initial Value
-                    value: dropdownvalue,
+                    value: globalVariables.dropdownvalue,
 
                     // Down Arrow Icon
                     icon: const Icon(Icons.keyboard_arrow_down),
@@ -216,9 +291,9 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                     // change button value to selected value
                     onChanged: (String? newValue) {
                       setState(() {
-                        dropdownvalue = newValue!;
+                        globalVariables.dropdownvalue = newValue!;
                       });
-                      print(dropdownvalue);
+                      print(globalVariables.dropdownvalue);
                     },
                   ),
                 ),
@@ -263,21 +338,24 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                   calculatedAgeinDays =
                       (DateTime.now().day - seletedYear!.day).toString();
                   print(seletedYear?.year);
-                  print(" Years : ${calculatedAgeinYears}");
-                  print(" Months : ${calculatedAgeinMonths}");
-                  print(" Days : ${calculatedAgeinDays}");
+
+
                   if (calculatedAgeinYears != "0") {
-                    dropdownvalue = "Years";
+                    globalVariables.dropdownvalue = "Years";
                   } else if (calculatedAgeinMonths != "0" &&
                       calculatedAgeinYears == "0") {
-                    dropdownvalue = "Months";
+                    globalVariables.dropdownvalue = "Months";
                   } else if (calculatedAgeinDays != "0" &&
                       calculatedAgeinYears == "0" &&
                       calculatedAgeinMonths == "0") {
-                    dropdownvalue = "Days";
+                    globalVariables.dropdownvalue = "Days";
                   }
                   calculateAge();
                 });
+                print(" Years : ${calculatedAgeinYears}");
+                print(" Months : ${calculatedAgeinMonths}");
+                print(" Days : ${calculatedAgeinDays}");
+                print("Dropdownvalue: ${globalVariables.dropdownvalue}");
               },
               child: Text(
                 "Select Date of Birth",
@@ -573,7 +651,8 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                             height: 70,
                             width: 1.sw,
                             margin: EdgeInsets.only(top: 32),
-                            child: DropdownButton(hint: Text("Select Blood Group"),
+                            child: DropdownButton(
+                              hint: Text("Select Blood Group"),
                               iconSize: 40,
                               isExpanded: true,
                               style:
@@ -680,7 +759,7 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                                     ),
                                   ],
                                 ),
-                              Spacer(),
+                                Spacer(),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -745,15 +824,15 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
 
   calculateAge() {
     if (calculatedAgeinYears != "0") {
-      ageController.text = calculatedAgeinYears.toString();
+      globalVariables.ageController.text = calculatedAgeinYears.toString();
     } else if (calculatedAgeinMonths != "0" && calculatedAgeinYears == "0") {
-      ageController.text = calculatedAgeinMonths.toString();
+      globalVariables.ageController.text = calculatedAgeinMonths.toString();
     } else if (calculatedAgeinDays != "0" &&
         calculatedAgeinYears == "0" &&
         calculatedAgeinMonths == "0") {
-      ageController.text = calculatedAgeinDays.toString();
+      globalVariables.ageController.text = calculatedAgeinDays.toString();
     }
 
-    print("Textediting ::${ageController.text}");
+    print("Textediting ::${globalVariables.ageController.text}");
   }
 }

@@ -85,7 +85,8 @@ abstract class _ProfessionalDetailsViewModel with Store {
       'userId': prefs.userid() ?? "",
       'stateMedicalCouncil': stateMedicalCouncilController.text,
       'specialityId': specialtyIds,
-      'yearsOfExperience': yearsOfExperienceController.text
+      'yearsOfExperience': yearsOfExperienceController.text,
+      'regNo': registrationNumberController.text
     });
     request.files
         .add(await http.MultipartFile.fromPath('kycFontPic', kycFontpic));

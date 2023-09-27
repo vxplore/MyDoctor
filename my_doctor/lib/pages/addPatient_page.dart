@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:my_doctor/pages/myPatient_page.dart';
 import 'package:my_doctor/service/global_variables.dart';
 import 'package:my_doctor/service/navigation_service.dart';
-
 import 'inner page/allergies_page.dart';
 import 'inner page/history_page.dart';
 import 'inner page/patientpersonalinfo_page.dart';
@@ -78,6 +77,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
             Padding(
               padding: const EdgeInsets.only(right: 13),
               child: InkWell(
+                ///////Add personal info patient api call////////////////
                   onTap: () {
                     print("before clear : ${globalVariables.patientGender}");
                     setState(() {
@@ -102,7 +102,8 @@ class _AddPatientPageState extends State<AddPatientPage> {
             ),
           ),
         ),
-        body: TabBarView(physics: NeverScrollableScrollPhysics(),
+        body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
           children: [PatientPersonalInfopage(), AllergiesPage(), HistoryPage()],
         ),
       ),

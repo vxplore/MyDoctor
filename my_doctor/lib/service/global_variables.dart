@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
 class GlobalVariables {
@@ -22,6 +23,9 @@ class GlobalVariables {
   XFile? fontimage;
   XFile? backimage;
   String? patientGender;
+  String dropdownvalue = "Years";
+  var profileImagePath = '';
+  TextEditingController ageController = TextEditingController();
   var specialityapiName = [""];
   var specialityName = [""];
   String specialtyId = "";

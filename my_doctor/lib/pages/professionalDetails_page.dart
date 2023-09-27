@@ -43,14 +43,14 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
   final ImagePicker picker = ImagePicker();
 
   Future fontgetImage(ImageSource media) async {
-    var fontimg = await picker.pickImage(source: media);
+    var fontimg = await picker.pickImage(source: media,imageQuality: 50);
     setState(() {
       globalVariables.fontimage = fontimg;
     });
   }
 
   Future backgetImage(ImageSource media) async {
-    var backimg = await picker.pickImage(source: media);
+    var backimg = await picker.pickImage(source: media,imageQuality: 50);
     setState(() {
       globalVariables.backimage = backimg;
     });
