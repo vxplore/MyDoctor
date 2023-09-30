@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:my_doctor/pages/doctor_profile_page.dart';
 import 'package:my_doctor/pages/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../core/di/di.dart';
+import '../core/repository/preference_repo.dart';
 import '../service/navigation_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -190,12 +192,17 @@ class _DashBoardPageState extends State<DashBoardPage> {
               ),
               Padding(
                 padding: EdgeInsets.all(8),
-                child: Text(
-                  "About",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25,
-                      fontWeight: FontWeight.normal),
+                child: InkWell(onTap: (){
+                  final prefs = dependency<PreferenceRepo>();
+                  print(prefs.userid());
+                },
+                  child: Text(
+                    "About",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 25,
+                        fontWeight: FontWeight.normal),
+                  ),
                 ),
               ),
               Padding(

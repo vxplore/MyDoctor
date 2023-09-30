@@ -6,6 +6,7 @@ import 'package:my_doctor/service/navigation_service.dart';
 import 'inner page/allergies_page.dart';
 import 'inner page/history_page.dart';
 import 'inner page/patientpersonalinfo_page.dart';
+import 'main_dashboard_page.dart';
 
 class AddPatientPage extends StatefulWidget {
   const AddPatientPage({super.key});
@@ -84,7 +85,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                       globalVariables.patientGender = null;
                     });
                     print("After clear : ${globalVariables.patientGender}");
-                    Navigator.pop(context);
+                   NavigationService().navigateToScreen(MainDashboardPage());
                   },
                   child: Icon(
                     Icons.done_outline,

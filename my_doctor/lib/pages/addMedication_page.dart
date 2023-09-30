@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_doctor/pages/additionalAssesment_page.dart';
+import 'package:my_doctor/service/global_variables.dart';
 import 'package:my_doctor/service/navigation_service.dart';
+import 'package:my_doctor/view_models/addMedication_view_model.dart';
 
 import 'addMedicationStep_page.dart';
 
@@ -13,10 +17,39 @@ class AddMedicationPage extends StatefulWidget {
 }
 
 class _AddMedicationPageState extends State<AddMedicationPage> {
+  final vm = AddMedicationViewModel();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Timer.periodic(Duration(seconds: 1), (timer) async {
+      if (timer.tick == 1) {
+        vm.getMedicineDosageFormApi();
+        vm.getMedicineNameApi();
+        vm.getMedicineDosageQuantityApi();
+        vm.getMedicineDosageRegimenApi();
+        vm.getMedicineDosageDurationApi();
+        await Future.delayed(Duration(seconds: 1));
+        setState(() {
+          globalVariables.getDosageForm = globalVariables.getDosageFormFromApi;
+          globalVariables.getMedicineName =
+              globalVariables.getMedicineNameFromApi;
+          globalVariables.getMedicineDosageQuantity =
+              globalVariables.getMedicineDosageQuantityFromApi;
+          globalVariables.getMedicineDosageRegimen =
+              globalVariables.getMedicineDosageRegimenFromApi;
+          globalVariables.getMedicineDosageDuration =
+              globalVariables.getMedicineDosageDurationFromApi;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async{
+      onWillPop: () async {
         NavigationService().navigateToScreen(AdditionalAssesmentPage());
         return false;
       },
@@ -28,9 +61,10 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
           toolbarHeight: 90,
           leading: Padding(
             padding: const EdgeInsets.only(left: 18),
-            child: InkWell(onTap: (){
-              NavigationService().navigateToScreen(AdditionalAssesmentPage());
-            },
+            child: InkWell(
+              onTap: () {
+                NavigationService().navigateToScreen(AdditionalAssesmentPage());
+              },
               child: Icon(
                 Icons.arrow_back_ios_new,
                 color: Colors.white,
@@ -103,8 +137,8 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
-                        padding:
-                            const EdgeInsets.only(left: 20, top: 17, bottom: 13),
+                        padding: const EdgeInsets.only(
+                            left: 20, top: 17, bottom: 13),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -139,8 +173,8 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                       ),
                       Spacer(),
                       Padding(
-                        padding:
-                            const EdgeInsets.only(right: 16, top: 26, bottom: 26),
+                        padding: const EdgeInsets.only(
+                            right: 16, top: 26, bottom: 26),
                         child: Icon(
                           Icons.close,
                           color: Colors.black,
@@ -229,9 +263,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                       ),
                       padding: const EdgeInsets.all(12),
                       backgroundColor: Color(0xff1468B3)),
-                  onPressed: () {
-
-                  },
+                  onPressed: () {},
                   child: Text(
                     "Done",
                     style: TextStyle(

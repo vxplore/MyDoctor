@@ -121,12 +121,6 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                                                 tabControllers == 5 ||
                                                 globalVariables.dosageform !=
                                                     null)
-                                            /* ||
-                                            (tabControllers == 1 ||
-                                                tabControllers == 2 ||
-                                                tabControllers == 3 ||
-                                                tabControllers == 4 ||
-                                                tabControllers == 5)  */
                                             &&
                                             (globalVariables.dosageform != null)
                                         ? Colors.green

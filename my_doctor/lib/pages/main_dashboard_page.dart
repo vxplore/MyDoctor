@@ -15,7 +15,6 @@ class MainDashboardPage extends StatefulWidget {
 }
 
 class _MainDashboardPageState extends State<MainDashboardPage> {
-  @override
   int _selectedIndex = 0;
 
   Widget build(BuildContext context) {

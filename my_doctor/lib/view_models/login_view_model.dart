@@ -23,16 +23,6 @@ abstract class _LoginViewModel with Store {
   @observable
   TextEditingController passwordController = TextEditingController();
 
-  /*login() {
-    if (emailController.text == "arpan@gmail.com" &&
-        passwordController.text == "123456") {
-      NavigationService().navigateToScreen(MainDashboardPage());
-      showToast = "Otp Matched";
-    } else {
-      showToast = "Not Matched";
-    }
-  }*/
-
   registration() {
     NavigationService().navigateToScreen(RegistrationPage());
   }
