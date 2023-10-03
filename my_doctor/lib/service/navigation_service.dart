@@ -35,7 +35,7 @@ class NavigationService {
           Tween<double>(begin: 0.1, end: 1).animate(
             CurvedAnimation(
               parent: animation,
-              curve: Curves.easeIn,
+              curve: Curves.elasticIn,
             ),
           ),
           child: child,

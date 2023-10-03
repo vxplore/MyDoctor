@@ -1,9 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_doctor/pages/patient_complaints_page.dart';
+import 'package:my_doctor/service/global_variables.dart';
 
 class PatientPrescriptionPage extends StatefulWidget {
-  const PatientPrescriptionPage({super.key});
+  final String name;
+  final String age;
+  final String ageType;
+  final String gender;
+  final String image;
+
+  PatientPrescriptionPage(String this.name, String this.age,
+      String this.ageType, String this.gender, String this.image,
+      {super.key});
 
   @override
   State<PatientPrescriptionPage> createState() =>
@@ -36,9 +45,14 @@ class _PatientPrescriptionPageState extends State<PatientPrescriptionPage> {
                       border: Border.all(color: Colors.grey)),
                   child: CircleAvatar(
                     maxRadius: 35,
-                    child: Image.asset(
-                      "assets/images/instadoclogo.png",
-                      fit: BoxFit.fill,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: Image.network(
+                        // "assets/images/instadoclogo.png",
+                        widget.image,
+                        fit: BoxFit.fill,
+                        width: MediaQuery.of(context).size.width,
+                      ),
                     ),
                   ),
                 ),
@@ -67,7 +81,8 @@ class _PatientPrescriptionPageState extends State<PatientPrescriptionPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Nitish Kumar",
+                    // "Nitish Kumar",
+                    "${widget.name}",
                     style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.normal,
@@ -76,7 +91,8 @@ class _PatientPrescriptionPageState extends State<PatientPrescriptionPage> {
                   Row(
                     children: [
                       Text(
-                        "26 Years -",
+                        // "26 Years -",
+                        "${widget.age} ${widget.ageType} -",
                         style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.normal,
@@ -86,7 +102,8 @@ class _PatientPrescriptionPageState extends State<PatientPrescriptionPage> {
                         width: 5,
                       ),
                       Text(
-                        "Male",
+                        // "Male",
+                        "${widget.gender}",
                         style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.normal,
@@ -100,10 +117,15 @@ class _PatientPrescriptionPageState extends State<PatientPrescriptionPage> {
           ],
         ),
         actions: [
-          Icon(
-            Icons.receipt_long,
-            color: Colors.white,
-            size: 28,
+          InkWell(
+            onTap: () {
+              print("patient id :: ${globalVariables.patientId}");
+            },
+            child: Icon(
+              Icons.receipt_long,
+              color: Colors.white,
+              size: 28,
+            ),
           ),
           Icon(
             Icons.more_vert,

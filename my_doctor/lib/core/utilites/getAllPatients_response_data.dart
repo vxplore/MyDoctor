@@ -9,19 +9,21 @@ class GetallpatientsResponseData {
     required this.httpStatus,
   });
 
-  factory GetallpatientsResponseData.fromJson(String str) => GetallpatientsResponseData.fromMap(json.decode(str));
+  factory GetallpatientsResponseData.fromJson(String str) =>
+      GetallpatientsResponseData.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory GetallpatientsResponseData.fromMap(Map<String, dynamic> json) => GetallpatientsResponseData(
-    data: Data.fromMap(json["data"]),
-    httpStatus: json["http_status"],
-  );
+  factory GetallpatientsResponseData.fromMap(Map<String, dynamic> json) =>
+      GetallpatientsResponseData(
+        data: Data.fromMap(json["data"]),
+        httpStatus: json["http_status"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "data": data.toMap(),
-    "http_status": httpStatus,
-  };
+        "data": data.toMap(),
+        "http_status": httpStatus,
+      };
 }
 
 class Data {
@@ -40,16 +42,17 @@ class Data {
   String toJson() => json.encode(toMap());
 
   factory Data.fromMap(Map<String, dynamic> json) => Data(
-    status: json["status"],
-    message: json["message"],
-    patients: List<Patient>.from(json["patients"].map((x) => Patient.fromMap(x))),
-  );
+        status: json["status"],
+        message: json["message"],
+        patients:
+            List<Patient>.from(json["patients"].map((x) => Patient.fromMap(x))),
+      );
 
   Map<String, dynamic> toMap() => {
-    "status": status,
-    "message": message,
-    "patients": List<dynamic>.from(patients.map((x) => x.toMap())),
-  };
+        "status": status,
+        "message": message,
+        "patients": List<dynamic>.from(patients.map((x) => x.toMap())),
+      };
 }
 
 class Patient {
@@ -76,22 +79,22 @@ class Patient {
   String toJson() => json.encode(toMap());
 
   factory Patient.fromMap(Map<String, dynamic> json) => Patient(
-    age: json["age"],
-    profileImage: json["profileImage"],
-    name: json["name"],
-    phoneNumber: json["phoneNumber"],
-    gender: json["gender"],
-    id: json["id"],
-    ageType: json["age_type"],
-  );
+        age: json["age"],
+        profileImage: json["profileImage"],
+        name: json["name"],
+        phoneNumber: json["phoneNumber"],
+        gender: json["gender"],
+        id: json["id"],
+        ageType: json["age_type"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "age": age,
-    "profileImage": profileImage,
-    "name": name,
-    "phoneNumber": phoneNumber,
-    "gender": gender,
-    "id": id,
-    "age_type": ageType,
-  };
+        "age": age,
+        "profileImage": profileImage,
+        "name": name,
+        "phoneNumber": phoneNumber,
+        "gender": gender,
+        "id": id,
+        "age_type": ageType,
+      };
 }

@@ -71,10 +71,7 @@ class _MyPatientPageState extends State<MyPatientPage> {
           Padding(
             padding: const EdgeInsets.only(right: 21),
             child: InkWell(
-                onTap: () {
-                  NavigationService().navigateToScreen(
-                      PatientPrescriptionPage());
-                },
+                onTap: () {},
                 child: Icon(
                   Icons.search,
                   color: Colors.white,
@@ -122,123 +119,151 @@ class _MyPatientPageState extends State<MyPatientPage> {
               child: globalVariables.getAllPatients!.data.patients.isEmpty ==
                       true
                   ? Center(
-                    child: Text(
-                        textAlign: TextAlign.center,
-                        "You Have No patient yet!!!\n\nClick on + button to add patient"),
-                  )
+                      child: Text(
+                          textAlign: TextAlign.center,
+                          "You Have No patient yet!!!\n\nClick on + button to add patient"),
+                    )
                   : Padding(
-                    padding: EdgeInsets.only(left: 17),
-                    child: Container(
-                      height: 740,
-                      width: 500,
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          physics: AlwaysScrollableScrollPhysics(),
-                          // itemCount: patientName.length,
-                          itemCount: globalVariables
-                              .getAllPatients!.data.patients.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return InkWell(
-                              onTap: () {
-                                NavigationService().navigateToScreen(
-                                    PatientPrescriptionPage());
-                              },
-                              child: Container(
-                                height: 120,
-                                width: 500,
-                                child: Column(
-                                  children: [
-                                    Card(
-                                      elevation: 0,
-                                      color: Color(0xffF3FBFF),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          CircleAvatar(
-                                            maxRadius: 45,
-                                            child: Image.network(
+                      padding: EdgeInsets.only(left: 17),
+                      child: Container(
+                        height: 740,
+                        width: 500,
+                        child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            physics: AlwaysScrollableScrollPhysics(),
+                            // itemCount: patientName.length,
+                            itemCount: globalVariables
+                                .getAllPatients!.data.patients.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return InkWell(
+                                onTap: () {
+                                  globalVariables.patientId = globalVariables
+                                      .getAllPatients!.data.patients[index].id;
+                                  NavigationService().navigateToScreen(
+                                      PatientPrescriptionPage(
+                                          globalVariables.getAllPatients!.data
+                                              .patients[index].name,
+                                          globalVariables.getAllPatients!.data
+                                              .patients[index].age,
+                                          globalVariables.getAllPatients!.data
+                                              .patients[index].ageType,
+                                          globalVariables.getAllPatients!.data
+                                              .patients[index].gender,
+                                          globalVariables.getAllPatients!.data
+                                              .patients[index].profileImage));
+                                },
+                                child: Container(
+                                  height: 120,
+                                  width: 500,
+                                  child: Column(
+                                    children: [
+                                      Card(
+                                        elevation: 0,
+                                        color: Color(0xffF3FBFF),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            CircleAvatar(
+                                              maxRadius: 45,
+                                              child: /*globalVariables
+                                                .getAllPatients!
+                                                .data
+                                                .patients[index]
+                                                .profileImage == "" ?  Image.asset(
                                               // patientimage[index],
-                                              globalVariables
-                                                  .getAllPatients!
-                                                  .data
-                                                  .patients[index]
-                                                  .profileImage,
+                                              "assets/images/instadoclogo.png",
                                               fit: BoxFit.fill,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.all(10.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  // patientName[index],
+                                            ):*/
+                                                  ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(100),
+                                                child: Image.network(
+                                                  // patientimage[index],
                                                   globalVariables
                                                       .getAllPatients!
                                                       .data
                                                       .patients[index]
-                                                      .name,
-                                                  style: TextStyle(
-                                                      fontSize: 25,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                      color: Colors.black),
+                                                      .profileImage,
+                                                  fit: BoxFit.fill,
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
                                                 ),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      // "${patientAge[index]} Years -",
-                                                      "${globalVariables.getAllPatients!.data.patients[index].age} ${globalVariables.getAllPatients!.data.patients[index].ageType} -",
-                                                      style: TextStyle(
-                                                          fontSize: 17,
-                                                          fontWeight:
-                                                              FontWeight
-                                                                  .normal,
-                                                          color: Color(
-                                                              0xffAEAEAE)),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    Text(
-                                                      // patientGender[index],
-                                                      globalVariables
-                                                          .getAllPatients!
-                                                          .data
-                                                          .patients[index]
-                                                          .gender,
-                                                      style: TextStyle(
-                                                          fontSize: 17,
-                                                          fontWeight:
-                                                              FontWeight
-                                                                  .normal,
-                                                          color: Color(
-                                                              0xffAEAEAE)),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    // patientName[index],
+                                                    globalVariables
+                                                        .getAllPatients!
+                                                        .data
+                                                        .patients[index]
+                                                        .name,
+                                                    style: TextStyle(
+                                                        fontSize: 25,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                        color: Colors.black),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        // "${patientAge[index]} Years -",
+                                                        "${globalVariables.getAllPatients!.data.patients[index].age} ${globalVariables.getAllPatients!.data.patients[index].ageType} -",
+                                                        style: TextStyle(
+                                                            fontSize: 17,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal,
+                                                            color: Color(
+                                                                0xffAEAEAE)),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 5,
+                                                      ),
+                                                      Text(
+                                                        // patientGender[index],
+                                                        globalVariables
+                                                            .getAllPatients!
+                                                            .data
+                                                            .patients[index]
+                                                            .gender,
+                                                        style: TextStyle(
+                                                            fontSize: 17,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal,
+                                                            color: Color(
+                                                                0xffAEAEAE)),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    new Divider(
-                                      color: Color(0xffE6E6E6),
-                                    ),
-                                  ],
+                                      new Divider(
+                                        color: Color(0xffE6E6E6),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          }),
+                              );
+                            }),
+                      ),
                     ),
-                  ),
             ),
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),

@@ -10,46 +10,10 @@ part of 'addPatientPersonalInfo_view_model.dart';
 
 mixin _$AddPatientPersonalInfoViewModel
     on _AddPatientPersonalInfoViewModel, Store {
-  late final _$mobileNumberControllerAtom = Atom(
-      name: '_AddPatientPersonalInfoViewModel.mobileNumberController',
-      context: context);
-
-  @override
-  TextEditingController get mobileNumberController {
-    _$mobileNumberControllerAtom.reportRead();
-    return super.mobileNumberController;
-  }
-
-  @override
-  set mobileNumberController(TextEditingController value) {
-    _$mobileNumberControllerAtom
-        .reportWrite(value, super.mobileNumberController, () {
-      super.mobileNumberController = value;
-    });
-  }
-
-  late final _$fullNameControllerAtom = Atom(
-      name: '_AddPatientPersonalInfoViewModel.fullNameController',
-      context: context);
-
-  @override
-  TextEditingController get fullNameController {
-    _$fullNameControllerAtom.reportRead();
-    return super.fullNameController;
-  }
-
-  @override
-  set fullNameController(TextEditingController value) {
-    _$fullNameControllerAtom.reportWrite(value, super.fullNameController, () {
-      super.fullNameController = value;
-    });
-  }
-
   @override
   String toString() {
     return '''
-mobileNumberController: ${mobileNumberController},
-fullNameController: ${fullNameController}
+
     ''';
   }
 }

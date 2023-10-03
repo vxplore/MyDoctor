@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_doctor/pages/myPatient_page.dart';
 import 'package:my_doctor/service/global_variables.dart';
 import 'package:my_doctor/service/navigation_service.dart';
+import 'package:my_doctor/view_models/addPatientPersonalInfo_view_model.dart';
 import 'inner page/allergies_page.dart';
 import 'inner page/history_page.dart';
 import 'inner page/patientpersonalinfo_page.dart';
@@ -16,6 +17,8 @@ class AddPatientPage extends StatefulWidget {
 }
 
 class _AddPatientPageState extends State<AddPatientPage> {
+  final vm = AddPatientPersonalInfoViewModel();
+
   TabBar get _tabBar => TabBar(
         indicatorColor: Color(0xff7C8DA1),
         unselectedLabelColor: Colors.grey,
@@ -56,7 +59,10 @@ class _AddPatientPageState extends State<AddPatientPage> {
             onTap: () {
               print("before clear : ${globalVariables.patientGender}");
               setState(() {
-                globalVariables.patientGender = null;
+                globalVariables.patientGender = "";
+                globalVariables.profileImagePath = "";
+                globalVariables.ageController.text = "";
+                globalVariables.dropdownvalue = "Years";
               });
               print("After clear : ${globalVariables.patientGender}");
               Navigator.pop(context);
@@ -78,14 +84,24 @@ class _AddPatientPageState extends State<AddPatientPage> {
             Padding(
               padding: const EdgeInsets.only(right: 13),
               child: InkWell(
-                ///////Add personal info patient api call////////////////
-                  onTap: () {
+                  ///////Add personal info patient api call////////////////
+                  onTap: () async {
                     print("before clear : ${globalVariables.patientGender}");
+                    vm.addPatientPersonalDetailsApi(
+                        globalVariables.profileImagePath,
+                        globalVariables.ageController.text,
+                        globalVariables.patientGender,
+                        globalVariables.dropdownvalue,
+                        context);
+
                     setState(() {
-                      globalVariables.patientGender = null;
+                      globalVariables.patientGender = "";
+                      globalVariables.profileImagePath = "";
+                      globalVariables.ageController.text = "";
+                      globalVariables.dropdownvalue = "Years";
                     });
                     print("After clear : ${globalVariables.patientGender}");
-                   NavigationService().navigateToScreen(MainDashboardPage());
+                    NavigationService().navigateToScreen(MainDashboardPage());
                   },
                   child: Icon(
                     Icons.done_outline,

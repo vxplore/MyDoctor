@@ -75,19 +75,33 @@ class _DosePageState extends State<DosePage> {
             SizedBox(
               height: 25,
             ),
-            Container(
-              height: 70,
-              width: 500,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InkWell(
+            GridView.builder(
+              scrollDirection: Axis.vertical,
+              physics: AlwaysScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  mainAxisExtent: 55),
+              itemCount:
+                  globalVariables.getMedicineDosageQuantity!.data.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  height: 70,
+                  width: 500,
+                  child: InkWell(
                     onTap: () {
                       setState(() {
-                        globalVariables.dose = "100mg";
+                        // globalVariables.dose = "100mg";
+                        globalVariables.dose = globalVariables
+                            .getMedicineDosageQuantity!.data.data[index].dose;
+                        globalVariables.doseId = globalVariables
+                            .getMedicineDosageQuantity!.data.data[index].id;
                         widget.onNext();
                       });
                       print("button pressed: ${globalVariables.dose}");
+                      print("button pressed: ${globalVariables.doseId}");
                     },
                     child: Container(
                       height: 50,
@@ -111,7 +125,9 @@ class _DosePageState extends State<DosePage> {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              "100mg",
+                              // "100mg",
+                              globalVariables.getMedicineDosageQuantity!.data
+                                  .data[index].dose,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 14, color: Color(0xff5A88BB)),
@@ -121,88 +137,8 @@ class _DosePageState extends State<DosePage> {
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        globalVariables.dose = "400mg";
-                        widget.onNext();
-                      });
-                      print("button pressed: ${globalVariables.dose}");
-                    },
-                    child: Container(
-                      height: 50,
-                      width: 120,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(25))),
-                        elevation: 5,
-                        child: Container(
-                          padding: EdgeInsets.only(left: 7, right: 7),
-                          height: 80,
-                          width: 150,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                color: Colors.white,
-                              ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "400mg",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 14, color: Color(0xff5A88BB)),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        globalVariables.dose = "500mg";
-                        widget.onNext();
-                      });
-                      print("button pressed: ${globalVariables.dose}");
-                    },
-                    child: Container(
-                      height: 50,
-                      width: 120,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(25))),
-                        elevation: 5,
-                        child: Container(
-                          padding: EdgeInsets.only(left: 7, right: 7),
-                          height: 80,
-                          width: 150,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                color: Colors.white,
-                              ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "500mg",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 14, color: Color(0xff5A88BB)),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
             /*for (var item in Experience.values)
               RadioListTile<Experience>(

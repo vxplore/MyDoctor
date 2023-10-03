@@ -84,24 +84,39 @@ class _DoseRegimenPageState extends State<DoseRegimenPage> {
             SizedBox(
               height: 25,
             ),
-            Container(
-              height: 70,
-              width: 500,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InkWell(
+            GridView.builder(
+              scrollDirection: Axis.vertical,
+              physics: AlwaysScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  mainAxisExtent: 55),
+              itemCount:
+                  globalVariables.getMedicineDosageRegimen!.data.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  height: 70,
+                  width: 500,
+                  child: InkWell(
                     onTap: () async {
-                      globalVariables.dataFromDialog = await showDialog(
-                          context: context,
-                          builder: (context) => ourDialog(),
-                          barrierDismissible: false);
+                      globalVariables.dataFromDialogdoseregimen =
+                          await showDialog(
+                              context: context,
+                              builder: (context) => ourDialog(),
+                              barrierDismissible: false);
                       setState(() {
-                        globalVariables.doseregimen = "Twice Daily (1-0-1)";
+                        // globalVariables.doseregimen = "Twice Daily (1-0-1)";
+                        globalVariables.doseregimen = globalVariables
+                            .getMedicineDosageRegimen!.data.data[index].regimen;
+                        globalVariables.doseregimenId = globalVariables
+                            .getMedicineDosageRegimen!.data.data[index].id;
                       });
                       print("button pressed: ${globalVariables.doseregimen}");
+                      print("button pressed: ${globalVariables.doseregimenId}");
                       print(
-                          "button pressed: ${globalVariables.dataFromDialog}");
+                          "button pressed: ${globalVariables.dataFromDialogdoseregimen}");
                     },
                     child: Container(
                       height: 50,
@@ -125,7 +140,9 @@ class _DoseRegimenPageState extends State<DoseRegimenPage> {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              "Twice Daily (1-0-1)",
+                              // "Twice Daily (1-0-1)",
+                              globalVariables.getMedicineDosageRegimen!.data
+                                  .data[index].regimen,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 14, color: Color(0xff5A88BB)),
@@ -135,55 +152,8 @@ class _DoseRegimenPageState extends State<DoseRegimenPage> {
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () async {
-                      globalVariables.dataFromDialog = await showDialog(
-                          context: context,
-                          builder: (context) => ourDialog(),
-                          barrierDismissible: false);
-                      setState(() {
-                        globalVariables.doseregimen =
-                            "Three Time a Day (1-1-1)";
-                      });
-
-                      print("button pressed: ${globalVariables.doseregimen}");
-                      print(
-                          "button pressed: ${globalVariables.dataFromDialog}");
-                    },
-                    child: Container(
-                      height: 50,
-                      width: 200,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(25))),
-                        elevation: 5,
-                        child: Container(
-                          padding: EdgeInsets.only(left: 7, right: 7),
-                          height: 80,
-                          // width: 150,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                color: Colors.white,
-                              ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Three Time a Day (1-1-1)",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 14, color: Color(0xff5A88BB)),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
             SizedBox(
               height: 20,
@@ -229,7 +199,7 @@ class _DoseRegimenPageState extends State<DoseRegimenPage> {
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              "${globalVariables.dataFromDialog}",
+                              "${globalVariables.dataFromDialogdoseregimen}",
                               textAlign: TextAlign.center,
                               style:
                                   TextStyle(fontSize: 22, color: Colors.green),
@@ -239,7 +209,7 @@ class _DoseRegimenPageState extends State<DoseRegimenPage> {
                       ),
                     ),
                   ),
-           /* const Spacer(),
+            /* const Spacer(),
             Align(
               alignment: Alignment.center,
               child: Container(

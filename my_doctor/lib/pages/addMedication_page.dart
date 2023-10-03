@@ -216,7 +216,8 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                     ),
                     Spacer(),
                     InkWell(
-                      onTap: () {
+                      onTap: () async {
+                        await Future.delayed(Duration(milliseconds: 1300));
                         Navigator.push(
                           context,
                           MaterialPageRoute(

@@ -7,7 +7,7 @@ import 'package:pinput/pinput.dart';
 import '../custom widget/button.dart';
 
 class OtpPage extends StatefulWidget {
-  String phnumber;
+ final String phnumber;
 
   OtpPage(String this.phnumber, {super.key});
 

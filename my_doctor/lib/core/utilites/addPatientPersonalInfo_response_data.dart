@@ -1,21 +1,22 @@
 import 'dart:convert';
 
-class ProfessionaladdResponseData {
+class AddpatientpersonalinfoResponseData {
   Data data;
   int httpStatus;
 
-  ProfessionaladdResponseData({
+  AddpatientpersonalinfoResponseData({
     required this.data,
     required this.httpStatus,
   });
 
-  factory ProfessionaladdResponseData.fromJson(String str) =>
-      ProfessionaladdResponseData.fromMap(json.decode(str));
+  factory AddpatientpersonalinfoResponseData.fromJson(String str) =>
+      AddpatientpersonalinfoResponseData.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory ProfessionaladdResponseData.fromMap(Map<String, dynamic> json) =>
-      ProfessionaladdResponseData(
+  factory AddpatientpersonalinfoResponseData.fromMap(
+          Map<String, dynamic> json) =>
+      AddpatientpersonalinfoResponseData(
         data: Data.fromMap(json["data"]),
         httpStatus: json["http_status"],
       );

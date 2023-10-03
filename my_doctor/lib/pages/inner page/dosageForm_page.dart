@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_doctor/custom%20widget/custom_circularProgress.dart';
 
 import '../../service/global_variables.dart';
 import '../patient_complaints_page.dart';
@@ -15,13 +16,11 @@ class DosageFormPage extends StatefulWidget {
 class _DosageFormPageState extends State<DosageFormPage> {
   // String? dosageform;
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
+      body:globalVariables.getDosageForm == null ? MyCircularIndicator(): Padding(
         padding: const EdgeInsets.only(left: 19, right: 18),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,7 +56,7 @@ class _DosageFormPageState extends State<DosageFormPage> {
                       child: Text(
                         "Search Dosages Form",
                         style:
-                        TextStyle(fontSize: 21, color: Color(0xffA5A5A5)),
+                            TextStyle(fontSize: 21, color: Color(0xffA5A5A5)),
                       ),
                     ),
                     Spacer(),
@@ -79,150 +78,85 @@ class _DosageFormPageState extends State<DosageFormPage> {
             SizedBox(
               height: 25,
             ),
-            Container(
-              height: 70,
-              width: 500,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InkWell(
+
+            GridView.builder(
+              scrollDirection: Axis.vertical,
+              physics: AlwaysScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  mainAxisExtent: 55),
+              itemCount: globalVariables.getDosageForm!.data.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  height: 100,
+                  // height: 500,
+                  // width: 500,
+                  width: 70,
+                  // color: Colors.red,
+                  child: InkWell(
                     onTap: () {
                       setState(() {
                         // dosageform = "Tablet";
-                        globalVariables.dosageform = "Tablet";
+                        // globalVariables.dosageform = "Tablet";
+                        globalVariables.dosageform = globalVariables
+                            .getDosageForm!.data.data[index].type;
+                        globalVariables.dosageFormId =
+                            globalVariables.getDosageForm!.data.data[index].id;
                         widget.onNext();
                       });
                       // print("button pressed: ${dosageform}");
                       print("button pressed: ${globalVariables.dosageform}");
+                      print("button pressed: ${globalVariables.dosageFormId}");
                     },
                     child: Container(
                       height: 50,
                       width: 120,
+                      // width: 70,
                       child: Card(
                         shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(25))),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(25),
+                          ),
+                        ),
                         elevation: 5,
                         child: Container(
                           // padding: EdgeInsets.only(left: 7, right: 7),
                           height: 80,
+                          // height: 70,
                           width: 150,
+                          // width: 70,
                           decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
                               color: Colors.white,
-                              border: Border.all(
-                                color: Colors.white,
-                              ),
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(20))),
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(20),
+                            ),
+                          ),
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              "Tablet",
+                              // "Tablet",
+                              globalVariables
+                                  .getDosageForm!.data.data[index].type,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: 14, color: Color(0xff5A88BB)),
+                                fontSize: 14,
+                                color: Color(0xff5A88BB),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        // dosageform = "Capsule";
-                        globalVariables.dosageform = "Capsule";
-                        widget.onNext();
-                      });
-                      // print("button pressed: ${dosageform}");
-                      print("button pressed: ${globalVariables.dosageform}");
-                    },
-                    child: Container(
-                      height: 50,
-                      width: 120,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(25))),
-                        elevation: 5,
-                        child: Container(
-                          padding: EdgeInsets.only(left: 7, right: 7),
-                          height: 80,
-                          width: 150,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                color: Colors.white,
-                              ),
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(20))),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Capsule",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 14, color: Color(0xff5A88BB)),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        // dosageform = "Syrup";
-                        globalVariables.dosageform = "Syrup";
-                        widget.onNext();
-                      });
-                      // print("button pressed: ${dosageform}");
-                      print("button pressed: ${globalVariables.dosageform}");
-                    },
-                    child: Container(
-                      height: 50,
-                      width: 120,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(25))),
-                        elevation: 5,
-                        child: Container(
-                          padding: EdgeInsets.only(left: 7, right: 7),
-                          height: 80,
-                          width: 150,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                color: Colors.white,
-                              ),
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(20))),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Syrup",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 14, color: Color(0xff5A88BB)),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
-            /*for (var item in Experience.values)
-              RadioListTile<Experience>(
-                title: Text(_experienceTitles[item]!),
-                value: item,
-                groupValue: _experience,
-                onChanged: (value) {
-                  setState(() => _experience = value);
-                },
-              ),*/
             const Spacer(),
             /*  PrimaryButton(
               onPressed: _experience != null ? widget.onNext : null,

@@ -19,7 +19,6 @@ class AddMedicationStepsPage extends StatefulWidget {
   _AddMedicationStepsPageState createState() => _AddMedicationStepsPageState();
 }
 
-
 class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
     with SingleTickerProviderStateMixin {
   // We need a TabController to control the selected tab programmatically
@@ -31,8 +30,8 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
   bool isDosageFormPageIndexChange = false;
   bool isNamePageIndexChange = false;
   bool isDosePageIndexChange = false;
-  // bool isDoseRegimentPageIndexChange = false;
 
+  // bool isDoseRegimentPageIndexChange = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,11 +51,16 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
             child: InkWell(
               onTap: () {
                 setState(() {
+                  globalVariables.dosageFormId = null;
+                  globalVariables.nameId = null;
+                  globalVariables.doseId = null;
+                  globalVariables.doseregimenId = null;
+                  globalVariables.durationsId = null;
                   globalVariables.dosageform = null;
                   globalVariables.dose = null;
                   globalVariables.names = null;
                   globalVariables.doseregimen = null;
-                  globalVariables.dataFromDialog = null;
+                  globalVariables.dataFromDialogdoseregimen = null;
                   globalVariables.durations = null;
                   globalVariables.startMediactionFrom = null;
                   globalVariables.selectedLanguage = null;
@@ -92,7 +96,7 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
               child: Container(
                 width: 420,
                 child: TabBar(
-                  padding: EdgeInsets.only(left: 19,right: 19),
+                  padding: EdgeInsets.only(left: 19, right: 19),
                   indicatorColor: Colors.transparent,
                   isScrollable: true,
                   labelPadding: EdgeInsets.only(left: 0),
@@ -120,8 +124,7 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                                                 tabControllers == 4 ||
                                                 tabControllers == 5 ||
                                                 globalVariables.dosageform !=
-                                                    null)
-                                            &&
+                                                    null) &&
                                             (globalVariables.dosageform != null)
                                         ? Colors.green
                                         : Color(0xff0065D7),
@@ -132,8 +135,7 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                                                   tabControllers == 4 ||
                                                   tabControllers == 5 ||
                                                   globalVariables.dosageform !=
-                                                      null)
-                                              &&
+                                                      null) &&
                                               (globalVariables.dosageform !=
                                                   null)
                                           ? Colors.green
@@ -444,8 +446,7 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                   }),
                 ),
                 DurationPage(
-                  onSubmit: () =>
-                      showCupertinoDialog(
+                  onSubmit: () => showCupertinoDialog(
                     context: context,
                     builder: (_) {
                       return CupertinoAlertDialog(
@@ -457,11 +458,17 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                             onPressed: () {
                               // dismiss dialog
                               setState(() {
+                                globalVariables.dosageFormId = null;
+                                globalVariables.nameId = null;
+                                globalVariables.doseId = null;
+                                globalVariables.doseregimenId = null;
+                                globalVariables.durationsId = null;
                                 globalVariables.dosageform = null;
                                 globalVariables.dose = null;
                                 globalVariables.names = null;
                                 globalVariables.doseregimen = null;
-                                globalVariables.dataFromDialog = null;
+                                globalVariables.dataFromDialogdoseregimen =
+                                    null;
                                 globalVariables.durations = null;
                                 globalVariables.startMediactionFrom = null;
                                 globalVariables.selectedLanguage = null;
@@ -487,17 +494,6 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({Key? key, required this.text, this.onPressed})

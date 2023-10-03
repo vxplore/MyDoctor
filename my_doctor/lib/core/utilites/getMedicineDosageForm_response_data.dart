@@ -9,19 +9,22 @@ class GetmedicinedosageformResponseData {
     required this.httpStatus,
   });
 
-  factory GetmedicinedosageformResponseData.fromJson(String str) => GetmedicinedosageformResponseData.fromMap(json.decode(str));
+  factory GetmedicinedosageformResponseData.fromJson(String str) =>
+      GetmedicinedosageformResponseData.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory GetmedicinedosageformResponseData.fromMap(Map<String, dynamic> json) => GetmedicinedosageformResponseData(
-    data: Data.fromMap(json["data"]),
-    httpStatus: json["http_status"],
-  );
+  factory GetmedicinedosageformResponseData.fromMap(
+          Map<String, dynamic> json) =>
+      GetmedicinedosageformResponseData(
+        data: Data.fromMap(json["data"]),
+        httpStatus: json["http_status"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "data": data.toMap(),
-    "http_status": httpStatus,
-  };
+        "data": data.toMap(),
+        "http_status": httpStatus,
+      };
 }
 
 class Data {
@@ -40,16 +43,16 @@ class Data {
   String toJson() => json.encode(toMap());
 
   factory Data.fromMap(Map<String, dynamic> json) => Data(
-    status: json["status"],
-    message: json["message"],
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromMap(x))),
-  );
+        status: json["status"],
+        message: json["message"],
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromMap(x))),
+      );
 
   Map<String, dynamic> toMap() => {
-    "status": status,
-    "message": message,
-    "data": List<dynamic>.from(data.map((x) => x.toMap())),
-  };
+        "status": status,
+        "message": message,
+        "data": List<dynamic>.from(data.map((x) => x.toMap())),
+      };
 }
 
 class Datum {
@@ -66,12 +69,12 @@ class Datum {
   String toJson() => json.encode(toMap());
 
   factory Datum.fromMap(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    type: json["type"],
-  );
+        id: json["id"],
+        type: json["type"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "id": id,
-    "type": type,
-  };
+        "id": id,
+        "type": type,
+      };
 }

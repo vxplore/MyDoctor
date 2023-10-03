@@ -1,12 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_doctor/custom%20widget/button.dart';
 import 'package:my_doctor/pages/patient_prescription_page.dart';
-
+import 'package:my_doctor/view_models/addPatientPersonalInfo_view_model.dart';
 import '../../service/global_variables.dart';
 
 class PatientPersonalInfopage extends StatefulWidget {
@@ -105,7 +104,7 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
   /* initialValue(val) {
     return TextEditingController(text: val);
   }*/
-
+final vm = AddPatientPersonalInfoViewModel();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -184,10 +183,11 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                   Container(
                     height: 70,
                     width: 342,
-                    child: const Padding(
+                    child:  Padding(
                       padding: EdgeInsets.all(0),
                       child: TextField(
-                        obscureText: true,
+                        controller: globalVariables.mobileNumberController,
+                        obscureText: false,
                         decoration: InputDecoration(
                           labelText: 'Mobile Number*',
                           labelStyle:
@@ -218,10 +218,11 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                   Container(
                     height: 70,
                     width: 342,
-                    child: const Padding(
+                    child:  Padding(
                       padding: EdgeInsets.all(0),
                       child: TextField(
-                        obscureText: true,
+                        controller: globalVariables.fullNameController,
+                        obscureText: false,
                         decoration: InputDecoration(
                           labelText: 'Full Name*',
                           labelStyle:

@@ -9,19 +9,21 @@ class LoginResponseData {
     required this.httpStatus,
   });
 
-  factory LoginResponseData.fromJson(String str) => LoginResponseData.fromMap(json.decode(str));
+  factory LoginResponseData.fromJson(String str) =>
+      LoginResponseData.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory LoginResponseData.fromMap(Map<String, dynamic> json) => LoginResponseData(
-    data: Data.fromMap(json["data"]),
-    httpStatus: json["http_status"],
-  );
+  factory LoginResponseData.fromMap(Map<String, dynamic> json) =>
+      LoginResponseData(
+        data: Data.fromMap(json["data"]),
+        httpStatus: json["http_status"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "data": data.toMap(),
-    "http_status": httpStatus,
-  };
+        "data": data.toMap(),
+        "http_status": httpStatus,
+      };
 }
 
 class Data {
@@ -44,18 +46,18 @@ class Data {
   String toJson() => json.encode(toMap());
 
   factory Data.fromMap(Map<String, dynamic> json) => Data(
-    status: json["status"],
-    message: json["message"],
-    isUser: json["isUser"],
-    userId: json["userId"],
-    isMatched: json["isMatched"],
-  );
+        status: json["status"],
+        message: json["message"],
+        isUser: json["isUser"],
+        userId: json["userId"],
+        isMatched: json["isMatched"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "status": status,
-    "message": message,
-    "isUser": isUser,
-    "userId": userId,
-    "isMatched": isMatched,
-  };
+        "status": status,
+        "message": message,
+        "isUser": isUser,
+        "userId": userId,
+        "isMatched": isMatched,
+      };
 }

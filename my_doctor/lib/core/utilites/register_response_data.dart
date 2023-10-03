@@ -9,19 +9,21 @@ class RegisterResponseData {
     required this.httpStatus,
   });
 
-  factory RegisterResponseData.fromJson(String str) => RegisterResponseData.fromMap(json.decode(str));
+  factory RegisterResponseData.fromJson(String str) =>
+      RegisterResponseData.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory RegisterResponseData.fromMap(Map<String, dynamic> json) => RegisterResponseData(
-    data: Data.fromMap(json["data"]),
-    httpStatus: json["http_status"],
-  );
+  factory RegisterResponseData.fromMap(Map<String, dynamic> json) =>
+      RegisterResponseData(
+        data: Data.fromMap(json["data"]),
+        httpStatus: json["http_status"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "data": data.toMap(),
-    "http_status": httpStatus,
-  };
+        "data": data.toMap(),
+        "http_status": httpStatus,
+      };
 }
 
 class Data {
@@ -42,16 +44,16 @@ class Data {
   String toJson() => json.encode(toMap());
 
   factory Data.fromMap(Map<String, dynamic> json) => Data(
-    status: json["status"],
-    message: json["message"],
-    isAdded: json["isAdded"],
-    userId: json["userId"],
-  );
+        status: json["status"],
+        message: json["message"],
+        isAdded: json["isAdded"],
+        userId: json["userId"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "status": status,
-    "message": message,
-    "isAdded": isAdded,
-    "userId": userId,
-  };
+        "status": status,
+        "message": message,
+        "isAdded": isAdded,
+        "userId": userId,
+      };
 }

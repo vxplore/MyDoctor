@@ -16,6 +16,7 @@ class _StartMedicationDialogState extends State<StartMedicationDialog> {
   bool isButtonClicked = false;
   String startmedicine = "";
   String? dropdownvalue;
+  TextEditingController remarkstext = TextEditingController();
 
   // List of items in our dropdown menu
   var items = [
@@ -228,9 +229,10 @@ class _StartMedicationDialogState extends State<StartMedicationDialog> {
                       Container(
                         height: 70,
                         width: 300,
-                        child: const Padding(
+                        child: Padding(
                           padding: EdgeInsets.all(0),
                           child: TextField(
+                            controller: remarkstext,
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Remark(s)',
@@ -279,7 +281,7 @@ class _StartMedicationDialogState extends State<StartMedicationDialog> {
                     ],
                   ),
                 ),
-               Spacer(),
+                Spacer(),
                 Align(
                   alignment: Alignment.center,
                   child: Container(
@@ -299,15 +301,17 @@ class _StartMedicationDialogState extends State<StartMedicationDialog> {
                           ? () {
                               var buttonPressedValue = startmedicine;
                               var selectedLanguageValue = dropdownvalue;
-                             /* Map<String, String> myData = new Map();
+                              var remarksValue = remarkstext.text;
+                              /* Map<String, String> myData = new Map();
                               myData['buttonPressedValue'] = buttonPressedValue;
                               myData['selectedLanguageValue'] = selectedLanguageValue!;*/
                               Map myData = {
-                                'buttonPressedValue' : buttonPressedValue,
-                                'selectedLanguageValue' : selectedLanguageValue!
+                                'buttonPressedValue': buttonPressedValue,
+                                'selectedLanguageValue': selectedLanguageValue!,
+                                'remarksValue': remarksValue
                               };
                               Future.delayed(Duration(seconds: 2));
-                              Navigator.pop(context,myData);
+                              Navigator.pop(context, myData);
                             }
                           : null,
                       child: Text(

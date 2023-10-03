@@ -17,22 +17,31 @@ class GlobalVariables {
 
   GlobalVariables._internal();
 
+  String? patientId;
+  String? dosageFormId;
   String? dosageform;
   String? dose;
+  String? doseId;
   String? names;
+  String? nameId;
   String? doseregimen;
-  String? dataFromDialog;
+  String? doseregimenId;
+  String? dataFromDialogdoseregimen;
   String? durations;
+  String? durationsId;
   String? startMediactionFrom;
   String? selectedLanguage;
+  String? medicineRemarks;
   bool isDoseRegimentPageIndexChange = false;
   XFile? image;
   XFile? fontimage;
   XFile? backimage;
-  String? patientGender;
+  String patientGender = "";
   String dropdownvalue = "Years";
   var profileImagePath = '';
   TextEditingController ageController = TextEditingController();
+  TextEditingController fullNameController = TextEditingController();
+  TextEditingController mobileNumberController = TextEditingController();
   var specialityapiName = [""];
   var specialityName = [""];
   String specialtyId = "";
@@ -49,7 +58,6 @@ class GlobalVariables {
   GetmedicinedodageregimenResponseData? getMedicineDosageRegimen;
   GetmedicinedodagedurationResponseData? getMedicineDosageDurationFromApi;
   GetmedicinedodagedurationResponseData? getMedicineDosageDuration;
-
 }
 
 // Create an instance of the singleton class
