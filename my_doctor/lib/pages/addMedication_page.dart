@@ -58,7 +58,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
         backgroundColor: Color(0xffF6F6F6),
         appBar: AppBar(
           backgroundColor: Color(0xff1468B3),
-          toolbarHeight: 90,
+          toolbarHeight: 89,
           leading: Padding(
             padding: const EdgeInsets.only(left: 18),
             child: InkWell(
