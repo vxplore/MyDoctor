@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_doctor/custom%20widget/custom_circularProgress.dart';
 import 'package:my_doctor/pages/video_consult_page.dart';
 
+import '../service/commonApiCall.dart';
+import '../service/global_variables.dart';
 import 'appointment_page.dart';
 import 'billing_page.dart';
 import 'dashboardPage.dart';
@@ -17,9 +22,28 @@ class MainDashboardPage extends StatefulWidget {
 class _MainDashboardPageState extends State<MainDashboardPage> {
   int _selectedIndex = 0;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Timer.periodic(Duration(seconds: 1), (timer) async {
+      if (timer.tick == 1) {
+        timer.cancel();
+        CommonApiCall().getDoctorDetailsApi();
+        await Future.delayed(Duration(seconds: 1));
+        setState(() {
+          globalVariables.getDoctorDetails =
+              globalVariables.getDoctorDetailsFromApi;
+        });
+      }
+    });
+  }
+
   Widget build(BuildContext context) {
     List<Widget> _pages = <Widget>[
-      DashBoardPage(),
+      globalVariables.getDoctorDetails == null
+          ? MyCircularIndicator()
+          : DashBoardPage(),
       MyPatientPage(),
       AppointmentTab(),
       VideoConsultTab(),

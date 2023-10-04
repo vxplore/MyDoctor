@@ -109,10 +109,14 @@ class _MyPatientPageState extends State<MyPatientPage> {
                       globalVariables.getAllPatients =
                           globalVariables.getAllPatientsFromApi;
                     });
-                    // Get.snackbar('Refreshed', '',
-                    //     backgroundColor: Colors.green.shade50,
-                    //     colorText: Colors.black,
-                    //     snackPosition: SnackPosition.BOTTOM);
+                    var snackdemo = SnackBar(
+                      content: Text("Refreshed List"),
+                      backgroundColor: Colors.green,
+                      elevation: 10,
+                      behavior: SnackBarBehavior.floating,
+                      margin: EdgeInsets.all(5),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackdemo);
                   },
                 );
               },

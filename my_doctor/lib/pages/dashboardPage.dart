@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_doctor/custom%20widget/custom_circularProgress.dart';
 import 'package:my_doctor/pages/doctor_profile_page.dart';
 import 'package:my_doctor/pages/login_page.dart';
+import 'package:my_doctor/service/global_variables.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../core/di/di.dart';
 import '../core/repository/preference_repo.dart';
@@ -73,7 +75,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                "AM",
+                                // "AM",
+                                "${globalVariables.getDoctorDetails!.data.doctor.name[0]}",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 30,
@@ -85,7 +88,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             width: 5,
                           ),
                           Text(
-                            "Dr.\nArpan Manna",
+                            // "Dr.\nArpan Manna",
+                            "Dr.\n${globalVariables.getDoctorDetails!.data.doctor.name}",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 28,
@@ -100,9 +104,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
                       SizedBox(
                         height: 20,
                       ),
-                      InkWell(onTap: (){
-                        NavigationService().navigateToScreen(DoctorProfilePage());
-                      },
+                      InkWell(
+                        onTap: () {
+                          NavigationService()
+                              .navigateToScreen(DoctorProfilePage());
+                        },
                         child: Row(
                           children: [
                             Text(
@@ -192,10 +198,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
               ),
               Padding(
                 padding: EdgeInsets.all(8),
-                child: InkWell(onTap: (){
-                  final prefs = dependency<PreferenceRepo>();
-                  print(prefs.userid());
-                },
+                child: InkWell(
+                  onTap: () {
+                    final prefs = dependency<PreferenceRepo>();
+                    print(prefs.userid());
+                  },
                   child: Text(
                     "About",
                     style: TextStyle(
@@ -257,79 +264,88 @@ class _DashBoardPageState extends State<DashBoardPage> {
           )
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.only(left: 19, right: 21),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 15,
-            ),
-            Container(
-              height: 100,
-              width: 500,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Welcome Back",
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
-                            color: Color(0xffB1B1B1)),
-                      ),
-                      Text(
-                        "Dr. Ajay Singh",
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black),
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  CircleAvatar(
-                    maxRadius: 35,
-                    child: Image.asset(
-                      "assets/images/instadoclogo.png",
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Center(
+      body: globalVariables.getDoctorDetails == null
+          ? MyCircularIndicator()
+          : Padding(
+              padding: EdgeInsets.only(left: 19, right: 21),
               child: Column(
                 children: [
                   SizedBox(
-                    height: 150,
+                    height: 15,
                   ),
-                  Image.asset(
-                    "assets/images/dashboard_icon.png",
-                    scale: 0.6,
+                  Container(
+                    height: 100,
+                    width: 500,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Welcome Back",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.normal,
+                                  color: Color(0xffB1B1B1)),
+                            ),
+                            Text(
+                              // "Dr. Ajay Singh",
+                              "Dr. ${globalVariables.getDoctorDetails!.data.doctor.name}",
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                        Spacer(),
+                        CircleAvatar(
+                          maxRadius: 35,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.network(
+                              // "assets/images/instadoclogo.png",
+                              globalVariables
+                                  .getDoctorDetails!.data.doctor.profileImage,
+                              fit: BoxFit.fill,
+                              width: MediaQuery.of(context).size.width,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      padding: EdgeInsets.only(left: 67, right: 59),
-                      child: Text(
-                        textAlign: TextAlign.center,
-                        "Your document is under verifications. We will put your profile live once our backend team will complete the process.",
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                            color: Color(0xff989898)),
-                      ),
+                  Center(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 150,
+                        ),
+                        Image.asset(
+                          "assets/images/dashboard_icon.png",
+                          scale: 0.6,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Container(
+                            padding: EdgeInsets.only(left: 67, right: 59),
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              "Your document is under verifications. We will put your profile live once our backend team will complete the process.",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal,
+                                  color: Color(0xff989898)),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }

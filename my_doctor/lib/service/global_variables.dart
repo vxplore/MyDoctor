@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../core/utilites/getAllPatients_response_data.dart';
+import '../core/utilites/getDoctorDetails_response_data.dart';
 import '../core/utilites/getMedicineDosageDuration_response_data.dart';
 import '../core/utilites/getMedicineDosageForm_response_data.dart';
 import '../core/utilites/getMedicineDosageQuantity_response_data.dart';
@@ -58,6 +59,8 @@ class GlobalVariables {
   GetmedicinedodageregimenResponseData? getMedicineDosageRegimen;
   GetmedicinedodagedurationResponseData? getMedicineDosageDurationFromApi;
   GetmedicinedodagedurationResponseData? getMedicineDosageDuration;
+  GetdoctordetailsResponseData? getDoctorDetailsFromApi;
+  GetdoctordetailsResponseData? getDoctorDetails;
 }
 
 // Create an instance of the singleton class
