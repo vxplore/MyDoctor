@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:my_doctor/core/repository/api_repo.dart';
 import 'package:my_doctor/service/global_variables.dart';
 import 'package:my_doctor/service/navigation_service.dart';
 import 'package:http/http.dart' as http;
@@ -43,16 +44,19 @@ abstract class _ProfessionalDetailsViewModel with Store {
   List<Specialization> res = List.empty();
 
   Future<SpecialityDropdownData?> getSpecialitydropdowndataApi() async {
-    var request = http.Request(
+    final getSpecializationlistApiRepo = dependency<ApiRepository>();
+    var result =
+        await getSpecializationlistApiRepo.getdoctorspecializationlist();
+    /* var request = http.Request(
         'GET',
         Uri.parse(
             'https://www.v-xplore.com/dev/rohan/e-prescription/user/docter/specialization'));
 
-    http.StreamedResponse response = await request.send();
+    http.StreamedResponse response = await request.send();*/
 
     var rr = "";
-    if (response.statusCode == 200) {
-      rr = await response.stream.bytesToString();
+    if (result.statusCode == 200) {
+      rr = await result.stream.bytesToString();
       print(rr);
       res = SpecialityDropdownData.fromJson(rr).data.specializations;
       globalVariables.specialityapiName =
@@ -77,7 +81,16 @@ abstract class _ProfessionalDetailsViewModel with Store {
   Future addProfessionalDetailsApi(String specialtyIds, String kycFontpic,
       String kycBackpic, BuildContext context) async {
     final prefs = dependency<PreferenceRepo>();
-    var request = http.MultipartRequest(
+    final addProfessionalDetailsApiRepo = dependency<ApiRepository>();
+    var result = await addProfessionalDetailsApiRepo.addprofessionaldetails(
+        specialtyIds,
+        kycFontpic,
+        kycBackpic,
+        prefs.userid() ?? "",
+        stateMedicalCouncilController.text,
+        yearsOfExperienceController.text,
+        registrationNumberController.text);
+    /* var request = http.MultipartRequest(
         'POST',
         Uri.parse(
             'https://v-xplore.com/dev/rohan/e-prescription/user/doctor/details'));
@@ -93,15 +106,15 @@ abstract class _ProfessionalDetailsViewModel with Store {
     request.files
         .add(await http.MultipartFile.fromPath('kycBackPic', kycBackpic));
 
-    http.StreamedResponse response = await request.send();
+    http.StreamedResponse response = await request.send();*/
 
     var rr = "";
-    if (response.statusCode == 200) {
-      rr = await response.stream.bytesToString();
+    if (result.statusCode == 200) {
+      rr = await result.stream.bytesToString();
       print(rr);
-      var cccaaaaq = ProfessionaladdResponseData.fromJson(rr);
-      if (cccaaaaq.data.isAdded == true) {
-        globalVariables.isAddApiLoading = cccaaaaq.data.isAdded;
+      var resp = ProfessionaladdResponseData.fromJson(rr);
+      if (resp.data.isAdded == true) {
+        globalVariables.isAddApiLoading = resp.data.isAdded;
         const snackdemo = SnackBar(
           content: Text('Details Added'),
           backgroundColor: Colors.green,
@@ -122,7 +135,7 @@ abstract class _ProfessionalDetailsViewModel with Store {
         ScaffoldMessenger.of(context).showSnackBar(snackdemo);
       }
 
-      return cccaaaaq;
+      return resp;
     } else {
       return null;
     }

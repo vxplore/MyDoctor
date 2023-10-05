@@ -141,6 +141,14 @@ class _MyPatientPageState extends State<MyPatientPage> {
                             itemBuilder: (BuildContext context, int index) {
                               return InkWell(
                                 onTap: () {
+                                  globalVariables.patientName=globalVariables.getAllPatients!.data
+                                      .patients[index].name;
+                                  globalVariables.patientAge=globalVariables.getAllPatients!.data
+                                      .patients[index].age;
+                                  globalVariables.patientAgeType= globalVariables.getAllPatients!.data
+                                      .patients[index].ageType;
+                                  globalVariables.patientsGender= globalVariables.getAllPatients!.data
+                                      .patients[index].gender;
                                   globalVariables.patientId = globalVariables
                                       .getAllPatients!.data.patients[index].id;
                                   NavigationService().navigateToScreen(

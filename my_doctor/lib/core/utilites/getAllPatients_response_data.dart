@@ -27,7 +27,7 @@ class GetallpatientsResponseData {
 }
 
 class Data {
-  String status;
+  bool status;
   String message;
   List<Patient> patients;
 

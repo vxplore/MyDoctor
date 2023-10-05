@@ -7,9 +7,10 @@ import '../repository/api_repo.dart';
 import '../repository/preference_repo.dart';
 
 final dependency = GetIt.instance;
+
 Future<void> setupLocator() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  dependency.registerLazySingleton<PreferenceRepo>(() => PreferenceRepoImpl(prefs));
   dependency
-      .registerLazySingleton<ApiRepository>(() => ApiRepositoryImpl());
+      .registerLazySingleton<PreferenceRepo>(() => PreferenceRepoImpl(prefs));
+  dependency.registerLazySingleton<ApiRepository>(() => ApiRepositoryImpl());
 }

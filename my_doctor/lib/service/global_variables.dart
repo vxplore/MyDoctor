@@ -7,6 +7,7 @@ import '../core/utilites/getMedicineDosageDuration_response_data.dart';
 import '../core/utilites/getMedicineDosageForm_response_data.dart';
 import '../core/utilites/getMedicineDosageQuantity_response_data.dart';
 import '../core/utilites/getMedicineDosageRegimen_response_data.dart';
+import '../core/utilites/getMedicineList_response_data.dart';
 import '../core/utilites/getMedicineName_response_data.dart';
 
 class GlobalVariables {
@@ -17,8 +18,12 @@ class GlobalVariables {
   }
 
   GlobalVariables._internal();
-
+  bool isOtpFromForgotPassword = false;
   String? patientId;
+  String? patientName;
+  String? patientAge;
+  String? patientAgeType;
+  String? patientsGender;
   String? dosageFormId;
   String? dosageform;
   String? dose;
@@ -61,6 +66,8 @@ class GlobalVariables {
   GetmedicinedodagedurationResponseData? getMedicineDosageDuration;
   GetdoctordetailsResponseData? getDoctorDetailsFromApi;
   GetdoctordetailsResponseData? getDoctorDetails;
+  GetmedicinesResponseData? getMedicineListFromApi;
+  GetmedicinesResponseData? getMedicineList;
 }
 
 // Create an instance of the singleton class

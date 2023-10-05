@@ -40,7 +40,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final ImagePicker picker = ImagePicker();
 
   Future getImage(ImageSource media) async {
-    var img = await picker.pickImage(source: media,imageQuality: 50);
+    var img = await picker.pickImage(source: media, imageQuality: 50);
     if (img == null)
       // img = await ImagePicker().pickImage(source: ImageSource.gallery);
       return;
@@ -435,8 +435,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 // do the API call here
                                 /*vm.testImageUploadApi(globalVariables.image!.path);*/
                                 // print("${File(globalVariables.image!.path)}");
-                                vm.registrationApi(profileImagePath);
+                                vm.registrationApi(profileImagePath, context);
                               }
+                              setState(() {
+                                globalVariables.isOtpFromForgotPassword = false;
+                              });
                             }
                           : null,
                       color: Color(0xff1468B3),

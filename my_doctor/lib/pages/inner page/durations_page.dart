@@ -293,10 +293,10 @@ class _DurationPageState extends State<DurationPage> {
                             globalVariables.selectedLanguage = null;
                           });
 
-                         /* Navigator.push(
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AddMedicationPage()));*/
+                                  builder: (context) => AddMedicationPage()));
                         }
                       : null,
                   child: Text(

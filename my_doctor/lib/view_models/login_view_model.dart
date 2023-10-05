@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:my_doctor/core/repository/api_repo.dart';
 import 'package:my_doctor/pages/main_dashboard_page.dart';
 import 'package:my_doctor/pages/registration_page.dart';
 import 'package:http/http.dart' as http;
@@ -28,22 +29,25 @@ abstract class _LoginViewModel with Store {
   }
 
   Future loginApi(BuildContext context) async {
-    var request = http.MultipartRequest('POST',
+    final loginApiRepo = dependency<ApiRepository>();
+    var result =
+        await loginApiRepo.login(emailController.text, passwordController.text);
+    /* var request = http.MultipartRequest('POST',
         Uri.parse('https://www.v-xplore.com/dev/rohan/e-prescription/login'));
     request.fields.addAll(
         {'email': emailController.text, 'password': passwordController.text});
 
-    http.StreamedResponse response = await request.send();
+    http.StreamedResponse response = await request.send();*/
 
     var rr = "";
-    if (response.statusCode == 200) {
-      rr = await response.stream.bytesToString();
+    if (result.statusCode == 200) {
+      rr = await result.stream.bytesToString();
       print(rr);
-      var cccaaaaq = LoginResponseData.fromJson(rr);
-      if (cccaaaaq.data.isMatched == true) {
-        prefs.setUserId(cccaaaaq.data.userId);
-        const snackdemo = SnackBar(
-          content: Text('Login Successful'),
+      var resp = LoginResponseData.fromJson(rr);
+      if (resp.data.isMatched == true) {
+        prefs.setUserId(resp.data.userId);
+        var snackdemo = SnackBar(
+          content: Text('${resp.data.message}'),
           backgroundColor: Colors.green,
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -51,9 +55,9 @@ abstract class _LoginViewModel with Store {
         );
         ScaffoldMessenger.of(context).showSnackBar(snackdemo);
         NavigationService().navigateToScreen(MainDashboardPage());
-      }else{
-        const snackdemo = SnackBar(
-          content: Text('Please Give Correct Login Details'),
+      } else {
+        var snackdemo = SnackBar(
+          content: Text('${resp.data.message}'),
           backgroundColor: Colors.red,
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -62,7 +66,7 @@ abstract class _LoginViewModel with Store {
         ScaffoldMessenger.of(context).showSnackBar(snackdemo);
       }
 
-      return cccaaaaq;
+      return resp;
     } else {
       return null;
     }

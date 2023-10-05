@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:my_doctor/core/repository/api_repo.dart';
 import 'package:my_doctor/core/utilites/register_response_data.dart';
 import 'package:my_doctor/pages/otp_page.dart';
 import 'package:http/http.dart' as http;
@@ -49,9 +51,15 @@ abstract class _RegistrationViewModel with Store {
 
   final prefs = dependency<PreferenceRepo>();
 
-  Future registrationApi(String img) async {
-    if (img == "") {
-      var request = http.MultipartRequest(
+  Future registrationApi(String img, BuildContext context) async {
+    final registerApiRepo = dependency<ApiRepository>();
+    var result = await registerApiRepo.register(
+        nameController.text,
+        mobileController.text,
+        emailController.text,
+        passwordController.text,
+        img);
+    /* var request = http.MultipartRequest(
           'POST',
           Uri.parse(
               'https://www.v-xplore.com/dev/rohan/e-prescription/user/docter'));
@@ -63,53 +71,41 @@ abstract class _RegistrationViewModel with Store {
       });
       // request.files.add(await http.MultipartFile.fromPath('image', ""));
 
-      http.StreamedResponse response = await request.send();
-      var rr = "";
-      if (response.statusCode == 200) {
-        rr = await response.stream.bytesToString();
-        print(rr);
-        var cccaaaaq = RegisterResponseData.fromJson(rr);
+      http.StreamedResponse response = await request.send();*/
+    var rr = "";
+    if (result.statusCode == 200) {
+      rr = await result.stream.bytesToString();
+      print(rr);
+      var resp = RegisterResponseData.fromJson(rr);
 
-        if (cccaaaaq.data.isAdded == true) {
-          prefs.setUserId(cccaaaaq.data.userId);
-          nextStep();
-        }
-
-        return cccaaaaq;
+      if (resp.data.isAdded == true) {
+        prefs.setUserId(resp.data.userId);
+        var snackdemo = SnackBar(
+          content: Text('${resp.data.message}'),
+          backgroundColor: Colors.green,
+          elevation: 10,
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.all(5),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackdemo);
+        nextStep();
       } else {
-        return null;
+        var snackdemo = SnackBar(
+          content: Text('${resp.data.message}'),
+          backgroundColor: Colors.red,
+          elevation: 10,
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.all(5),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackdemo);
       }
+
+      return resp;
     } else {
-      var request = http.MultipartRequest(
-          'POST',
-          Uri.parse(
-              'https://www.v-xplore.com/dev/rohan/e-prescription/user/docter'));
-      request.fields.addAll({
-        'name': nameController.text,
-        'number': mobileController.text,
-        'email': emailController.text,
-        'password': passwordController.text
-      });
-      request.files.add(await http.MultipartFile.fromPath('image', img));
-
-      http.StreamedResponse response = await request.send();
-      var rr = "";
-      if (response.statusCode == 200) {
-        rr = await response.stream.bytesToString();
-        print(rr);
-        var cccaaaaq = RegisterResponseData.fromJson(rr);
-
-        if (cccaaaaq.data.isAdded == true) {
-          prefs.setUserId(cccaaaaq.data.userId);
-          nextStep();
-        }
-
-        return cccaaaaq;
-      } else {
-        return null;
-      }
+      return null;
     }
   }
+}
 
 /* testImageUploadApi(String img) async {
     var request = http.MultipartRequest('POST',
@@ -125,4 +121,3 @@ abstract class _RegistrationViewModel with Store {
       print(response.reasonPhrase);
     }
   }*/
-}

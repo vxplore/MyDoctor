@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
+import 'package:my_doctor/pages/forgot_password_phNo_page.dart';
+import 'package:my_doctor/service/navigation_service.dart';
 import 'package:my_doctor/view_models/login_view_model.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -43,11 +45,10 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-
     reaction((_) => vm.showToast, (showToasts) {
       print(showToasts);
       if (showToasts != null) {
-       showToast(showToasts,Colors.black);
+        showToast(showToasts, Colors.black);
       }
     });
     return Scaffold(
@@ -159,16 +160,23 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
             Container(
               height: 18,
             ),
-            const Align(
+            Align(
                 alignment: Alignment.topRight,
-                child: Text(
-                  "Forget Password!",
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+                child: InkWell(
+                  onTap: () {
+                    NavigationService()
+                        .navigateToScreen(ForgotPasswordPhNoPage());
+                  },
+                  child: Text(
+                    "Forget Password!",
+                    style:
+                        TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+                  ),
                 )),
             Container(
               height: 28,
             ),
-             Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -178,9 +186,10 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                 SizedBox(
                   width: 5,
                 ),
-                InkWell(onTap: (){
-                  vm.registration();
-                },
+                InkWell(
+                  onTap: () {
+                    vm.registration();
+                  },
                   child: Text(
                     "Create Account",
                     style: TextStyle(
