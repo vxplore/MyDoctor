@@ -138,7 +138,7 @@ class _PatientPrescriptionPageState extends State<PatientPrescriptionPage> {
         child: Padding(
           padding: const EdgeInsets.only(left: 83, right: 71),
           child: Text(
-            "Seems like you have no prescriptions for Nitish Kumar",
+            "Seems like you have no prescriptions for ${widget.name}",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 14, color: Color(0xff9C9C9C)),
           ),

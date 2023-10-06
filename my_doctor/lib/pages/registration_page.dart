@@ -435,7 +435,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 // do the API call here
                                 /*vm.testImageUploadApi(globalVariables.image!.path);*/
                                 // print("${File(globalVariables.image!.path)}");
-                                vm.registrationApi(profileImagePath, context);
+                                vm.onNextStepButtonClicked(profileImagePath, context);
                               }
                               setState(() {
                                 globalVariables.isOtpFromForgotPassword = false;

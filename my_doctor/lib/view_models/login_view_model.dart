@@ -8,6 +8,7 @@ import 'package:my_doctor/pages/registration_page.dart';
 import 'package:http/http.dart' as http;
 import '../core/di/di.dart';
 import '../core/repository/preference_repo.dart';
+import '../core/repository/repository.dart';
 import '../core/utilites/login_response_data.dart';
 import '../service/navigation_service.dart';
 
@@ -17,37 +18,33 @@ class LoginViewModel = _LoginViewModel with _$LoginViewModel;
 
 abstract class _LoginViewModel with Store {
   final prefs = dependency<PreferenceRepo>();
-  @observable
-  String? showToast;
-  @observable
+
   TextEditingController emailController = TextEditingController();
-  @observable
+
   TextEditingController passwordController = TextEditingController();
 
   registration() {
     NavigationService().navigateToScreen(RegistrationPage());
   }
 
-  Future loginApi(BuildContext context) async {
-    final loginApiRepo = dependency<ApiRepository>();
-    var result =
-        await loginApiRepo.login(emailController.text, passwordController.text);
-    /* var request = http.MultipartRequest('POST',
-        Uri.parse('https://www.v-xplore.com/dev/rohan/e-prescription/login'));
-    request.fields.addAll(
-        {'email': emailController.text, 'password': passwordController.text});
-
-    http.StreamedResponse response = await request.send();*/
-
-    var rr = "";
-    if (result.statusCode == 200) {
-      rr = await result.stream.bytesToString();
-      print(rr);
-      var resp = LoginResponseData.fromJson(rr);
-      if (resp.data.isMatched == true) {
-        prefs.setUserId(resp.data.userId);
+  Future login(BuildContext context) async {
+    final repo = dependency<Repository>();
+    var response =
+        await repo.login(emailController.text, passwordController.text);
+    if (response == null) {
+      var snackdemo = SnackBar(
+        content: Text('Something went wrong...please try again!!!'),
+        backgroundColor: Colors.red,
+        elevation: 10,
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.all(5),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackdemo);
+    } else {
+      if (response.data.isMatched == true) {
+        prefs.setUserId(response.data.userId);
         var snackdemo = SnackBar(
-          content: Text('${resp.data.message}'),
+          content: Text('${response.data.message}'),
           backgroundColor: Colors.green,
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -57,7 +54,7 @@ abstract class _LoginViewModel with Store {
         NavigationService().navigateToScreen(MainDashboardPage());
       } else {
         var snackdemo = SnackBar(
-          content: Text('${resp.data.message}'),
+          content: Text('${response.data.message}'),
           backgroundColor: Colors.red,
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -65,10 +62,12 @@ abstract class _LoginViewModel with Store {
         );
         ScaffoldMessenger.of(context).showSnackBar(snackdemo);
       }
-
-      return resp;
-    } else {
-      return null;
     }
+  }
+
+  onLoginButtonClicked(BuildContext context) {
+    print("onLoginButtonClicked 1st");
+    login(context);
+    print("onLoginButtonClicked 2st");
   }
 }

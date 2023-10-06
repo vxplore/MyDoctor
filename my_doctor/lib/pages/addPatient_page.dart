@@ -84,30 +84,31 @@ class _AddPatientPageState extends State<AddPatientPage> {
             Padding(
               padding: const EdgeInsets.only(right: 13),
               child: InkWell(
-                  ///////Add personal info patient api call////////////////
-                  onTap: () async {
-                    print("before clear : ${globalVariables.patientGender}");
-                    vm.addPatientPersonalDetailsApi(
-                        globalVariables.profileImagePath,
-                        globalVariables.ageController.text,
-                        globalVariables.patientGender,
-                        globalVariables.dropdownvalue,
-                        context);
+                ///////Add personal info patient api call////////////////
+                onTap: () async {
+                  print("before clear : ${globalVariables.patientGender}");
+                  vm.addPatientPersonalDetails(
+                      globalVariables.profileImagePath,
+                      globalVariables.ageController.text,
+                      globalVariables.patientGender,
+                      globalVariables.dropdownvalue,
+                      context);
 
-                    setState(() {
-                      globalVariables.patientGender = "";
-                      globalVariables.profileImagePath = "";
-                      globalVariables.ageController.text = "";
-                      globalVariables.dropdownvalue = "Years";
-                    });
-                    print("After clear : ${globalVariables.patientGender}");
-                    NavigationService().navigateToScreen(MainDashboardPage());
-                  },
-                  child: Icon(
-                    Icons.done_outline,
-                    size: 50,
-                    color: Colors.white,
-                  )),
+                  setState(() {
+                    globalVariables.patientGender = "";
+                    globalVariables.profileImagePath = "";
+                    globalVariables.ageController.text = "";
+                    globalVariables.dropdownvalue = "Years";
+                  });
+                  print("After clear : ${globalVariables.patientGender}");
+                  NavigationService().navigateToScreen(MainDashboardPage());
+                },
+                child: Icon(
+                  Icons.done_outline,
+                  size: 50,
+                  color: Colors.white,
+                ),
+              ),
             ),
           ],
           backgroundColor: Color(0xff1468B3),

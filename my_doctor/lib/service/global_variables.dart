@@ -9,6 +9,7 @@ import '../core/utilites/getMedicineDosageQuantity_response_data.dart';
 import '../core/utilites/getMedicineDosageRegimen_response_data.dart';
 import '../core/utilites/getMedicineList_response_data.dart';
 import '../core/utilites/getMedicineName_response_data.dart';
+import '../core/utilites/speciality_dropdown_data.dart';
 
 class GlobalVariables {
   static final GlobalVariables _singleton = GlobalVariables._internal();
@@ -18,6 +19,7 @@ class GlobalVariables {
   }
 
   GlobalVariables._internal();
+  List<Specialization> res = List.empty();
   bool isOtpFromForgotPassword = false;
   String? patientId;
   String? patientName;

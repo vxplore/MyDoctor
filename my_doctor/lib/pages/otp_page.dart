@@ -158,7 +158,7 @@ class _OtpPageState extends State<OtpPage> {
                     width: 500,
                     child: ourButton(
                         onPress:() {
-                          vm.verifyOtpApi(widget.phnumber, context);
+                          vm.onVerifyNowButtonClicked(widget.phnumber, context);
                           /*Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => ProfessionalDetailsPage()),

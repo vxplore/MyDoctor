@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:my_doctor/custom%20widget/custom_circularProgress.dart';
 import 'package:my_doctor/pages/video_consult_page.dart';
 
-import '../service/commonApiCall.dart';
+import '../service/commonDataSource.dart';
 import '../service/global_variables.dart';
 import 'appointment_page.dart';
 import 'billing_page.dart';
@@ -29,7 +29,7 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
     Timer.periodic(Duration(seconds: 1), (timer) async {
       if (timer.tick == 1) {
         timer.cancel();
-        CommonApiCall().getDoctorDetailsApi();
+        CommonDataSource().getDoctorDetails();
         await Future.delayed(Duration(seconds: 1));
         setState(() {
           globalVariables.getDoctorDetails =

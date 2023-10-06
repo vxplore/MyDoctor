@@ -33,24 +33,10 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   final vm = LoginViewModel();
   List<ReactionDisposer> _disposers = [];
 
-  void showToast(String message, Color color) {
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.SNACKBAR,
-        timeInSecForIosWeb: 1,
-        backgroundColor: color,
-        textColor: Colors.white);
-  }
+
 
   @override
   Widget build(BuildContext context) {
-    reaction((_) => vm.showToast, (showToasts) {
-      print(showToasts);
-      if (showToasts != null) {
-        showToast(showToasts, Colors.black);
-      }
-    });
     return Scaffold(
       backgroundColor: Color(0xffF3FBFF),
       body: SafeArea(
@@ -127,18 +113,14 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
             Container(
               height: 31,
             ),
-            Observer(builder: (_) {
-              return MyTextField(vm.emailController, "Email Address",
-                  "assets/images/email_icon.png");
-            }),
+            MyTextField(vm.emailController, "Email Address",
+                "assets/images/email_icon.png"),
             Container(
               height: 18,
             ),
-            Observer(builder: (_) {
-              return MyTextField(vm.passwordController, "Password",
-                  "assets/images/password_icon.png",
-                  obscureText: true);
-            }),
+            MyTextField(vm.passwordController, "Password",
+                "assets/images/password_icon.png",
+                obscureText: true),
             Container(
               height: 18,
             ),
@@ -147,7 +129,7 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
               height: 55,
               child: ElevatedButton(
                 onPressed: () {
-                  vm.loginApi(context);
+                  vm.onLoginButtonClicked(context);
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xff1468B3),

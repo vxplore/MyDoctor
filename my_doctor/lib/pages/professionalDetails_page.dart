@@ -30,7 +30,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
     Timer.periodic(Duration(seconds: 1), (timer) async {
       if (timer.tick == 1) {
         timer.cancel();
-        vm.getSpecialitydropdowndataApi();
+        vm.getSpecialitydropdowndata();
         await Future.delayed(Duration(seconds: 1));
         setState(() {
           globalVariables.specialityName = globalVariables.specialityapiName;
@@ -43,14 +43,14 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
   final ImagePicker picker = ImagePicker();
 
   Future fontgetImage(ImageSource media) async {
-    var fontimg = await picker.pickImage(source: media,imageQuality: 50);
+    var fontimg = await picker.pickImage(source: media, imageQuality: 50);
     setState(() {
       globalVariables.fontimage = fontimg;
     });
   }
 
   Future backgetImage(ImageSource media) async {
-    var backimg = await picker.pickImage(source: media,imageQuality: 50);
+    var backimg = await picker.pickImage(source: media, imageQuality: 50);
     setState(() {
       globalVariables.backimage = backimg;
     });
@@ -490,7 +490,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                 print(
                                     "${File(globalVariables.backimage!.path)}");
 
-                                vm.addProfessionalDetailsApi(
+                                vm.onNextStepButtonClicked(
                                     globalVariables.specialtyId,
                                     globalVariables.fontimage!.path,
                                     globalVariables.backimage!.path,

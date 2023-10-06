@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_doctor/core/utilites/getAllPatients_response_data.dart';
 import 'package:my_doctor/pages/addPatient_page.dart';
 import 'package:my_doctor/pages/patient_prescription_page.dart';
 import 'package:my_doctor/service/global_variables.dart';
@@ -36,14 +37,14 @@ class _MyPatientPageState extends State<MyPatientPage> {
       Duration(seconds: 1),
       (timer) async {
         if (timer.tick == 1) {
-          vm.getAllPatientApi();
-          await Future.delayed(Duration(seconds: 1));
+          globalVariables.getAllPatients = await vm.getAllPatient();
+          /*await Future.delayed(Duration(seconds: 1));
           setState(
             () {
               globalVariables.getAllPatients =
                   globalVariables.getAllPatientsFromApi;
             },
-          );
+          );*/
         }
       },
     );
@@ -103,12 +104,12 @@ class _MyPatientPageState extends State<MyPatientPage> {
                 return Future.delayed(
                   Duration(seconds: 1),
                   () async {
-                    vm.getAllPatientApi();
-                    await Future.delayed(Duration(seconds: 1));
+                    globalVariables.getAllPatients = await vm.getAllPatient();
+                   /* await Future.delayed(Duration(seconds: 1));
                     setState(() {
                       globalVariables.getAllPatients =
                           globalVariables.getAllPatientsFromApi;
-                    });
+                    });*/
                     var snackdemo = SnackBar(
                       content: Text("Refreshed List"),
                       backgroundColor: Colors.green,

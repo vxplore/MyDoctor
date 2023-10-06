@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:mobx/mobx.dart';
 import 'package:my_doctor/core/di/di.dart';
 import 'package:my_doctor/core/repository/api_repo.dart';
+import '../core/repository/repository.dart';
 import '../core/utilites/addMedicine_response_data.dart';
 import '../core/utilites/getMedicineDosageDuration_response_data.dart';
 import '../core/utilites/getMedicineDosageForm_response_data.dart';
@@ -188,7 +189,7 @@ abstract class _AddMedicationViewModel with Store {
     }
   }
 
-  Future<AddmedicineResponseData?> addMedicineApi(BuildContext context) async {
+  Future addMedicineApi(BuildContext context) async {
     print("add medicine patientid :: ${globalVariables.patientId}");
     print("add medicine medNameId :: ${globalVariables.nameId}");
     print("add medicine medFormId :: ${globalVariables.dosageFormId}");
@@ -200,37 +201,14 @@ abstract class _AddMedicationViewModel with Store {
     print("add medicine startFrom :: ${globalVariables.startMediactionFrom}");
     print("add medicine remarks :: ${globalVariables.medicineRemarks}");
     print("add medicine language :: ${globalVariables.selectedLanguage}");
-    final addMedicineApiRepo = dependency<ApiRepository>();
-    var result = await addMedicineApiRepo.addmedicine();
-    /* var headers = {'Content-Type': 'application/json'};
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://v-xplore.com/dev/rohan/e-prescription/medicine/add'));
-    request.body = json.encode({
-      "patientId": globalVariables.patientId,
-      "medNameId": globalVariables.nameId,
-      "medFormId": globalVariables.dosageFormId,
-      "medTimeId": globalVariables.dataFromDialogdoseregimen,
-      "medDoseId": globalVariables.doseId,
-      "medDurationId": globalVariables.durationsId,
-      "medRegimenId": globalVariables.doseregimenId,
-      "startFrom": globalVariables.startMediactionFrom,
-      "remarks": globalVariables.medicineRemarks,
-      "language": globalVariables.selectedLanguage
-    });
-    request.headers.addAll(headers);
+    final repo = dependency<Repository>();
+    var response = await repo.addmedicine();
 
-    http.StreamedResponse response = await request.send();*/
-
-    var rr = "";
-    if (result.statusCode == 200) {
-      rr = await result.stream.bytesToString();
-      print(rr);
-      var resps = AddmedicineResponseData.fromJson(rr);
-      if (resps.data.isAdded == true) {
+    if (response == null) {
+    } else {
+      if (response.data.isAdded == true) {
         var snackdemo = SnackBar(
-          content: Text("${resps.data.message}"),
+          content: Text("${response.data.message}"),
           backgroundColor: Colors.green,
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -242,7 +220,7 @@ abstract class _AddMedicationViewModel with Store {
         // Get.to(() => BottomNavBar());
       } else {
         var snackdemo = SnackBar(
-          content: Text("${resps.data.message}"),
+          content: Text("${response.data.message}"),
           backgroundColor: Colors.red,
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -250,9 +228,6 @@ abstract class _AddMedicationViewModel with Store {
         );
         ScaffoldMessenger.of(context).showSnackBar(snackdemo);
       }
-      return resps;
-    } else {
-      return null;
     }
   }
 

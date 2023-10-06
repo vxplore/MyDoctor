@@ -8,6 +8,7 @@ import 'package:my_doctor/pages/otp_page.dart';
 import 'package:http/http.dart' as http;
 import '../core/di/di.dart';
 import '../core/repository/preference_repo.dart';
+import '../core/repository/repository.dart';
 import '../service/navigation_service.dart';
 
 part 'registration_view_model.g.dart';
@@ -16,15 +17,14 @@ class RegistrationViewModel = _RegistrationViewModel
     with _$RegistrationViewModel;
 
 abstract class _RegistrationViewModel with Store {
-  @observable
   TextEditingController nameController = TextEditingController();
-  @observable
+
   TextEditingController mobileController = TextEditingController();
-  @observable
+
   TextEditingController emailController = TextEditingController();
-  @observable
+
   TextEditingController passwordController = TextEditingController();
-  @observable
+
   TextEditingController reenterpassowrdController = TextEditingController();
 
   nextStep() {
@@ -51,37 +51,28 @@ abstract class _RegistrationViewModel with Store {
 
   final prefs = dependency<PreferenceRepo>();
 
-  Future registrationApi(String img, BuildContext context) async {
-    final registerApiRepo = dependency<ApiRepository>();
-    var result = await registerApiRepo.register(
+  Future registration(String img, BuildContext context) async {
+    final repo = dependency<Repository>();
+    var response = await repo.register(
         nameController.text,
         mobileController.text,
         emailController.text,
         passwordController.text,
         img);
-    /* var request = http.MultipartRequest(
-          'POST',
-          Uri.parse(
-              'https://www.v-xplore.com/dev/rohan/e-prescription/user/docter'));
-      request.fields.addAll({
-        'name': nameController.text,
-        'number': mobileController.text,
-        'email': emailController.text,
-        'password': passwordController.text
-      });
-      // request.files.add(await http.MultipartFile.fromPath('image', ""));
-
-      http.StreamedResponse response = await request.send();*/
-    var rr = "";
-    if (result.statusCode == 200) {
-      rr = await result.stream.bytesToString();
-      print(rr);
-      var resp = RegisterResponseData.fromJson(rr);
-
-      if (resp.data.isAdded == true) {
-        prefs.setUserId(resp.data.userId);
+    if (response == null) {
+      var snackdemo = SnackBar(
+        content: Text('Something went wrong...please try again!!!'),
+        backgroundColor: Colors.red,
+        elevation: 10,
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.all(5),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackdemo);
+    } else {
+      if (response.data.isAdded == true) {
+        prefs.setUserId(response.data.userId);
         var snackdemo = SnackBar(
-          content: Text('${resp.data.message}'),
+          content: Text('${response.data.message}'),
           backgroundColor: Colors.green,
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -91,7 +82,7 @@ abstract class _RegistrationViewModel with Store {
         nextStep();
       } else {
         var snackdemo = SnackBar(
-          content: Text('${resp.data.message}'),
+          content: Text('${response.data.message}'),
           backgroundColor: Colors.red,
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -99,25 +90,10 @@ abstract class _RegistrationViewModel with Store {
         );
         ScaffoldMessenger.of(context).showSnackBar(snackdemo);
       }
-
-      return resp;
-    } else {
-      return null;
     }
   }
+
+  onNextStepButtonClicked(String img, BuildContext context) {
+    registration(img, context);
+  }
 }
-
-/* testImageUploadApi(String img) async {
-    var request = http.MultipartRequest('POST',
-        Uri.parse('https://webhook.site/77583f10-00d7-481c-b205-fb3e1acf3e43'));
-    request.files.add(await http.MultipartFile.fromPath('myimage',
-        img));
-
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-    } else {
-      print(response.reasonPhrase);
-    }
-  }*/

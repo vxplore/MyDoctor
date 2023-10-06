@@ -7,6 +7,7 @@ import 'package:my_doctor/service/navigation_service.dart';
 import 'package:http/http.dart' as http;
 import '../core/di/di.dart';
 import '../core/repository/preference_repo.dart';
+import '../core/repository/repository.dart';
 import '../core/utilites/professional_add_response_data.dart';
 import '../core/utilites/speciality_dropdown_data.dart';
 import '../pages/congratulations_page.dart';
@@ -18,13 +19,13 @@ class ProfessionalDetailsViewModel = _ProfessionalDetailsViewModel
     with _$ProfessionalDetailsViewModel;
 
 abstract class _ProfessionalDetailsViewModel with Store {
-  @observable
+
   TextEditingController registrationNumberController = TextEditingController();
-  @observable
+
   TextEditingController stateMedicalCouncilController = TextEditingController();
-  @observable
+
   TextEditingController specialityController = TextEditingController();
-  @observable
+
   TextEditingController yearsOfExperienceController = TextEditingController();
 
   bool isAllFieldComplete() {
@@ -41,36 +42,15 @@ abstract class _ProfessionalDetailsViewModel with Store {
     NavigationService().navigateToScreen(CongratulationsPage());
   }
 
-  List<Specialization> res = List.empty();
+  Future getSpecialitydropdowndata() async {
+    final repo = dependency<Repository>();
 
-  Future<SpecialityDropdownData?> getSpecialitydropdowndataApi() async {
-    final getSpecializationlistApiRepo = dependency<ApiRepository>();
-    var result =
-        await getSpecializationlistApiRepo.getdoctorspecializationlist();
-    /* var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://www.v-xplore.com/dev/rohan/e-prescription/user/docter/specialization'));
-
-    http.StreamedResponse response = await request.send();*/
-
-    var rr = "";
-    if (result.statusCode == 200) {
-      rr = await result.stream.bytesToString();
-      print(rr);
-      res = SpecialityDropdownData.fromJson(rr).data.specializations;
-      globalVariables.specialityapiName =
-          res.map((e) => e.name.toString()).toList();
-      print(globalVariables.specialityapiName);
-    } else {
-      return null;
-    }
-    return null;
+    await repo.getdoctorspecializationlist();
   }
 
   String findIdByName(String name) {
-    for (var i = 0; i < res.length; i++) {
-      var item = res[i];
+    for (var i = 0; i < globalVariables.res.length; i++) {
+      var item = globalVariables.res[i];
       if (item.name == name) {
         return item.id;
       }
@@ -78,11 +58,11 @@ abstract class _ProfessionalDetailsViewModel with Store {
     return "";
   }
 
-  Future addProfessionalDetailsApi(String specialtyIds, String kycFontpic,
+  Future addProfessionalDetails(String specialtyIds, String kycFontpic,
       String kycBackpic, BuildContext context) async {
     final prefs = dependency<PreferenceRepo>();
-    final addProfessionalDetailsApiRepo = dependency<ApiRepository>();
-    var result = await addProfessionalDetailsApiRepo.addprofessionaldetails(
+    final repo = dependency<Repository>();
+    var response = await repo.addprofessionaldetails(
         specialtyIds,
         kycFontpic,
         kycBackpic,
@@ -90,33 +70,20 @@ abstract class _ProfessionalDetailsViewModel with Store {
         stateMedicalCouncilController.text,
         yearsOfExperienceController.text,
         registrationNumberController.text);
-    /* var request = http.MultipartRequest(
-        'POST',
-        Uri.parse(
-            'https://v-xplore.com/dev/rohan/e-prescription/user/doctor/details'));
-    request.fields.addAll({
-      'userId': prefs.userid() ?? "",
-      'stateMedicalCouncil': stateMedicalCouncilController.text,
-      'specialityId': specialtyIds,
-      'yearsOfExperience': yearsOfExperienceController.text,
-      'regNo': registrationNumberController.text
-    });
-    request.files
-        .add(await http.MultipartFile.fromPath('kycFontPic', kycFontpic));
-    request.files
-        .add(await http.MultipartFile.fromPath('kycBackPic', kycBackpic));
-
-    http.StreamedResponse response = await request.send();*/
-
-    var rr = "";
-    if (result.statusCode == 200) {
-      rr = await result.stream.bytesToString();
-      print(rr);
-      var resp = ProfessionaladdResponseData.fromJson(rr);
-      if (resp.data.isAdded == true) {
-        globalVariables.isAddApiLoading = resp.data.isAdded;
-        const snackdemo = SnackBar(
-          content: Text('Details Added'),
+    if (response == null) {
+      var snackdemo = SnackBar(
+        content: Text('Something went wrong..please try again!!!!'),
+        backgroundColor: Colors.red,
+        elevation: 10,
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.all(5),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackdemo);
+    } else {
+      if (response.data.isAdded == true) {
+        globalVariables.isAddApiLoading = response.data.isAdded;
+        var snackdemo = SnackBar(
+          content: Text('${response.data.message}'),
           backgroundColor: Colors.green,
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -125,8 +92,8 @@ abstract class _ProfessionalDetailsViewModel with Store {
         ScaffoldMessenger.of(context).showSnackBar(snackdemo);
         NavigationService().navigateToScreen(CongratulationsPage());
       } else {
-        const snackdemo = SnackBar(
-          content: Text('Something went wrong please try again'),
+        var snackdemo = SnackBar(
+          content: Text('${response.data.message}'),
           backgroundColor: Colors.red,
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -134,10 +101,11 @@ abstract class _ProfessionalDetailsViewModel with Store {
         );
         ScaffoldMessenger.of(context).showSnackBar(snackdemo);
       }
-
-      return resp;
-    } else {
-      return null;
     }
+  }
+
+  onNextStepButtonClicked(String specialtyIds, String kycFontpic,
+      String kycBackpic, BuildContext context) {
+    addProfessionalDetails(specialtyIds, kycFontpic, kycBackpic, context);
   }
 }
