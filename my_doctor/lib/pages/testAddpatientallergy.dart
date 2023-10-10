@@ -1,52 +1,3 @@
-/*
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:my_doctor/pages/addPatient_page.dart';
-import 'package:my_doctor/pages/additionalAssesment_page.dart';
-import 'package:my_doctor/pages/intro_page.dart';
-import 'package:my_doctor/pages/login_page.dart';
-import 'package:my_doctor/pages/myPatient_page.dart';
-import 'package:my_doctor/pages/otp_page.dart';
-import 'package:my_doctor/pages/professionalDetails_page.dart';
-import 'package:my_doctor/pages/registration_page.dart';
-import 'package:my_doctor/pages/splash_page.dart';
-import 'package:my_doctor/service/navigation_service.dart';
-
-import 'core/di/di.dart';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await setupLocator();
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      minTextAdapt: true,
-      splitScreenMode: false,
-      designSize: const Size(412, 778),
-      // scaleByHeight: true,
-      useInheritedMediaQuery: true,
-      builder: (BuildContext context, Widget? child) => MaterialApp(
-        navigatorKey: NavigationService().navigationKey,
-        debugShowCheckedModeBanner: false,
-        title: 'My Doctor',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: const SplashPage(),
-      ),
-    );
-  }
-}
-*/
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -81,7 +32,7 @@ class _SearchListDemoState extends State<SearchListDemo> {
   ];*/
 
   final List<Map<String,dynamic>> items = [
-   /* {"NAME":"COLD",
+    /* {"NAME":"COLD",
       "TYPE":"001"},
     {"NAME":"DUST",
       "ID":"002"},*/
@@ -131,7 +82,7 @@ class _SearchListDemoState extends State<SearchListDemo> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // Search input field
-         /* Padding(
+          /* Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               onChanged: filterItems,
@@ -142,12 +93,12 @@ class _SearchListDemoState extends State<SearchListDemo> {
           ),*/
           Container(height:40,),
           InkWell(onTap:() async {
- final newEntry = await _showAddItemDialog("ENV_ALRG");
+            final newEntry = await _showAddItemDialog("ENV_ALRG");
 
             // final newEntry = await _showAddItemDialog();
             if (newEntry != null) {
               setState(() {
-   // final newItem = Item(newEntry);
+                // final newItem = Item(newEntry);
 
                 final newEntryss = {
                   "NAME": newEntry,
@@ -329,8 +280,8 @@ class _SearchListDemoState extends State<SearchListDemo> {
                 if (itemName != null && itemName!.isNotEmpty) {
                   setState(() {
                     // final newItem = Item(itemName!);
- // items.add(newItem);
- //                    selectedItems.add(newItem);
+                    // items.add(newItem);
+                    //                    selectedItems.add(newItem);
 
                     final newEntryss = {
                       "NAME": itemName,
