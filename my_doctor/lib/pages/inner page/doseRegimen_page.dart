@@ -94,7 +94,7 @@ class _DoseRegimenPageState extends State<DoseRegimenPage> {
                   crossAxisSpacing: 8,
                   mainAxisExtent: 55),
               itemCount:
-                  globalVariables.getMedicineDosageRegimen!.data.data.length,
+                  globalVariables.getMedicineDosageRegimen!.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   height: 70,
@@ -109,9 +109,9 @@ class _DoseRegimenPageState extends State<DoseRegimenPage> {
                       setState(() {
                         // globalVariables.doseregimen = "Twice Daily (1-0-1)";
                         globalVariables.doseregimen = globalVariables
-                            .getMedicineDosageRegimen!.data.data[index].regimen;
+                            .getMedicineDosageRegimen!.data[index].regimen;
                         globalVariables.doseregimenId = globalVariables
-                            .getMedicineDosageRegimen!.data.data[index].id;
+                            .getMedicineDosageRegimen!.data[index].id;
                       });
                       print("button pressed: ${globalVariables.doseregimen}");
                       print("button pressed: ${globalVariables.doseregimenId}");
@@ -141,7 +141,7 @@ class _DoseRegimenPageState extends State<DoseRegimenPage> {
                             alignment: Alignment.center,
                             child: Text(
                               // "Twice Daily (1-0-1)",
-                              globalVariables.getMedicineDosageRegimen!.data
+                              globalVariables.getMedicineDosageRegimen!
                                   .data[index].regimen,
                               textAlign: TextAlign.center,
                               style: TextStyle(

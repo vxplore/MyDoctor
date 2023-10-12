@@ -41,10 +41,10 @@ abstract class _LoginViewModel with Store {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackdemo);
     } else {
-      if (response.data.isMatched == true) {
-        prefs.setUserId(response.data.userId);
+      if (response.isMatched == true) {
+        prefs.setUserId(response.userId);
         var snackdemo = SnackBar(
-          content: Text('${response.data.message}'),
+          content: Text('${response.message}'),
           backgroundColor: Colors.green,
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -54,7 +54,7 @@ abstract class _LoginViewModel with Store {
         NavigationService().navigateToScreen(MainDashboardPage());
       } else {
         var snackdemo = SnackBar(
-          content: Text('${response.data.message}'),
+          content: Text('${response.message}'),
           backgroundColor: Colors.red,
           elevation: 10,
           behavior: SnackBarBehavior.floating,

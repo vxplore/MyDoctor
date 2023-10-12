@@ -105,7 +105,7 @@ class _MyPatientPageState extends State<MyPatientPage> {
                   Duration(seconds: 1),
                   () async {
                     globalVariables.getAllPatients = await vm.getAllPatient();
-                   /* await Future.delayed(Duration(seconds: 1));
+                    /* await Future.delayed(Duration(seconds: 1));
                     setState(() {
                       globalVariables.getAllPatients =
                           globalVariables.getAllPatientsFromApi;
@@ -121,8 +121,7 @@ class _MyPatientPageState extends State<MyPatientPage> {
                   },
                 );
               },
-              child: globalVariables.getAllPatients!.data.patients.isEmpty ==
-                      true
+              child: globalVariables.getAllPatients!.patients.isEmpty == true
                   ? Center(
                       child: Text(
                           textAlign: TextAlign.center,
@@ -137,32 +136,34 @@ class _MyPatientPageState extends State<MyPatientPage> {
                             scrollDirection: Axis.vertical,
                             physics: AlwaysScrollableScrollPhysics(),
                             // itemCount: patientName.length,
-                            itemCount: globalVariables
-                                .getAllPatients!.data.patients.length,
+                            itemCount:
+                                globalVariables.getAllPatients!.patients.length,
                             itemBuilder: (BuildContext context, int index) {
                               return InkWell(
                                 onTap: () {
-                                  globalVariables.patientName=globalVariables.getAllPatients!.data
-                                      .patients[index].name;
-                                  globalVariables.patientAge=globalVariables.getAllPatients!.data
-                                      .patients[index].age;
-                                  globalVariables.patientAgeType= globalVariables.getAllPatients!.data
-                                      .patients[index].ageType;
-                                  globalVariables.patientsGender= globalVariables.getAllPatients!.data
-                                      .patients[index].gender;
+                                  globalVariables.patientName = globalVariables
+                                      .getAllPatients!.patients[index].name;
+                                  globalVariables.patientAge = globalVariables
+                                      .getAllPatients!.patients[index].age;
+                                  globalVariables.patientAgeType =
+                                      globalVariables.getAllPatients!
+                                          .patients[index].ageType;
+                                  globalVariables.patientsGender =
+                                      globalVariables.getAllPatients!
+                                          .patients[index].gender;
                                   globalVariables.patientId = globalVariables
-                                      .getAllPatients!.data.patients[index].id;
+                                      .getAllPatients!.patients[index].id;
                                   NavigationService().navigateToScreen(
                                       PatientPrescriptionPage(
-                                          globalVariables.getAllPatients!.data
+                                          globalVariables.getAllPatients!
                                               .patients[index].name,
-                                          globalVariables.getAllPatients!.data
+                                          globalVariables.getAllPatients!
                                               .patients[index].age,
-                                          globalVariables.getAllPatients!.data
+                                          globalVariables.getAllPatients!
                                               .patients[index].ageType,
-                                          globalVariables.getAllPatients!.data
+                                          globalVariables.getAllPatients!
                                               .patients[index].gender,
-                                          globalVariables.getAllPatients!.data
+                                          globalVariables.getAllPatients!
                                               .patients[index].profileImage));
                                 },
                                 child: Container(
@@ -195,7 +196,6 @@ class _MyPatientPageState extends State<MyPatientPage> {
                                                   // patientimage[index],
                                                   globalVariables
                                                       .getAllPatients!
-                                                      .data
                                                       .patients[index]
                                                       .profileImage,
                                                   fit: BoxFit.fill,
@@ -219,7 +219,6 @@ class _MyPatientPageState extends State<MyPatientPage> {
                                                     // patientName[index],
                                                     globalVariables
                                                         .getAllPatients!
-                                                        .data
                                                         .patients[index]
                                                         .name,
                                                     style: TextStyle(
@@ -232,7 +231,7 @@ class _MyPatientPageState extends State<MyPatientPage> {
                                                     children: [
                                                       Text(
                                                         // "${patientAge[index]} Years -",
-                                                        "${globalVariables.getAllPatients!.data.patients[index].age} ${globalVariables.getAllPatients!.data.patients[index].ageType} -",
+                                                        "${globalVariables.getAllPatients!.patients[index].age} ${globalVariables.getAllPatients!.patients[index].ageType} -",
                                                         style: TextStyle(
                                                             fontSize: 17,
                                                             fontWeight:
@@ -248,7 +247,6 @@ class _MyPatientPageState extends State<MyPatientPage> {
                                                         // patientGender[index],
                                                         globalVariables
                                                             .getAllPatients!
-                                                            .data
                                                             .patients[index]
                                                             .gender,
                                                         style: TextStyle(

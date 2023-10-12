@@ -76,7 +76,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               alignment: Alignment.center,
                               child: Text(
                                 // "AM",
-                                "${globalVariables.getDoctorDetails!.data.doctor.name[0]}",
+                                "${globalVariables.getDoctorDetails!.doctor.name[0]}",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 30,
@@ -89,7 +89,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                           ),
                           Text(
                             // "Dr.\nArpan Manna",
-                            "Dr.\n${globalVariables.getDoctorDetails!.data.doctor.name}",
+                            "Dr.\n${globalVariables.getDoctorDetails!.doctor.name}",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 28,
@@ -291,7 +291,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             ),
                             Text(
                               // "Dr. Ajay Singh",
-                              "Dr. ${globalVariables.getDoctorDetails!.data.doctor.name}",
+                              "Dr. ${globalVariables.getDoctorDetails!.doctor.name}",
                               style: TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.normal,
@@ -307,7 +307,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             child: Image.network(
                               // "assets/images/instadoclogo.png",
                               globalVariables
-                                  .getDoctorDetails!.data.doctor.profileImage,
+                                  .getDoctorDetails!.doctor.profileImage,
                               fit: BoxFit.fill,
                               width: MediaQuery.of(context).size.width,
                             ),

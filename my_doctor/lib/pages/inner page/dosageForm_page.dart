@@ -88,7 +88,7 @@ class _DosageFormPageState extends State<DosageFormPage> {
                   mainAxisSpacing: 8,
                   crossAxisSpacing: 8,
                   mainAxisExtent: 55),
-              itemCount: globalVariables.getDosageForm!.data.data.length,
+              itemCount: globalVariables.getDosageForm!.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   height: 100,
@@ -102,9 +102,9 @@ class _DosageFormPageState extends State<DosageFormPage> {
                         // dosageform = "Tablet";
                         // globalVariables.dosageform = "Tablet";
                         globalVariables.dosageform = globalVariables
-                            .getDosageForm!.data.data[index].type;
+                            .getDosageForm!.data[index].type;
                         globalVariables.dosageFormId =
-                            globalVariables.getDosageForm!.data.data[index].id;
+                            globalVariables.getDosageForm!.data[index].id;
                         widget.onNext();
                       });
                       // print("button pressed: ${dosageform}");
@@ -142,7 +142,7 @@ class _DosageFormPageState extends State<DosageFormPage> {
                             child: Text(
                               // "Tablet",
                               globalVariables
-                                  .getDosageForm!.data.data[index].type,
+                                  .getDosageForm!.data[index].type,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 14,

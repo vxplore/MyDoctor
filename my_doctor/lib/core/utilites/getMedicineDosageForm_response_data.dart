@@ -1,58 +1,31 @@
 import 'dart:convert';
 
 class GetmedicinedosageformResponseData {
-  Data data;
-  int httpStatus;
-
-  GetmedicinedosageformResponseData({
-    required this.data,
-    required this.httpStatus,
-  });
-
-  factory GetmedicinedosageformResponseData.fromJson(String str) =>
-      GetmedicinedosageformResponseData.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory GetmedicinedosageformResponseData.fromMap(
-          Map<String, dynamic> json) =>
-      GetmedicinedosageformResponseData(
-        data: Data.fromMap(json["data"]),
-        httpStatus: json["http_status"],
-      );
-
-  Map<String, dynamic> toMap() => {
-        "data": data.toMap(),
-        "http_status": httpStatus,
-      };
-}
-
-class Data {
   bool status;
   String message;
   List<Datum> data;
 
-  Data({
+  GetmedicinedosageformResponseData({
     required this.status,
     required this.message,
     required this.data,
   });
 
-  factory Data.fromJson(String str) => Data.fromMap(json.decode(str));
+  factory GetmedicinedosageformResponseData.fromJson(String str) => GetmedicinedosageformResponseData.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Data.fromMap(Map<String, dynamic> json) => Data(
-        status: json["status"],
-        message: json["message"],
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromMap(x))),
-      );
+  factory GetmedicinedosageformResponseData.fromMap(Map<String, dynamic> json) => GetmedicinedosageformResponseData(
+    status: json["status"],
+    message: json["message"],
+    data: List<Datum>.from(json["data"].map((x) => Datum.fromMap(x))),
+  );
 
   Map<String, dynamic> toMap() => {
-        "status": status,
-        "message": message,
-        "data": List<dynamic>.from(data.map((x) => x.toMap())),
-      };
+    "status": status,
+    "message": message,
+    "data": List<dynamic>.from(data.map((x) => x.toMap())),
+  };
 }
 
 class Datum {
@@ -69,12 +42,12 @@ class Datum {
   String toJson() => json.encode(toMap());
 
   factory Datum.fromMap(Map<String, dynamic> json) => Datum(
-        id: json["id"],
-        type: json["type"],
-      );
+    id: json["id"],
+    type: json["type"],
+  );
 
   Map<String, dynamic> toMap() => {
-        "id": id,
-        "type": type,
-      };
+    "id": id,
+    "type": type,
+  };
 }

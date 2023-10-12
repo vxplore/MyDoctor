@@ -206,9 +206,9 @@ abstract class _AddMedicationViewModel with Store {
 
     if (response == null) {
     } else {
-      if (response.data.isAdded == true) {
+      if (response.isAdded == true) {
         var snackdemo = SnackBar(
-          content: Text("${response.data.message}"),
+          content: Text("${response.message}"),
           backgroundColor: Colors.green,
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -220,7 +220,7 @@ abstract class _AddMedicationViewModel with Store {
         // Get.to(() => BottomNavBar());
       } else {
         var snackdemo = SnackBar(
-          content: Text("${response.data.message}"),
+          content: Text("${response.message}"),
           backgroundColor: Colors.red,
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -231,33 +231,13 @@ abstract class _AddMedicationViewModel with Store {
     }
   }
 
-  Future<GetmedicinesResponseData?> getMedicinesApi() async {
-    /* var request = http.Request('GET', Uri.parse('https://v-xplore.com/dev/rohan/e-prescription/user/patient/medicine?patient_id=PATE628124A1695723317'));
-
-
-    http.StreamedResponse response = await request.send();*/
-    final getMedicineListsApiRepo = dependency<ApiRepository>();
-    var result = await getMedicineListsApiRepo.getmedicinelists();
-    var rr = "";
-    if (result.statusCode == 200) {
-      rr = await result.stream.bytesToString();
-      print(rr);
-      var resps = GetmedicinesResponseData.fromJson(rr);
-      globalVariables.getMedicineListFromApi = resps;
-      /* if (resps.status == true) {
-        prefs.setUserId(resps.data.userId);
-        Get.snackbar("Success", "OTP Verified",
-            snackPosition: SnackPosition.BOTTOM);
-        // Get.to(() => BottomNavBar());
-        NavigationService().navigateToScreen(BottomNavBar());
-        otpController.clear();
-      } else {
-        Get.snackbar("Error", resps.message,
-            snackPosition: SnackPosition.BOTTOM, colorText: kRedColor);
-      }*/
-      return resps;
-    } else {
-      return null;
+  Future getMedicinesApi() async {
+    final repo = dependency<Repository>();
+    var response = await repo.getmedicinelists();
+    if(response == null){}
+    else{
+      globalVariables.getMedicineListFromApi = response;
     }
   }
-}
+  }
+

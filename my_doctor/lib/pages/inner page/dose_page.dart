@@ -85,7 +85,7 @@ class _DosePageState extends State<DosePage> {
                   crossAxisSpacing: 8,
                   mainAxisExtent: 55),
               itemCount:
-                  globalVariables.getMedicineDosageQuantity!.data.data.length,
+                  globalVariables.getMedicineDosageQuantity!.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   height: 70,
@@ -95,9 +95,9 @@ class _DosePageState extends State<DosePage> {
                       setState(() {
                         // globalVariables.dose = "100mg";
                         globalVariables.dose = globalVariables
-                            .getMedicineDosageQuantity!.data.data[index].dose;
+                            .getMedicineDosageQuantity!.data[index].dose;
                         globalVariables.doseId = globalVariables
-                            .getMedicineDosageQuantity!.data.data[index].id;
+                            .getMedicineDosageQuantity!.data[index].id;
                         widget.onNext();
                       });
                       print("button pressed: ${globalVariables.dose}");
@@ -126,7 +126,7 @@ class _DosePageState extends State<DosePage> {
                             alignment: Alignment.center,
                             child: Text(
                               // "100mg",
-                              globalVariables.getMedicineDosageQuantity!.data
+                              globalVariables.getMedicineDosageQuantity!
                                   .data[index].dose,
                               textAlign: TextAlign.center,
                               style: TextStyle(

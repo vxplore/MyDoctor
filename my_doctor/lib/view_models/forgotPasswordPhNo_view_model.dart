@@ -24,10 +24,10 @@ var result = await verifyMobileNoApiRepo.verifymobileno(emailController.text);
     rr = await result.stream.bytesToString();
     print(rr);
     var resp = VerifymobilenoResponseData.fromJson(rr);
-    if (resp.data.isVerified == true) {
+    if (resp.isVerified == true) {
       globalVariables.isOtpFromForgotPassword = true;
       var snackdemo = SnackBar(
-        content: Text('OTP is ${resp.data.otp}'),
+        content: Text('Please verify with this OTP : ${resp.otp}'),
         backgroundColor: Colors.green,
         elevation: 10,
         behavior: SnackBarBehavior.floating,
@@ -37,7 +37,7 @@ var result = await verifyMobileNoApiRepo.verifymobileno(emailController.text);
       NavigationService().navigateToScreen(OtpPage(emailController.text));
     } else {
       var snackdemo = SnackBar(
-        content: Text('${resp.data.message}'),
+        content: Text('${resp.message}'),
         backgroundColor: Colors.red,
         elevation: 10,
         behavior: SnackBarBehavior.floating,

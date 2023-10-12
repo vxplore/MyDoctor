@@ -36,10 +36,10 @@ abstract class _OtpViewModel with Store {
 
     if (response == null) {
     } else {
-      if (response.data.isMatched == true) {
-        prefs.setUserId(response.data.userId);
+      if (response.isMatched == true) {
+        prefs.setUserId(response.userId);
         var snackdemo = SnackBar(
-          content: Text('${response.data.message}'),
+          content: Text('${response.message}'),
           backgroundColor: Colors.green,
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -56,7 +56,7 @@ abstract class _OtpViewModel with Store {
         }
       } else {
         var snackdemo = SnackBar(
-          content: Text('${response.data.message}'),
+          content: Text('${response.message}'),
           backgroundColor: Colors.red,
           elevation: 10,
           behavior: SnackBarBehavior.floating,

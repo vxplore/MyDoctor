@@ -168,7 +168,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                         );
                       },
                       child: globalVariables
-                                  .getMedicineList!.data.medicine.isEmpty ==
+                                  .getMedicineList!.medicine.isEmpty ==
                               true
                           ? Center(
                               child: Text(
@@ -177,7 +177,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                             )
                           : ListView.builder(
                               itemCount: globalVariables
-                                  .getMedicineList!.data.medicine.length,
+                                  .getMedicineList!.medicine.length,
                               scrollDirection: Axis.vertical,
                               physics: BouncingScrollPhysics(),
                               itemBuilder: (BuildContext context, int index) {
@@ -203,7 +203,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                                             children: [
                                               Text(
                                                 // "Tablet",
-                                                "${globalVariables.getMedicineList!.data.medicine[index].type}",
+                                                "${globalVariables.getMedicineList!.medicine[index].type}",
                                                 style: TextStyle(
                                                     fontSize: 14,
                                                     fontWeight:
@@ -215,7 +215,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                                                 children: [
                                                   Text(
                                                     // "Paracetamol",
-                                                    "${globalVariables.getMedicineList!.data.medicine[index].name}",
+                                                    "${globalVariables.getMedicineList!.medicine[index].name}",
                                                     style: TextStyle(
                                                         fontSize: 17,
                                                         fontWeight:
@@ -224,7 +224,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                                                   ),
                                                   Text(
                                                     // "(300mg)",
-                                                    " (${globalVariables.getMedicineList!.data.medicine[index].dose})",
+                                                    " (${globalVariables.getMedicineList!.medicine[index].dose})",
                                                     style: TextStyle(
                                                         fontSize: 17,
                                                         fontWeight:

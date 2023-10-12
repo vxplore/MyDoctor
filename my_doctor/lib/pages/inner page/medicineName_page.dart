@@ -86,7 +86,7 @@ class _NamePageState extends State<NamePage> {
                   mainAxisSpacing: 8,
                   crossAxisSpacing: 8,
                   mainAxisExtent: 55),
-              itemCount: globalVariables.getMedicineName!.data.data.length,
+              itemCount: globalVariables.getMedicineName!.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   height: 70,
@@ -96,9 +96,9 @@ class _NamePageState extends State<NamePage> {
                       setState(() {
                         // globalVariables.names = "Paracetamol";
                         globalVariables.names = globalVariables
-                            .getMedicineName!.data.data[index].name;
+                            .getMedicineName!.data[index].name;
                         globalVariables.nameId = globalVariables
-                            .getMedicineName!.data.data[index].id;
+                            .getMedicineName!.data[index].id;
                         widget.onNext();
                       });
                       print("button pressed: ${globalVariables.names}");
@@ -128,7 +128,7 @@ class _NamePageState extends State<NamePage> {
                             child: Text(
                               // "Paracetamol",
                               globalVariables
-                                  .getMedicineName!.data.data[index].name,
+                                  .getMedicineName!.data[index].name,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 14, color: Color(0xff5A88BB)),

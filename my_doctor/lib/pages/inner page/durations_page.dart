@@ -100,7 +100,7 @@ class _DurationPageState extends State<DurationPage> {
                   crossAxisSpacing: 8,
                   mainAxisExtent: 55),
               itemCount:
-                  globalVariables.getMedicineDosageDuration!.data.data.length,
+                  globalVariables.getMedicineDosageDuration!.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   height: 70,
@@ -115,11 +115,11 @@ class _DurationPageState extends State<DurationPage> {
                         // globalVariables.durations = "To Coninue";
                         globalVariables.durations = globalVariables
                             .getMedicineDosageDuration!
-                            .data
+
                             .data[index]
                             .duration;
                         globalVariables.durationsId = globalVariables
-                            .getMedicineDosageDuration!.data.data[index].id;
+                            .getMedicineDosageDuration!.data[index].id;
                       });
                       var entryList = dataFromDialogduration?.entries.toList();
                       print("button pressed: ${globalVariables.durations}");
@@ -153,8 +153,7 @@ class _DurationPageState extends State<DurationPage> {
                             alignment: Alignment.center,
                             child: Text(
                               // "To Coninue",
-                              globalVariables.getMedicineDosageDuration!.data
-                                  .data[index].duration,
+                              globalVariables.getMedicineDosageDuration!.data[index].duration,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 14, color: Color(0xff5A88BB)),

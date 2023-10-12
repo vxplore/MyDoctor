@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 class GetmedicinesResponseData {
-  Data data;
-  int httpStatus;
+  bool status;
+  String message;
+  List<Medicine> medicine;
 
   GetmedicinesResponseData({
-    required this.data,
-    required this.httpStatus,
+    required this.status,
+    required this.message,
+    required this.medicine,
   });
 
   factory GetmedicinesResponseData.fromJson(String str) => GetmedicinesResponseData.fromMap(json.decode(str));
@@ -14,32 +16,6 @@ class GetmedicinesResponseData {
   String toJson() => json.encode(toMap());
 
   factory GetmedicinesResponseData.fromMap(Map<String, dynamic> json) => GetmedicinesResponseData(
-    data: Data.fromMap(json["data"]),
-    httpStatus: json["http_status"],
-  );
-
-  Map<String, dynamic> toMap() => {
-    "data": data.toMap(),
-    "http_status": httpStatus,
-  };
-}
-
-class Data {
-  bool status;
-  String message;
-  List<Medicine> medicine;
-
-  Data({
-    required this.status,
-    required this.message,
-    required this.medicine,
-  });
-
-  factory Data.fromJson(String str) => Data.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory Data.fromMap(Map<String, dynamic> json) => Data(
     status: json["status"],
     message: json["message"],
     medicine: List<Medicine>.from(json["medicine"].map((x) => Medicine.fromMap(x))),

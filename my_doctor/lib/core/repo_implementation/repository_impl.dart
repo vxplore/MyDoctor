@@ -3,6 +3,7 @@ import 'package:my_doctor/core/utilites/addMedicine_response_data.dart';
 import 'package:my_doctor/core/utilites/addPatientPersonalInfo_response_data.dart';
 import 'package:my_doctor/core/utilites/getAllPatients_response_data.dart';
 import 'package:my_doctor/core/utilites/getDoctorDetails_response_data.dart';
+import 'package:my_doctor/core/utilites/getMedicineList_response_data.dart';
 import 'package:my_doctor/core/utilites/otp_response_data.dart';
 import 'package:my_doctor/core/utilites/professional_add_response_data.dart';
 import 'package:my_doctor/core/utilites/register_response_data.dart';
@@ -62,7 +63,7 @@ class RepositoryImpl extends Repository {
       rr = await result.stream.bytesToString();
       print(rr);
       globalVariables.res =
-          SpecialityDropdownData.fromJson(rr).data.specializations;
+          SpecialityDropdownData.fromJson(rr).specializations;
       globalVariables.specialityapiName =
           globalVariables.res.map((e) => e.name.toString()).toList();
       print(globalVariables.specialityapiName);
@@ -147,6 +148,20 @@ class RepositoryImpl extends Repository {
       rr = await result.stream.bytesToString();
       print(rr);
       var resp = AddmedicineResponseData.fromJson(rr);
+      return resp;
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  Future<GetmedicinesResponseData?> getmedicinelists() async {
+    var result = await ApiRepo.getmedicinelists();
+    var rr = "";
+    if (result.statusCode == 200) {
+      rr = await result.stream.bytesToString();
+      print(rr);
+      var resp = GetmedicinesResponseData.fromJson(rr);
       return resp;
     } else {
       return null;

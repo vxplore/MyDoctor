@@ -80,10 +80,10 @@ abstract class _ProfessionalDetailsViewModel with Store {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackdemo);
     } else {
-      if (response.data.isAdded == true) {
-        globalVariables.isAddApiLoading = response.data.isAdded;
+      if (response.isAdded == true) {
+        globalVariables.isAddApiLoading = response.isAdded;
         var snackdemo = SnackBar(
-          content: Text('${response.data.message}'),
+          content: Text('${response.message}'),
           backgroundColor: Colors.green,
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -93,7 +93,7 @@ abstract class _ProfessionalDetailsViewModel with Store {
         NavigationService().navigateToScreen(CongratulationsPage());
       } else {
         var snackdemo = SnackBar(
-          content: Text('${response.data.message}'),
+          content: Text('${response.message}'),
           backgroundColor: Colors.red,
           elevation: 10,
           behavior: SnackBarBehavior.floating,

@@ -3,6 +3,7 @@ import '../utilites/addMedicine_response_data.dart';
 import '../utilites/addPatientPersonalInfo_response_data.dart';
 import '../utilites/getAllPatients_response_data.dart';
 import '../utilites/getDoctorDetails_response_data.dart';
+import '../utilites/getMedicineList_response_data.dart';
 import '../utilites/login_response_data.dart';
 import '../utilites/otp_response_data.dart';
 import '../utilites/professional_add_response_data.dart';
@@ -38,4 +39,5 @@ abstract class Repository {
       String userid, String img, String age, String gender, String ageTypes);
 
   Future<AddmedicineResponseData?> addmedicine();
+  Future<GetmedicinesResponseData?> getmedicinelists();
 }

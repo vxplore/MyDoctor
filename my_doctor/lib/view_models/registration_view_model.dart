@@ -69,10 +69,10 @@ abstract class _RegistrationViewModel with Store {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackdemo);
     } else {
-      if (response.data.isAdded == true) {
-        prefs.setUserId(response.data.userId);
+      if (response.isAdded == true) {
+        prefs.setUserId(response.userId);
         var snackdemo = SnackBar(
-          content: Text('${response.data.message}'),
+          content: Text('${response.message}'),
           backgroundColor: Colors.green,
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -82,7 +82,7 @@ abstract class _RegistrationViewModel with Store {
         nextStep();
       } else {
         var snackdemo = SnackBar(
-          content: Text('${response.data.message}'),
+          content: Text('${response.message}'),
           backgroundColor: Colors.red,
           elevation: 10,
           behavior: SnackBarBehavior.floating,

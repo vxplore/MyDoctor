@@ -1,4 +1,3 @@
-/*
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_doctor/pages/addPatient_page.dart';
@@ -45,8 +44,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-*/
 
+/*
 import 'package:flutter/material.dart';
 
 void main() {
@@ -62,11 +61,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
-/*class Item {
-  final String name;
+// class Item {
+//   final String name;
+//
+//   Item(this.name);
+// }
 
-  Item(this.name);
-}*/
 
 
 class SearchListDemo extends StatefulWidget {
@@ -76,18 +76,25 @@ class SearchListDemo extends StatefulWidget {
 
 class _SearchListDemoState extends State<SearchListDemo> {
   // Sample data for the initial list
-/*final List<Item> items = [
+// final List<Item> items = [
+//
+//   ];
 
-  ];*/
 
   final List<Map<String,dynamic>> items = [
-   /* {"NAME":"COLD",
+ {"NAME":"COLD",
       "TYPE":"001"},
     {"NAME":"DUST",
-      "ID":"002"},*/
+      "ID":"002"},
+
   ];
-  /*List<Item> selectedItems = [];
-  List<Item> filteredItems = [];*/
+*/
+/*
+List<Item> selectedItems = [];
+  List<Item> filteredItems = [];
+*//*
+
+
 
   List<Map<String,dynamic>> filteredItems = [];
   List<Map<String,dynamic>> selectedItems = [];
@@ -106,14 +113,17 @@ class _SearchListDemoState extends State<SearchListDemo> {
   void initState() {
     super.initState();
     // Initially, display all items in the list.
-    filteredItems = items;
+    // filteredItems = items;
   }
 
   void filterItems(String query) {
     setState(() {
+*/
 /*filteredItems = items
           .where((item) => item.name.toLowerCase().contains(query.toLowerCase()))
-          .toList();*/
+          .toList();*//*
+
+
 
       filteredItems = items
           .where((item) => item["NAME"].toLowerCase().contains(query.toLowerCase()))
@@ -131,7 +141,7 @@ class _SearchListDemoState extends State<SearchListDemo> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // Search input field
-         /* Padding(
+ Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               onChanged: filterItems,
@@ -139,7 +149,8 @@ class _SearchListDemoState extends State<SearchListDemo> {
                 hintText: "Search...",
               ),
             ),
-          ),*/
+          ),
+
           Container(height:40,),
           InkWell(onTap:() async {
  final newEntry = await _showAddItemDialog("ENV_ALRG");
@@ -337,7 +348,7 @@ class _SearchListDemoState extends State<SearchListDemo> {
                       "TYPE":alrgType// Replace "New Item" with the desired name
                       // Assign a unique ID or use a dynamic method to generate one
                     };
-                    items.add(newEntryss);
+                    // items.add(newEntryss);
                     selectedItems.add(newEntryss);
                     filteredItems = items; // Update filteredItems to show all items
                   });
@@ -354,3 +365,4 @@ class _SearchListDemoState extends State<SearchListDemo> {
   }
 
 }
+*/
