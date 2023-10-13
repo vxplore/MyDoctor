@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:my_doctor/pages/addPatient_page.dart';
-import 'package:my_doctor/pages/additionalAssesment_page.dart';
-import 'package:my_doctor/pages/intro_page.dart';
-import 'package:my_doctor/pages/login_page.dart';
-import 'package:my_doctor/pages/myPatient_page.dart';
-import 'package:my_doctor/pages/otp_page.dart';
-import 'package:my_doctor/pages/professionalDetails_page.dart';
-import 'package:my_doctor/pages/registration_page.dart';
 import 'package:my_doctor/pages/splash_page.dart';
 import 'package:my_doctor/service/navigation_service.dart';
-
 import 'core/di/di.dart';
 
 Future<void> main() async {

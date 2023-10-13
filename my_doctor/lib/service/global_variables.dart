@@ -19,6 +19,8 @@ class GlobalVariables {
   }
 
   GlobalVariables._internal();
+
+  List<Map<String, dynamic>> selectedItems = [];
   List<Specialization> res = List.empty();
   bool isOtpFromForgotPassword = false;
   String? patientId;
