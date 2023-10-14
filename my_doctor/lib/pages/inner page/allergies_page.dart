@@ -15,14 +15,14 @@ class _AllergiesPageState extends State<AllergiesPage> {
   // List<Map<String, dynamic>> selectedItems = [];
 
   List<Map<String, dynamic>> getSelectedItemsByType(String targetType) {
-    return globalVariables.selectedItems
+    return globalVariables.selectedAllergy
         .where((item) => item["type"] == targetType)
         .toList();
   }
 
   void removeSelectedAllergyByType(String targetType) {
     setState(() {
-      globalVariables.selectedItems
+      globalVariables.selectedAllergy
           .removeWhere((item) => item["type"] == targetType);
     });
   }
@@ -62,7 +62,7 @@ class _AllergiesPageState extends State<AllergiesPage> {
                         fontWeight: FontWeight.normal,
                         color: Color(0xffC7C7C7)),
                   ),
-                  globalVariables.selectedItems
+                  globalVariables.selectedAllergy
                           .where((item) => item["type"] == "environmental")
                           .isEmpty
                       ? Container(
@@ -192,7 +192,7 @@ class _AllergiesPageState extends State<AllergiesPage> {
                         fontWeight: FontWeight.normal,
                         color: Color(0xffC7C7C7)),
                   ),
-                  globalVariables.selectedItems
+                  globalVariables.selectedAllergy
                           .where((item) => item["type"] == "food")
                           .isEmpty
                       ? Container(
@@ -321,7 +321,7 @@ class _AllergiesPageState extends State<AllergiesPage> {
                         fontWeight: FontWeight.normal,
                         color: Color(0xffC7C7C7)),
                   ),
-                  globalVariables.selectedItems
+                  globalVariables.selectedAllergy
                           .where((item) => item["type"] == "drug")
                           .isEmpty
                       ? Container(
@@ -450,7 +450,7 @@ class _AllergiesPageState extends State<AllergiesPage> {
                         fontWeight: FontWeight.normal,
                         color: Color(0xffC7C7C7)),
                   ),
-                  globalVariables.selectedItems
+                  globalVariables.selectedAllergy
                           .where((item) => item["type"] == "other")
                           .isEmpty
                       ? Container(
@@ -584,12 +584,12 @@ class _AllergiesPageState extends State<AllergiesPage> {
                 if (itemName != null && itemName!.isNotEmpty) {
                   setState(() {
                     final newEntryss = {"name": itemName, "type": alrgType};
-                    globalVariables.selectedItems.add(newEntryss);
+                    globalVariables.selectedAllergy.add(newEntryss);
                   });
                   Navigator.of(context).pop(); // Close the dialog.
                 }
                 print(
-                    "${globalVariables.selectedItems}"); // Return the itemName.
+                    "${globalVariables.selectedAllergy}"); // Return the itemName.
               },
               child: Text("Add"),
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_doctor/pages/inner%20page/habit_page.dart';
 import 'package:my_doctor/pages/myPatient_page.dart';
 import 'package:my_doctor/service/global_variables.dart';
 import 'package:my_doctor/service/navigation_service.dart';
@@ -28,6 +29,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
             height: 65,
             child: Text(
               "Personal Info",
+              textAlign: TextAlign.center,
               style: TextStyle(fontSize: 17, color: Color(0xff9D9D9D)),
             ),
           ),
@@ -43,13 +45,19 @@ class _AddPatientPageState extends State<AddPatientPage> {
               style: TextStyle(fontSize: 17, color: Color(0xff9D9D9D)),
             ),
           ),
+          Tab(
+            child: Text(
+              "Habit",
+              style: TextStyle(fontSize: 17, color: Color(0xff9D9D9D)),
+            ),
+          ),
         ],
       );
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Color(0xffF3FBFF),
@@ -63,6 +71,9 @@ class _AddPatientPageState extends State<AddPatientPage> {
                 globalVariables.profileImagePath = "";
                 globalVariables.ageController.text = "";
                 globalVariables.dropdownvalue = "Years";
+                globalVariables.selectedDisease = [];
+                globalVariables.selectedAllergy = [];
+                globalVariables.selectedHabits = [];
               });
               print("After clear : ${globalVariables.patientGender}");
               Navigator.pop(context);
@@ -99,6 +110,9 @@ class _AddPatientPageState extends State<AddPatientPage> {
                     globalVariables.profileImagePath = "";
                     globalVariables.ageController.text = "";
                     globalVariables.dropdownvalue = "Years";
+                    globalVariables.selectedDisease = [];
+                    globalVariables.selectedAllergy = [];
+                    globalVariables.selectedHabits = [];
                   });
                   print("After clear : ${globalVariables.patientGender}");
                   NavigationService().navigateToScreen(MainDashboardPage());
@@ -122,7 +136,12 @@ class _AddPatientPageState extends State<AddPatientPage> {
         ),
         body: TabBarView(
           physics: NeverScrollableScrollPhysics(),
-          children: [PatientPersonalInfopage(), AllergiesPage(), HistoryPage()],
+          children: [
+            PatientPersonalInfopage(),
+            AllergiesPage(),
+            HistoryPage(),
+            HabitPage()
+          ],
         ),
       ),
     );

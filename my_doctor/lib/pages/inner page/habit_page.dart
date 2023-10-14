@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 import '../../service/global_variables.dart';
 
-class HistoryPage extends StatefulWidget {
-  const HistoryPage({super.key});
+class HabitPage extends StatefulWidget {
+  const HabitPage({super.key});
 
   @override
-  State<HistoryPage> createState() => _HistoryPageState();
+  State<HabitPage> createState() => _HistoryPageState();
 }
 
-class _HistoryPageState extends State<HistoryPage> {
+class _HistoryPageState extends State<HabitPage> {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -26,20 +26,20 @@ class _HistoryPageState extends State<HistoryPage> {
             SizedBox(
               height: 25,
             ),
-            globalVariables.selectedDisease.isNotEmpty
+            globalVariables.selectedHabits.isNotEmpty
                 ? Container(
                     width: 0,
                     height: 0,
                   )
                 : Text(
-                    "you have not added any\npatient's disease history",
+                    "you have not added any patient's habit",
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.normal,
                         color: Color(0xffC7C7C7)),
                   ),
             SizedBox(
-              height: 25,
+              height: 20,
             ),
             InkWell(
               onTap: () async {
@@ -59,7 +59,7 @@ class _HistoryPageState extends State<HistoryPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Text(
-                    "ADD DISEASE HISTORY",
+                    "ADD HABIT",
                     style: TextStyle(
                         color: Color(0xff1468B3), fontWeight: FontWeight.bold),
                   ),
@@ -71,7 +71,7 @@ class _HistoryPageState extends State<HistoryPage> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: globalVariables.selectedDisease.length,
+                itemCount: globalVariables.selectedHabits.length,
                 itemBuilder: (context, index) {
                   return Card(
                     shape:
@@ -89,7 +89,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                 left: 20, top: 17, bottom: 13),
                             child: Text(
                               // "Tablet",
-                              "${globalVariables.selectedDisease[index]}",
+                              "${globalVariables.selectedHabits[index]}",
                               style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.normal,
@@ -103,7 +103,7 @@ class _HistoryPageState extends State<HistoryPage> {
                             child: InkWell(
                               onTap: () {
                                 setState(() {
-                                  globalVariables.selectedDisease
+                                  globalVariables.selectedHabits
                                       .removeAt(index);
                                 });
                               },
@@ -133,9 +133,9 @@ class _HistoryPageState extends State<HistoryPage> {
       builder: (context) {
         String? itemName; // Initialize itemName variable here.
         return AlertDialog(
-          title: Text("Add Disease History"),
+          title: Text("Add Habit"),
           content: TextField(
-            decoration: InputDecoration(labelText: "Disease Name"),
+            decoration: InputDecoration(labelText: "Habit Name"),
             onChanged: (value) {
               itemName = value; // Assign the entered value to itemName.
             },
@@ -151,12 +151,12 @@ class _HistoryPageState extends State<HistoryPage> {
               onPressed: () {
                 if (itemName != null && itemName!.isNotEmpty) {
                   setState(() {
-                    globalVariables.selectedDisease.add(itemName!);
+                    globalVariables.selectedHabits.add(itemName!);
                   });
                   Navigator.of(context).pop(); // Close the dialog.
                 }
                 print(
-                    "${globalVariables.selectedDisease}"); // Return the itemName.
+                    "${globalVariables.selectedHabits}"); // Return the itemName.
               },
               child: Text("Add"),
             ),

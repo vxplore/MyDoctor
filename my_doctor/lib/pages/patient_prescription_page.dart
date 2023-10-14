@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_doctor/pages/patient_complaints_page.dart';
 import 'package:my_doctor/service/global_variables.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PatientPrescriptionPage extends StatefulWidget {
   final String name;
@@ -127,11 +128,208 @@ class _PatientPrescriptionPageState extends State<PatientPrescriptionPage> {
               size: 28,
             ),
           ),
-          Icon(
-            Icons.more_vert,
-            color: Colors.white,
-            size: 28,
-          ),
+          InkWell(
+              onTap: () {
+                // Navigator.pop(context);
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 30.0),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 65,
+                              ),
+                              Card(
+                                child: Container(
+                                  // height: 90,
+                                  width: 200,
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 150,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              print("chg");
+                                              /* NavigationService()
+                                                  .navigateToScreen(
+                                                  DoctorBankDetailsPage());*/
+                                            },
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "Edit",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 15),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 150,
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                              final Uri url = Uri(
+                                                  scheme: "tel",
+                                                  path: "18888888818");
+                                              if (await canLaunchUrl(url)) {
+                                                await launchUrl(url);
+                                              } else {
+                                                print("cannot start calling");
+                                              }
+                                            },
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "Refer",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 20),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 150,
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                              final Uri url = Uri(
+                                                  scheme: "tel",
+                                                  path: "18888888818");
+                                              if (await canLaunchUrl(url)) {
+                                                await launchUrl(url);
+                                              } else {
+                                                print("cannot start calling");
+                                              }
+                                            },
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "Delete",
+                                                style: TextStyle(
+                                                    color: Colors.red,
+                                                    fontSize: 20),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          // width: 150,
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                              final Uri url = Uri(
+                                                  scheme: "tel",
+                                                  path: "18888888818");
+                                              if (await canLaunchUrl(url)) {
+                                                await launchUrl(url);
+                                              } else {
+                                                print("cannot start calling");
+                                              }
+                                            },
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "Send Payment Link",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 20),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          // width: 150,
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                              final Uri url = Uri(
+                                                  scheme: "tel",
+                                                  path: "18888888818");
+                                              if (await canLaunchUrl(url)) {
+                                                await launchUrl(url);
+                                              } else {
+                                                print("cannot start calling");
+                                              }
+                                            },
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "Send SMS",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 20),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          // width: 150,
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                              final Uri url = Uri(
+                                                  scheme: "tel",
+                                                  path: "18888888818");
+                                              if (await canLaunchUrl(url)) {
+                                                await launchUrl(url);
+                                              } else {
+                                                print("cannot start calling");
+                                              }
+                                            },
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "Make a phone call",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 20),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          // width: 150,
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                              final Uri whatsapp = Uri.parse(
+                                                  "https://wa.me/18888888818");
+                                              launchUrl(whatsapp);
+                                            },
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "Send Whatsapp",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 20),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    barrierDismissible: false);
+              },
+              child: Icon(
+                Icons.more_vert,
+                size: 50,
+                color: Colors.white,
+              )),
         ],
       ),
       body: Center(
