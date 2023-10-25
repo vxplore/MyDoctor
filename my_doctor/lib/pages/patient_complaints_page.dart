@@ -4,6 +4,7 @@ import 'package:my_doctor/pages/additionalAssesment_page.dart';
 import 'package:my_doctor/pages/dashboardPage.dart';
 import 'package:my_doctor/pages/main_dashboard_page.dart';
 import 'package:my_doctor/pages/myPatient_page.dart';
+import 'package:my_doctor/pages/patient_prescription_page.dart';
 import 'package:my_doctor/service/navigation_service.dart';
 
 import '../service/global_variables.dart';
@@ -57,7 +58,16 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => PatientPrescriptionPage(
+                  globalVariables.patientName!,
+                  globalVariables.patientAge!,
+                  globalVariables.patientAgeType!,
+                  globalVariables.patientsGender!,
+                  globalVariables.patientImg!)),
+        );
         return false;
       },
       child: Scaffold(
@@ -68,7 +78,16 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
           toolbarHeight: 70,
           leading: InkWell(
             onTap: () {
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => PatientPrescriptionPage(
+                        globalVariables.patientName!,
+                        globalVariables.patientAge!,
+                        globalVariables.patientAgeType!,
+                        globalVariables.patientsGender!,
+                        globalVariables.patientImg!)),
+              );
             },
             child: Icon(
               Icons.arrow_back_ios_new,

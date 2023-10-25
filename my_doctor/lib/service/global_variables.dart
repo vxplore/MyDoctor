@@ -26,6 +26,7 @@ class GlobalVariables {
   List<Specialization> res = List.empty();
   bool isOtpFromForgotPassword = false;
   String? patientId;
+  String? patientImg;
   String? patientName;
   String? patientAge;
   String? patientAgeType;

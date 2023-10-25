@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_doctor/pages/followUpDate_page.dart';
+import 'package:my_doctor/pages/inner%20page/advise_page.dart';
 import 'package:my_doctor/pages/recommandedLabTest_page.dart';
 
 import '../pages/addMedication_page.dart';
@@ -173,11 +174,19 @@ class _ShowPatientLookUpDialogState extends State<ShowPatientLookUpDialog> {
                             Icons.textsms,
                             color: Color(0xff4E89B1),
                           ),
-                          Text(
-                            "Provide Advice",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 18, color: Color(0xff787878)),
+                          InkWell(onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AdvicePage()),
+                            );
+                          },
+                            child: Text(
+                              "Provide Advice",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 18, color: Color(0xff787878)),
+                            ),
                           ),
                         ],
                       ),

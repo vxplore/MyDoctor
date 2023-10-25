@@ -7,6 +7,8 @@ import 'package:my_doctor/pages/intro_page.dart';
 import 'package:my_doctor/pages/login_page.dart';
 import 'package:my_doctor/service/navigation_service.dart';
 
+import '../service/commonDataSource.dart';
+import '../service/global_variables.dart';
 import '../view_models/splash_view_model.dart';
 
 class SplashPage extends StatefulWidget {
@@ -15,18 +17,18 @@ class SplashPage extends StatefulWidget {
   @override
   State<SplashPage> createState() => _SplashPageState();
 }
+
 SplashLogo() {
   return Image.asset("assets/images/instadoclogo.png");
 }
-class _SplashPageState extends State<SplashPage> with WidgetsBindingObserver {
 
+class _SplashPageState extends State<SplashPage> with WidgetsBindingObserver {
   final vm = SplashViewModel();
   List<ReactionDisposer> _disposers = [];
 
   @override
   Widget build(BuildContext context) {
-
-     /* Timer.periodic(Duration(seconds: 3), (timer) {
+    /* Timer.periodic(Duration(seconds: 3), (timer) {
         NavigationService().navigateToScreen(LoginPage());
       })*/
 
@@ -38,20 +40,15 @@ class _SplashPageState extends State<SplashPage> with WidgetsBindingObserver {
     );
   }
 
-  Widget splashWidget(){
+  Widget splashWidget() {
     return Stack(
       children: [
         Center(child: LogoName()),
-        Align(
-          alignment: Alignment.bottomCenter,
-            child: CopyRight()
-        ),
+        Align(alignment: Alignment.bottomCenter, child: CopyRight()),
         Padding(
           padding: const EdgeInsets.all(70.0),
           child: Align(
-            alignment: Alignment.bottomCenter,
-              child: CircularIndicator()
-          ),
+              alignment: Alignment.bottomCenter, child: CircularIndicator()),
         )
       ],
     );
@@ -61,29 +58,18 @@ class _SplashPageState extends State<SplashPage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
 
-  Timer.periodic(Duration(seconds: 3), (timer) {
-       vm.screenSwitch();
-        timer.cancel();
-       /* if (timer.tick == 2)
-        {
-          print(timer.tick);
-          timer.cancel();
-
-
-// some code here once timed out
-
-        }*/
-      });
+    Timer.periodic(Duration(seconds: 3), (timer) async {
+      timer.cancel();
+      vm.screenSwitch();
+    });
     WidgetsBinding.instance.addObserver(this);
-
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    _disposers = [
-    ];
+    _disposers = [];
   }
 
   @override
@@ -96,11 +82,7 @@ class _SplashPageState extends State<SplashPage> with WidgetsBindingObserver {
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-
-  }
-
-
+  void didChangeAppLifecycleState(AppLifecycleState state) {}
 }
 
 CircularIndicator() {
@@ -110,29 +92,34 @@ CircularIndicator() {
     strokeWidth: 4,
   );
 }
+
 Widget CopyRight() {
   return Padding(
     padding: const EdgeInsets.all(16.0),
     child: Text("Instadoc.in © 2022. All Rights Reserved."),
   );
 }
+
 Widget LogoName() {
   return Column(
     mainAxisSize: MainAxisSize.min,
     children: [
       SplashLogo(),
-      Text.rich(
-          TextSpan(
-              text: 'e',
-              style: TextStyle(fontSize: 31,fontWeight: FontWeight.bold, color: Color(0xff41CFD9)),
-              children: <InlineSpan>[
-                TextSpan(
-                  text: 'PRESCRIPTION',
-                  style: TextStyle(fontSize: 31,fontWeight: FontWeight.bold,color: Color(0xffff0000)),
-                )
-              ]
-          )
-      )
+      Text.rich(TextSpan(
+          text: 'e',
+          style: TextStyle(
+              fontSize: 31,
+              fontWeight: FontWeight.bold,
+              color: Color(0xff41CFD9)),
+          children: <InlineSpan>[
+            TextSpan(
+              text: 'PRESCRIPTION',
+              style: TextStyle(
+                  fontSize: 31,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xffff0000)),
+            )
+          ]))
     ],
   );
 }
@@ -159,8 +146,8 @@ class _ProgressIndicatorExampleState extends State<ProgressIndicatorExample>
       vsync: this,
       duration: const Duration(seconds: 5),
     )..addListener(() {
-      setState(() {});
-    });
+        setState(() {});
+      });
     controller.repeat(reverse: false);
     super.initState();
   }

@@ -144,13 +144,14 @@ class _MyPatientPageState extends State<MyPatientPage> {
                               scrollDirection: Axis.vertical,
                               physics: AlwaysScrollableScrollPhysics(),
                               // itemCount: patientName.length,
-                              itemCount:
-                                  globalVariables.getAllPatients!.patients.length,
+                              itemCount: globalVariables
+                                  .getAllPatients!.patients.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return InkWell(
                                   onTap: () {
-                                    globalVariables.patientName = globalVariables
-                                        .getAllPatients!.patients[index].name;
+                                    globalVariables.patientName =
+                                        globalVariables.getAllPatients!
+                                            .patients[index].name;
                                     globalVariables.patientAge = globalVariables
                                         .getAllPatients!.patients[index].age;
                                     globalVariables.patientAgeType =
@@ -161,6 +162,10 @@ class _MyPatientPageState extends State<MyPatientPage> {
                                             .patients[index].gender;
                                     globalVariables.patientId = globalVariables
                                         .getAllPatients!.patients[index].id;
+                                    globalVariables.patientImg = globalVariables
+                                        .getAllPatients!
+                                        .patients[index]
+                                        .profileImage;
                                     NavigationService().navigateToScreen(
                                         PatientPrescriptionPage(
                                             globalVariables.getAllPatients!
@@ -199,7 +204,8 @@ class _MyPatientPageState extends State<MyPatientPage> {
                                               ):*/
                                                     ClipRRect(
                                                   borderRadius:
-                                                      BorderRadius.circular(100),
+                                                      BorderRadius.circular(
+                                                          100),
                                                   child: Image.network(
                                                     // patientimage[index],
                                                     globalVariables
@@ -207,9 +213,10 @@ class _MyPatientPageState extends State<MyPatientPage> {
                                                         .patients[index]
                                                         .profileImage,
                                                     fit: BoxFit.fill,
-                                                    width: MediaQuery.of(context)
-                                                        .size
-                                                        .width,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
                                                   ),
                                                 ),
                                               ),
