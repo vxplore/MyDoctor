@@ -4,6 +4,7 @@ import 'package:my_doctor/pages/followUpDate_page.dart';
 import 'package:my_doctor/pages/recommandedLabTest_page.dart';
 
 import '../pages/addMedication_page.dart';
+import '../pages/inner page/add_notes_page.dart';
 
 class ShowPatientLookUpDialog extends StatefulWidget {
   const ShowPatientLookUpDialog({super.key});
@@ -82,11 +83,20 @@ class _ShowPatientLookUpDialogState extends State<ShowPatientLookUpDialog> {
                             Icons.article,
                             color: Color(0xff33ACBF),
                           ),
-                          Text(
-                            "Add Notes",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 18, color: Color(0xff787878)),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AddNotesPage()),
+                              );
+                            },
+                            child: Text(
+                              "Add Notes",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 18, color: Color(0xff787878)),
+                            ),
                           ),
                         ],
                       ),

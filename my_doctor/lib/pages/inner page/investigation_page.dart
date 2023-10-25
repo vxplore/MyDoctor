@@ -1,22 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_doctor/pages/additionalAssesment_page.dart';
-import 'package:my_doctor/pages/dashboardPage.dart';
-import 'package:my_doctor/pages/main_dashboard_page.dart';
-import 'package:my_doctor/pages/myPatient_page.dart';
-import 'package:my_doctor/service/navigation_service.dart';
 
-import '../service/global_variables.dart';
-import 'chief_complaintsDetails_page.dart';
-
-class PatientComplaintsPage extends StatefulWidget {
-  const PatientComplaintsPage({super.key});
+class InvestigationsPage extends StatefulWidget {
+  const InvestigationsPage({super.key});
 
   @override
-  State<PatientComplaintsPage> createState() => _PatientComplaintsPageState();
+  State<InvestigationsPage> createState() => _InvestigationsPageState();
 }
 
-class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
+class _InvestigationsPageState extends State<InvestigationsPage> {
   final List<Map<String, dynamic>> items = [
     {'name': 'Apple', 'ID': '001'},
     {'name': 'Strawberry', 'ID': '002'},
@@ -77,7 +68,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
             ),
           ),
           title: Text(
-            "${globalVariables.patientName}'s Complaints",
+            "Investigations",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 22, color: Colors.white),
           ),
@@ -101,33 +92,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                     ),
                     // height: 70,
                     width: 390,
-                    child:
-                        /* Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Text(
-                            "Search for Complaints",
-                            style:
-                                TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
-                          ),
-                        ),
-                        Spacer(),
-                        IconButton(
-                          onPressed: () {
-                            // method to show the search bar
-                            showSearch(
-                                context: context,
-                                // delegate to customize the search bar
-                                delegate: CustomSearchDelegate());
-                          },
-                          icon: const Icon(Icons.search,
-                              color: Color(0xffDFDFDF), size: 40),
-                        )
-                      ],
-                    ),*/
-                        FocusScope(
+                    child: FocusScope(
                       child: TextFormField(
                         controller: _controller,
                         onChanged: _filterItems,
@@ -135,7 +100,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                           border: InputBorder.none,
                           labelStyle:
                               TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
-                          labelText: '  Search for Complaints',
+                          labelText: '  Search for Investigations',
                           suffixIcon: showSearchResults == false
                               ? Icon(Icons.search,
                                   color: Color(0xffDFDFDF), size: 40)
@@ -195,7 +160,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                                       });
                                     },
                                     child: Text(
-                                        "Click here to add this as new complain",
+                                        "Click here to add this as new finding",
                                         style: TextStyle(
                                             color: Colors.red,
                                             fontSize: 20,
@@ -210,34 +175,13 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                 Padding(
                   padding: EdgeInsets.only(left: 19, top: 25),
                   child: Text(
-                    "Complaints",
+                    "Investigations",
                     style: TextStyle(fontSize: 24, color: Color(0xffC4C4C4)),
                   ),
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                /*InkWell(
-                  onTap: () {
-                   */ /* Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChiefComplaintsDetailsPage()),
-                    );*/ /*
-                  },
-                  child: Container(
-                    height: 65,
-                    width: 420,
-                    color: Colors.white,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 20, top: 20, right: 18),
-                      child: Text(
-                        "Tooth pain",
-                        style: TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
-                      ),
-                    ),
-                  ),
-                ),*/
                 Container(
                   padding: EdgeInsets.all(12),
                   height: showSearchResults == false ? 480 : 290,
@@ -282,22 +226,37 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                   ),
                 ),
                 Spacer(),
-                Container(
-                  margin: EdgeInsets.all(17),
-                  width: double.infinity,
-                  height: 55,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      print("chief complaints :$finalselectedItems");
-                      NavigationService()
-                          .navigateToScreen(AdditionalAssesmentPage());
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xff1468B3),
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4))),
-                    child: const Text("Skip"),
+                InkWell(
+                  onTap: () {
+                    debugPrint("Investigations: $finalselectedItems");
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.all(17),
+                    width: double.infinity,
+                    height: 55,
+                    child: Ink(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xff1468B3),
+                            Colors.greenAccent
+                          ], // Adjust the colors as needed
+                        ),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Container(
+                        width: double.infinity,
+                        height: 55,
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Done",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -308,127 +267,6 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
           ),
         ),
       ),
-    );
-  }
-
-  Future<String?> _showAddItemDialog() async {
-    return showDialog<String>(
-      context: context,
-      builder: (context) {
-        String? itemName; // Initialize itemName variable here.
-
-        return AlertDialog(
-          title: Text("Add New Item"),
-          content: TextField(
-            decoration: InputDecoration(labelText: "Item Name"),
-            onChanged: (value) {
-              itemName = value; // Assign the entered value to itemName.
-            },
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog.
-              },
-              child: Text("Cancel"),
-            ),
-            TextButton(
-              onPressed: () {
-                if (itemName != null && itemName!.isNotEmpty) {
-                  setState(() {
-                    final newEntryss = {"name": itemName, "ID": ""};
-
-                    finalselectedItems.add(newEntryss);
-                  });
-                  Navigator.of(context).pop(); // Close the dialog.
-                }
-              },
-              child: Text("Add"),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class CustomSearchDelegate extends SearchDelegate {
-// Demo list to show querying
-  List<String> searchTerms = [
-    "Apple",
-    "Banana",
-    "Mango",
-    "Pear",
-    "Watermelons",
-    "Blueberries",
-    "Pineapples",
-    "Strawberries"
-  ];
-
-// first overwrite to
-// clear the search text
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    return [
-      IconButton(
-        onPressed: () {
-          close(context, null);
-          query = '';
-        },
-        icon: Icon(Icons.clear),
-      ),
-    ];
-  }
-
-// second overwrite to pop out of search menu
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        close(context, null);
-      },
-      icon: Icon(Icons.arrow_back),
-    );
-  }
-
-// third overwrite to show query result
-  @override
-  Widget buildResults(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var fruit in searchTerms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
-      }
-    }
-    return ListView.builder(
-      itemCount: matchQuery.length,
-      itemBuilder: (context, index) {
-        var result = matchQuery[index];
-        return ListTile(
-          title: Text(result),
-        );
-      },
-    );
-  }
-
-// last overwrite to show the
-// querying process at the runtime
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var fruit in searchTerms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
-      }
-    }
-    return ListView.builder(
-      itemCount: matchQuery.length,
-      itemBuilder: (context, index) {
-        var result = matchQuery[index];
-        return ListTile(
-          title: Text(result),
-        );
-      },
     );
   }
 }

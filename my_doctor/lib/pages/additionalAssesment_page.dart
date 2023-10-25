@@ -6,6 +6,9 @@ import 'package:my_doctor/pages/patient_lookUp_page.dart';
 
 import '../custom widget/showPatientLookUpDialog.dart';
 import '../service/navigation_service.dart';
+import 'inner page/diagnosis_page.dart';
+import 'inner page/findings_page.dart';
+import 'inner page/investigation_page.dart';
 
 class AdditionalAssesmentPage extends StatefulWidget {
   const AdditionalAssesmentPage({super.key});
@@ -52,12 +55,14 @@ class _AdditionalAssesmentPageState extends State<AdditionalAssesmentPage> {
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 21),
-              child: InkWell(onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PatientLookUppage()),
-                );
-              },
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PatientLookUppage()),
+                  );
+                },
                 child: Icon(
                   Icons.content_paste,
                   color: Colors.white,
@@ -87,34 +92,41 @@ class _AdditionalAssesmentPageState extends State<AdditionalAssesmentPage> {
                         SizedBox(
                           height: 20,
                         ),
-                        Container(
-                          height: 90,
-                          child: Card(
-                            shape: BeveledRectangleBorder(
-                                borderRadius: BorderRadius.zero),
-                            elevation: 5,
-                            child: Container(
-                              padding: EdgeInsets.only(left: 14, right: 7),
-                              height: 80,
-                              color: Colors.white,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    Icons.youtube_searched_for,
-                                    color: Colors.black,
-                                    size: 30,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    "Findings",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 22, color: Color(0xff545454)),
-                                  ),
-                                ],
+                        InkWell(
+                          onTap: () {
+                            NavigationService()
+                                .navigateToScreen(FindingsPage());
+                          },
+                          child: Container(
+                            height: 90,
+                            child: Card(
+                              shape: BeveledRectangleBorder(
+                                  borderRadius: BorderRadius.zero),
+                              elevation: 5,
+                              child: Container(
+                                padding: EdgeInsets.only(left: 14, right: 7),
+                                height: 80,
+                                color: Colors.white,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.youtube_searched_for,
+                                      color: Colors.black,
+                                      size: 30,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Findings",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          color: Color(0xff545454)),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -122,34 +134,41 @@ class _AdditionalAssesmentPageState extends State<AdditionalAssesmentPage> {
                         SizedBox(
                           height: 20,
                         ),
-                        Container(
-                          height: 90,
-                          child: Card(
-                            shape: BeveledRectangleBorder(
-                                borderRadius: BorderRadius.zero),
-                            elevation: 5,
-                            child: Container(
-                              padding: EdgeInsets.only(left: 14, right: 7),
-                              height: 80,
-                              color: Colors.white,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    Icons.article,
-                                    color: Colors.black,
-                                    size: 30,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    "Investigation",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 22, color: Color(0xff545454)),
-                                  ),
-                                ],
+                        InkWell(
+                          onTap: () {
+                            NavigationService()
+                                .navigateToScreen(InvestigationsPage());
+                          },
+                          child: Container(
+                            height: 90,
+                            child: Card(
+                              shape: BeveledRectangleBorder(
+                                  borderRadius: BorderRadius.zero),
+                              elevation: 5,
+                              child: Container(
+                                padding: EdgeInsets.only(left: 14, right: 7),
+                                height: 80,
+                                color: Colors.white,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.article,
+                                      color: Colors.black,
+                                      size: 30,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Investigation",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          color: Color(0xff545454)),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -157,34 +176,41 @@ class _AdditionalAssesmentPageState extends State<AdditionalAssesmentPage> {
                         SizedBox(
                           height: 20,
                         ),
-                        Container(
-                          height: 90,
-                          child: Card(
-                            shape: BeveledRectangleBorder(
-                                borderRadius: BorderRadius.zero),
-                            elevation: 5,
-                            child: Container(
-                              height: 80,
-                              padding: EdgeInsets.only(left: 14, right: 7),
-                              color: Colors.white,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    Icons.medication,
-                                    color: Colors.black,
-                                    size: 30,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    "Diagnosis",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 22, color: Color(0xff545454)),
-                                  ),
-                                ],
+                        InkWell(
+                          onTap: () {
+                            NavigationService()
+                                .navigateToScreen(DiagnosisPage());
+                          },
+                          child: Container(
+                            height: 90,
+                            child: Card(
+                              shape: BeveledRectangleBorder(
+                                  borderRadius: BorderRadius.zero),
+                              elevation: 5,
+                              child: Container(
+                                height: 80,
+                                padding: EdgeInsets.only(left: 14, right: 7),
+                                color: Colors.white,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.medication,
+                                      color: Colors.black,
+                                      size: 30,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Diagnosis",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          color: Color(0xff545454)),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -235,7 +261,8 @@ class _AdditionalAssesmentPageState extends State<AdditionalAssesmentPage> {
                             onPressed: () {
                               showDialog(
                                   context: context,
-                                  builder: (context) => ShowPatientLookUpDialog(),
+                                  builder: (context) =>
+                                      ShowPatientLookUpDialog(),
                                   barrierDismissible: false);
                             },
                             child: Text(
