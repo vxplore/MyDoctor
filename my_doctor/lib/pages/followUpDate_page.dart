@@ -99,8 +99,8 @@ class _FollowUpDatePageState extends State<FollowUpDatePage> {
                               initialEntryMode:
                                   DatePickerEntryMode.calendarOnly,
                               initialDate: DateTime.now(),
-                              firstDate: DateTime(1900),
-                              lastDate: DateTime.now(),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(2100),
                               context: (context));
                           setState(() {
                             selectedDateFromCalender = formattedDate =

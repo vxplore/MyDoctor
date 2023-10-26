@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_doctor/pages/dashboardPage.dart';
 import 'package:my_doctor/service/navigation_service.dart';
 
+import '../service/global_variables.dart';
 import 'doctor_profile_edit_page.dart';
 import 'main_dashboard_page.dart';
 
@@ -25,7 +26,8 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
         },
         child: Scaffold(
           backgroundColor: Colors.red,
-          body: SingleChildScrollView(
+          body:
+          SingleChildScrollView(
             // padding: EdgeInsets.only(left: 28,right: 28),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +108,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  "AM",
+                                  "${globalVariables.getDoctorDetails!.doctor.name[0]}",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 40,
@@ -132,7 +134,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Dr.Arpan Manna",
+                                    "Dr.${globalVariables.getDoctorDetails!.doctor.name}",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 30,

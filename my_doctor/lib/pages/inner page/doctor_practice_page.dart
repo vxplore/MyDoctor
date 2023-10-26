@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../service/navigation_service.dart';
+import 'add_clinic_1st_page.dart';
+
 class DoctorPracticePage extends StatefulWidget {
   const DoctorPracticePage({super.key});
 
@@ -143,21 +146,27 @@ class _DoctorPracticePageState extends State<DoctorPracticePage> {
                                 fontWeight: FontWeight.bold),
                           ),
                           Spacer(),
-                          Container(
-                            height: 30,
-                            width: 80,
-                            decoration: BoxDecoration(
-                                color: Colors.deepOrange,
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(20))),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "ADD",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold),
+                          InkWell(onTap: (){
+                            NavigationService()
+                                .navigateToScreen(AddClinicFirstPage());
+
+                          },
+                            child: Container(
+                              height: 30,
+                              width: 80,
+                              decoration: BoxDecoration(
+                                  color: Colors.deepOrange,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(20))),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "ADD",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                           ),
