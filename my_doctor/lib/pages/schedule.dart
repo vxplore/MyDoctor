@@ -371,7 +371,8 @@ class _ClinicScheduleState extends State<ClinicSchedule> {
 
     return Scaffold(
       backgroundColor: Colors.grey[200], // Set a light gray background
-      body: ListView(
+      body:
+      ListView(
         children: [
           for (var day in schedule.keys)
             Container(

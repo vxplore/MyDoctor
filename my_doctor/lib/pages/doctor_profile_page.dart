@@ -61,7 +61,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                               onTap: () {
 
                                 NavigationService()
-                                    .navigateToScreen(DoctorProfileEditPage());
+                                    .navigateToScreen(DoctorProfileEditPage(initialTabIndex: 0,));
                               },
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
