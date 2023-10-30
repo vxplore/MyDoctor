@@ -59,7 +59,7 @@ class _ShowPatientLookUpDialogState extends State<ShowPatientLookUpDialog> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AddMedicationPage()),
+                                    builder: (context) => AddMedicationPage(pharmacyname: '',)),
                               );
                             },
                             child: Text(

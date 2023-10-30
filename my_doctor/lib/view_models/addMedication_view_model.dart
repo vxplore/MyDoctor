@@ -216,7 +216,7 @@ abstract class _AddMedicationViewModel with Store {
         );
         ScaffoldMessenger.of(context).showSnackBar(snackdemo);
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => AddMedicationPage()));
+            MaterialPageRoute(builder: (context) => AddMedicationPage(pharmacyname:  globalVariables.pharmacynamess!,)));
         // Get.to(() => BottomNavBar());
       } else {
         var snackdemo = SnackBar(

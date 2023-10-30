@@ -66,8 +66,8 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
           // buildMyNavBar(context),
           BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        selectedFontSize: 15,
-        selectedIconTheme: IconThemeData(color: Color(0xff98CCFD), size: 40),
+        selectedFontSize: 12,
+        selectedIconTheme: IconThemeData(color: Color(0xff98CCFD), size: 30),
         selectedItemColor: Color(0xff98CCFD),
         selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
         items: <BottomNavigationBarItem>[

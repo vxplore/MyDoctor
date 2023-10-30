@@ -476,7 +476,7 @@ class _AddMedicationStepsPageState extends State<AddMedicationStepsPage>
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AddMedicationPage()),
+                                    builder: (context) => AddMedicationPage(pharmacyname: globalVariables.pharmacynamess!,)),
                               );
                               // _tabController.index = 0;
                             },

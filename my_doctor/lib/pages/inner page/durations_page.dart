@@ -295,7 +295,7 @@ class _DurationPageState extends State<DurationPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AddMedicationPage()));
+                                  builder: (context) => AddMedicationPage(pharmacyname: globalVariables.pharmacynamess!,)));
                         }
                       : null,
                   child: Text(

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_doctor/pages/addMedication_page.dart';
 import 'package:my_doctor/pages/additionalAssesment_page.dart';
 import 'package:my_doctor/pages/dashboardPage.dart';
 import 'package:my_doctor/pages/main_dashboard_page.dart';
@@ -10,27 +11,29 @@ import 'package:my_doctor/service/navigation_service.dart';
 import '../service/global_variables.dart';
 import 'chief_complaintsDetails_page.dart';
 
-class PatientComplaintsPage extends StatefulWidget {
-  const PatientComplaintsPage({super.key});
+class SuggestPharmacyPage extends StatefulWidget {
+  const SuggestPharmacyPage({super.key});
 
   @override
-  State<PatientComplaintsPage> createState() => _PatientComplaintsPageState();
+  State<SuggestPharmacyPage> createState() => _SuggestPharmacyPageState();
 }
 
-class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
+class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
   final List<Map<String, dynamic>> items = [
-    {'name': 'Apple', 'ID': '001'},
-    {'name': 'Strawberry', 'ID': '002'},
-    {'name': 'Orange', 'ID': '003'},
-    {'name': 'Kiwi', 'ID': '004'},
-    {'name': 'Grapes', 'ID': '005'},
+    {'name': 'Apple', 'ID': '001', "phone": "235355554"},
+    {'name': 'Strawberry', 'ID': '002', "phone": "23535559"},
+    {'name': 'Orange', 'ID': '003', "phone": "235355552"},
+    {'name': 'Kiwi', 'ID': '004', "phone": "235355551"},
+    {'name': 'Grapes', 'ID': '005', "phone": "235355550"},
   ];
 
   final TextEditingController _controller = TextEditingController();
   List<Map<String, dynamic>> selectedItems = [];
   List<Map<String, dynamic>> finalselectedItems = [];
+  Map<String, dynamic> selectedPharmacy = {};
   bool showSearchResults = false;
   bool noSearch = false;
+
   void _filterItems(String query) {
     setState(() {
       selectedItems.clear();
@@ -42,7 +45,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
           if (itemName.toLowerCase().contains(lowercaseQuery)) {
             selectedItems.add(item);
             noSearch = false;
-          } else  {
+          } else {
             noSearch = !noSearch;
           }
         }
@@ -52,6 +55,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
       }
     });
   }
+
   void _filterItems2(String query) {
     setState(() {
       selectedItems.clear();
@@ -72,13 +76,11 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.push(
+        /* Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => PatientPrescriptionPage(
@@ -87,7 +89,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                   globalVariables.patientAgeType!,
                   globalVariables.patientsGender!,
                   globalVariables.patientImg!)),
-        );
+        );*/
         return false;
       },
       child: Scaffold(
@@ -98,7 +100,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
           toolbarHeight: 70,
           leading: InkWell(
             onTap: () {
-              Navigator.push(
+              /*  Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => PatientPrescriptionPage(
@@ -107,7 +109,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                         globalVariables.patientAgeType!,
                         globalVariables.patientsGender!,
                         globalVariables.patientImg!)),
-              );
+              );*/
             },
             child: Icon(
               Icons.arrow_back_ios_new,
@@ -116,7 +118,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
             ),
           ),
           title: Text(
-            "${globalVariables.patientName}'s Complaints",
+            "Suggest Pharmacy",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 22, color: Colors.white),
           ),
@@ -169,14 +171,16 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                         FocusScope(
                       child: TextFormField(
                         controller: _controller,
-                        onChanged: noSearch!= true ? _filterItems : _filterItems2,
+                        onChanged:
+                            noSearch != true ? _filterItems : _filterItems2,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(left: 20.0,top: 15,bottom: 10),
+                          contentPadding:
+                              EdgeInsets.only(left: 20.0, top: 15, bottom: 10),
                           isDense: true,
                           border: InputBorder.none,
                           labelStyle:
                               TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
-                          labelText: '  Search for Complaints',
+                          labelText: 'Search for Pharmacy',
                           suffixIcon: showSearchResults == false
                               ? Icon(Icons.search,
                                   color: Color(0xffDFDFDF), size: 40)
@@ -206,18 +210,25 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                                   final item = selectedItems[index];
                                   final itemName = item['name'] as String;
                                   final itemId = item['ID'] as String;
+                                  final itemPh = item["phone"] as String;
                                   return InkWell(
                                     onTap: () {
-                                     /* setState(() {
+                                      /* setState(() {
                                         finalselectedItems.add(
                                             {"name": itemName, "ID": itemId});
                                         print(finalselectedItems);
                                       });*/
-                                      if (!finalselectedItems.any((selectedItem) =>
-                                      (selectedItem['name'] as String) == itemName)) {
+                                      if (!finalselectedItems.any(
+                                          (selectedItem) =>
+                                              (selectedItem['name']
+                                                  as String) ==
+                                              itemName)) {
                                         setState(() {
-                                          finalselectedItems
-                                              .add({"name": itemName, "ID": itemId});
+                                          finalselectedItems.add({
+                                            "name": itemName,
+                                            "ID": itemId,
+                                            "phone": itemPh
+                                          });
                                           print(finalselectedItems);
                                           showSearchResults = false;
                                           _controller.clear();
@@ -238,7 +249,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                                     Text("No result found"),
                                     InkWell(
                                       onTap: () {
-                                       /* setState(() {
+                                        /* setState(() {
                                           final newEntryss = {
                                             "name": _controller.text,
                                             "ID": ""
@@ -246,21 +257,24 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
 
                                           finalselectedItems.add(newEntryss);
                                         });*/
-                                        if (!finalselectedItems.any((selectedItem) =>
-                                        (selectedItem['name'] as String) == _controller.text)) {
-                                          setState(() {
-                                            finalselectedItems
-                                                .add({"name": _controller.text, "ID": ""});
-                                            print(finalselectedItems);
-                                            _controller.clear();
-                                            FocusScope.of(context).unfocus();
-                                            showSearchResults = false;
-                                          });
+                                        if (!finalselectedItems.any(
+                                            (selectedItem) =>
+                                                (selectedItem['name']
+                                                    as String) ==
+                                                _controller.text)) {
+                                          /*  setState(() {
+                                      finalselectedItems
+                                          .add({"name": _controller.text, "ID": ""});
+                                      print(finalselectedItems);
+                                      _controller.clear();
+                                      FocusScope.of(context).unfocus();
+                                      showSearchResults = false;
+                                    });*/
+                                          _showAddItemDialog();
                                         }
-
                                       },
                                       child: Text(
-                                          "Click here to add this as new complain",
+                                          "Click here to add this as new pharmacy",
                                           style: TextStyle(
                                               color: Colors.red,
                                               fontSize: 20,
@@ -276,7 +290,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                 Padding(
                   padding: EdgeInsets.only(left: 19, top: 25),
                   child: Text(
-                    "Complaints",
+                    "Pharmacy",
                     style: TextStyle(fontSize: 24, color: Color(0xffC4C4C4)),
                   ),
                 ),
@@ -325,10 +339,30 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                finalselectedItems[index]["name"],
+                                "Name - ${finalselectedItems[index]["name"]}\nPhone - ${finalselectedItems[index]["phone"]}",
                                 style: TextStyle(
                                     fontSize: 18, color: Color(0xffBBBBBB)),
                               ),
+                              Spacer(),
+                              InkWell(
+                                  onTap: () {
+                                    selectedPharmacy.addAll({
+                                      "name": finalselectedItems[index]["name"],
+                                      "ID": finalselectedItems[index]["ID"],
+                                      "phone": finalselectedItems[index]
+                                          ["phone"]
+                                    });
+                                    var snackdemo = SnackBar(
+                                      content: Text("Added Successfully"),
+                                      backgroundColor: Colors.green,
+                                      elevation: 10,
+                                      behavior: SnackBarBehavior.floating,
+                                      margin: EdgeInsets.all(5),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackdemo);
+                                  },
+                                  child: Text("Select")),
                               Spacer(),
                               InkWell(
                                   onTap: () {
@@ -354,16 +388,17 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                   height: 55,
                   child: ElevatedButton(
                     onPressed: () {
-                      print("chief complaints :$finalselectedItems");
-                      NavigationService()
-                          .navigateToScreen(AdditionalAssesmentPage());
+                      print("selected pharmacy :$selectedPharmacy");
+                      globalVariables.pharmacynamess = selectedPharmacy["name"];
+                       NavigationService()
+                          .navigateToScreen(AddMedicationPage(pharmacyname: globalVariables.pharmacynamess! ,));
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xff1468B3),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4))),
-                    child:  Text(finalselectedItems.isEmpty?"Skip":"Done"),
+                    child: Text("Done"),
                   ),
                 ),
                 SizedBox(
@@ -382,14 +417,28 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
       context: context,
       builder: (context) {
         String? itemName; // Initialize itemName variable here.
-
+        String? itemName2;
         return AlertDialog(
-          title: Text("Add New Item"),
-          content: TextField(
-            decoration: InputDecoration(labelText: "Item Name"),
-            onChanged: (value) {
-              itemName = value; // Assign the entered value to itemName.
-            },
+          title: Text("Add New Pharmacy"),
+          content: Container(
+            height: 150,
+            child: Column(
+              children: [
+                TextField(
+                  controller: _controller,
+                  decoration: InputDecoration(labelText: "Pharmacy Name"),
+                  onChanged: (value) {
+                    itemName = value; // Assign the entered value to itemName.
+                  },
+                ),
+                TextField(
+                  decoration: InputDecoration(labelText: "Pharmacy Phone"),
+                  onChanged: (value) {
+                    itemName2 = value; // Assign the entered value to itemName.
+                  },
+                ),
+              ],
+            ),
           ),
           actions: <Widget>[
             TextButton(
@@ -400,99 +449,29 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
             ),
             TextButton(
               onPressed: () {
-                if (itemName != null && itemName!.isNotEmpty) {
+               /* if (_controller.text!=""&&itemName != null &&
+                    itemName!.isNotEmpty &&
+                    itemName2 != null &&
+                    itemName2!.isNotEmpty)*/ {
                   setState(() {
-                    final newEntryss = {"name": itemName, "ID": ""};
+                    final newEntryss = {
+                      "name": itemName,
+                      "ID": "",
+                      "phone": itemName2
+                    };
 
                     finalselectedItems.add(newEntryss);
                   });
+                  print(finalselectedItems);
+                  _controller.clear();
+                  FocusScope.of(context).unfocus();
+                  showSearchResults = false;
                   Navigator.of(context).pop(); // Close the dialog.
                 }
               },
               child: Text("Add"),
             ),
           ],
-        );
-      },
-    );
-  }
-}
-
-class CustomSearchDelegate extends SearchDelegate {
-// Demo list to show querying
-  List<String> searchTerms = [
-    "Apple",
-    "Banana",
-    "Mango",
-    "Pear",
-    "Watermelons",
-    "Blueberries",
-    "Pineapples",
-    "Strawberries"
-  ];
-
-// first overwrite to
-// clear the search text
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    return [
-      IconButton(
-        onPressed: () {
-          close(context, null);
-          query = '';
-        },
-        icon: Icon(Icons.clear),
-      ),
-    ];
-  }
-
-// second overwrite to pop out of search menu
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        close(context, null);
-      },
-      icon: Icon(Icons.arrow_back),
-    );
-  }
-
-// third overwrite to show query result
-  @override
-  Widget buildResults(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var fruit in searchTerms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
-      }
-    }
-    return ListView.builder(
-      itemCount: matchQuery.length,
-      itemBuilder: (context, index) {
-        var result = matchQuery[index];
-        return ListTile(
-          title: Text(result),
-        );
-      },
-    );
-  }
-
-// last overwrite to show the
-// querying process at the runtime
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var fruit in searchTerms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
-      }
-    }
-    return ListView.builder(
-      itemCount: matchQuery.length,
-      itemBuilder: (context, index) {
-        var result = matchQuery[index];
-        return ListTile(
-          title: Text(result),
         );
       },
     );

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_doctor/custom%20widget/custom_circularProgress.dart';
 import 'package:my_doctor/pages/additionalAssesment_page.dart';
+import 'package:my_doctor/pages/suggest_pharmacy_page.dart';
 import 'package:my_doctor/service/global_variables.dart';
 import 'package:my_doctor/service/navigation_service.dart';
 import 'package:my_doctor/view_models/addMedication_view_model.dart';
@@ -12,7 +13,8 @@ import 'package:my_doctor/view_models/addMedication_view_model.dart';
 import 'addMedicationStep_page.dart';
 
 class AddMedicationPage extends StatefulWidget {
-  const AddMedicationPage({super.key});
+  final String pharmacyname;
+  const AddMedicationPage({super.key, required this.pharmacyname});
 
   @override
   State<AddMedicationPage> createState() => _AddMedicationPageState();
@@ -27,7 +29,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
     super.initState();
     Timer.periodic(Duration(seconds: 1), (timer) async {
       if (timer.tick == 1) {
-        vm.getMedicinesApi();
+         vm.getMedicinesApi();
         vm.getMedicineDosageFormApi();
         vm.getMedicineNameApi();
         vm.getMedicineDosageQuantityApi();
@@ -261,7 +263,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Container(
-                      height: 80,
+                      // height: 80,
                       width: 500,
                       margin: EdgeInsets.only(left: 25),
                       child: Row(
@@ -273,14 +275,28 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                           MaterialPageRoute(
                               builder: (context) => SearchForLaboratoryPage()),
                         );*/
+                              NavigationService().navigateToScreen(SuggestPharmacyPage());
                             },
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              "+ Suggest Pharmacy",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
+                            child: Column(
+                              children: [
+                                Text(
+                                  textAlign: TextAlign.center,
+                                  "+ Suggest Pharmacy",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                 SizedBox(height: 5,),
+                                Text(
+                                  textAlign: TextAlign.center,
+                                  widget.pharmacyname,
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
                           ),
                           Spacer(),

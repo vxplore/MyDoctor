@@ -22,6 +22,7 @@ class _AdvicePageState extends State<AdvicePage> {
   bool showSearchResults = false;
   bool noSearch = false;
 
+
   void _filterItems(String query) {
     setState(() {
       selectedItems.clear();
@@ -33,8 +34,27 @@ class _AdvicePageState extends State<AdvicePage> {
           if (itemName.toLowerCase().contains(lowercaseQuery)) {
             selectedItems.add(item);
             noSearch = false;
-          } else {
-            noSearch = true;
+          } else  {
+          noSearch = !noSearch;
+          }
+        }
+        showSearchResults = true;
+      } else {
+        showSearchResults = false;
+      }
+    });
+  }
+  void _filterItems2(String query) {
+    setState(() {
+       selectedItems.clear();
+
+      if (query.isNotEmpty) {
+        String lowercaseQuery = query.toLowerCase();
+        for (Map<String, dynamic> item in items) {
+          final itemName = item['name'] as String;
+          if (itemName.toLowerCase().contains(lowercaseQuery)) {
+            selectedItems.add(item);
+             noSearch = !noSearch;
           }
         }
         showSearchResults = true;
@@ -94,25 +114,28 @@ class _AdvicePageState extends State<AdvicePage> {
                     width: 390,
                     child: FocusScope(
                       child: TextFormField(
-                        controller: _controller,
-                        onChanged: _filterItems,
+                        textAlign: TextAlign.left,
+                        controller:  _controller,
+                        onChanged: noSearch!= true ? _filterItems : _filterItems2,
                         decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(left: 20.0,top: 15,bottom: 10),
+                          isDense: true,
                           border: InputBorder.none,
                           labelStyle:
-                          TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
-                          labelText: '  Search for Advice',
+                              TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
+                          labelText: 'Search for Advice',
                           suffixIcon: showSearchResults == false
                               ? Icon(Icons.search,
-                              color: Color(0xffDFDFDF), size: 40)
+                                  color: Color(0xffDFDFDF), size: 40)
                               : InkWell(
-                            onTap: () {
-                              _controller.clear();
-                              _filterItems('');
-                              FocusScope.of(context).unfocus();
-                            },
-                            child: Icon(Icons.clear,
-                                color: Color(0xffDFDFDF), size: 40),
-                          ),
+                                  onTap: () {
+                                    _controller.clear();
+                                    _filterItems('');
+                                    FocusScope.of(context).unfocus();
+                                  },
+                                  child: Icon(Icons.clear,
+                                      color: Color(0xffDFDFDF), size: 40),
+                                ),
                         ),
                       ),
                     ),
@@ -124,53 +147,82 @@ class _AdvicePageState extends State<AdvicePage> {
                       height: 195,
                       child: noSearch == false
                           ? ListView.builder(
-                        itemCount: selectedItems.length,
-                        itemBuilder: (context, index) {
-                          final item = selectedItems[index];
-                          final itemName = item['name'] as String;
-                          final itemId = item['ID'] as String;
-                          return InkWell(
-                            onTap: () {
-                              setState(() {
+                              itemCount: selectedItems.length,
+                              itemBuilder: (context, index) {
+                                final item = selectedItems[index];
+                                final itemName = item['name'] as String;
+                                final itemId = item['ID'] as String;
+                                return InkWell(
+                                  onTap: () {
+                                    /*setState(() {
                                 finalselectedItems.add(
                                     {"name": itemName, "ID": itemId});
                                 print(finalselectedItems);
-                              });
-                            },
-                            child: ListTile(
-                              title: Text(itemName),
-                            ),
-                          );
-                        },
-                      )
+                              });*/
+                                    if (!finalselectedItems.any(
+                                        (selectedItem) =>
+                                            (selectedItem['name'] as String) ==
+                                            itemName)) {
+                                      setState(() {
+                                        finalselectedItems.add(
+                                            {"name": itemName, "ID": itemId});
+                                        showSearchResults = false;
+                                        _controller.clear();
+                                        FocusScope.of(context).unfocus();
+                                        print(finalselectedItems);
+                                      });
+                                    }
+                                  },
+                                  child: ListTile(
+                                    title: Text(itemName),
+                                  ),
+                                );
+                              },
+                            )
                           : Center(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text("No result found"),
-                            InkWell(
-                              onTap: () {
-                                setState(() {
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text("No result found"),
+                                  InkWell(
+                                    onTap: () {
+                                      /* setState(() {
                                   final newEntryss = {
                                     "name": _controller.text,
                                     "ID": ""
                                   };
 
                                   finalselectedItems.add(newEntryss);
-                                });
-                              },
-                              child: Text(
-                                  "Click here to add this as new advice",
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      decoration:
-                                      TextDecoration.underline)),
-                            ),
-                          ],
-                        ),
-                      )),
+                                });*/
+                                      if (!finalselectedItems.any(
+                                          (selectedItem) =>
+                                              (selectedItem['name']
+                                                  as String) ==
+                                              _controller.text)) {
+                                        setState(() {
+                                          finalselectedItems.add({
+                                            "name": _controller.text,
+                                            "ID": ""
+                                          });
+                                          showSearchResults = false;
+                                          _controller.clear();
+                                          FocusScope.of(context).unfocus();
+                                          print(finalselectedItems);
+                                        });
+                                      }
+                                    },
+                                    child: Text(
+                                        "Click here to add this as new advice",
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            decoration:
+                                                TextDecoration.underline)),
+                                  ),
+                                ],
+                              ),
+                            )),
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 19, top: 25),
