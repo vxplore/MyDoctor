@@ -55,7 +55,7 @@ class _DiagnosisPageState extends State<DiagnosisPage> {
         resizeToAvoidBottomInset: false,
         backgroundColor: Color(0xffF3FBFF),
         appBar: AppBar(
-          backgroundColor: Color(0xff1468B3),
+          backgroundColor: Colors.white,
           toolbarHeight: 70,
           leading: InkWell(
             onTap: () {
@@ -63,14 +63,14 @@ class _DiagnosisPageState extends State<DiagnosisPage> {
             },
             child: Icon(
               Icons.arrow_back_ios_new,
-              color: Colors.white,
+              color: Colors.black,
               size: 35,
             ),
           ),
           title: Text(
             "Diagnosis",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 22, color: Colors.white),
+            style: TextStyle(fontSize: 22, color: Colors.orange),
           ),
         ),
         body: SingleChildScrollView(
@@ -99,20 +99,20 @@ class _DiagnosisPageState extends State<DiagnosisPage> {
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           labelStyle:
-                          TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
+                              TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
                           labelText: '  Search for Diagnosis',
                           suffixIcon: showSearchResults == false
                               ? Icon(Icons.search,
-                              color: Color(0xffDFDFDF), size: 40)
+                                  color: Color(0xffDFDFDF), size: 40)
                               : InkWell(
-                            onTap: () {
-                              _controller.clear();
-                              _filterItems('');
-                              FocusScope.of(context).unfocus();
-                            },
-                            child: Icon(Icons.clear,
-                                color: Color(0xffDFDFDF), size: 40),
-                          ),
+                                  onTap: () {
+                                    _controller.clear();
+                                    _filterItems('');
+                                    FocusScope.of(context).unfocus();
+                                  },
+                                  child: Icon(Icons.clear,
+                                      color: Color(0xffDFDFDF), size: 40),
+                                ),
                         ),
                       ),
                     ),
@@ -124,53 +124,53 @@ class _DiagnosisPageState extends State<DiagnosisPage> {
                       height: 195,
                       child: noSearch == false
                           ? ListView.builder(
-                        itemCount: selectedItems.length,
-                        itemBuilder: (context, index) {
-                          final item = selectedItems[index];
-                          final itemName = item['name'] as String;
-                          final itemId = item['ID'] as String;
-                          return InkWell(
-                            onTap: () {
-                              setState(() {
-                                finalselectedItems.add(
-                                    {"name": itemName, "ID": itemId});
-                                print(finalselectedItems);
-                              });
-                            },
-                            child: ListTile(
-                              title: Text(itemName),
-                            ),
-                          );
-                        },
-                      )
-                          : Center(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text("No result found"),
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  final newEntryss = {
-                                    "name": _controller.text,
-                                    "ID": ""
-                                  };
-
-                                  finalselectedItems.add(newEntryss);
-                                });
+                              itemCount: selectedItems.length,
+                              itemBuilder: (context, index) {
+                                final item = selectedItems[index];
+                                final itemName = item['name'] as String;
+                                final itemId = item['ID'] as String;
+                                return InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      finalselectedItems.add(
+                                          {"name": itemName, "ID": itemId});
+                                      print(finalselectedItems);
+                                    });
+                                  },
+                                  child: ListTile(
+                                    title: Text(itemName),
+                                  ),
+                                );
                               },
-                              child: Text(
-                                  "Click here to add this as new diagnosis",
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      decoration:
-                                      TextDecoration.underline)),
-                            ),
-                          ],
-                        ),
-                      )),
+                            )
+                          : Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text("No result found"),
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        final newEntryss = {
+                                          "name": _controller.text,
+                                          "ID": ""
+                                        };
+
+                                        finalselectedItems.add(newEntryss);
+                                      });
+                                    },
+                                    child: Text(
+                                        "Click here to add this as new diagnosis",
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            decoration:
+                                                TextDecoration.underline)),
+                                  ),
+                                ],
+                              ),
+                            )),
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 19, top: 25),
@@ -239,8 +239,8 @@ class _DiagnosisPageState extends State<DiagnosisPage> {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            Color(0xff1468B3),
-                            Colors.greenAccent
+                            Colors.orange,
+                            Colors.orange
                           ], // Adjust the colors as needed
                         ),
                         borderRadius: BorderRadius.circular(4),
@@ -252,8 +252,9 @@ class _DiagnosisPageState extends State<DiagnosisPage> {
                         child: Text(
                           "Done",
                           style: TextStyle(
-                            color: Colors.white,
-                          ),
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),

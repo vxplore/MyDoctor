@@ -29,8 +29,8 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
     Timer.periodic(Duration(seconds: 1), (timer) async {
       if (timer.tick == 1) {
         timer.cancel();
-        CommonDataSource().getDoctorDetails();
-        await Future.delayed(Duration(seconds: 1));
+        await CommonDataSource().getDoctorDetails();
+        Future.delayed(Duration(seconds: 2));
         setState(() {
           globalVariables.getDoctorDetails =
               globalVariables.getDoctorDetailsFromApi;

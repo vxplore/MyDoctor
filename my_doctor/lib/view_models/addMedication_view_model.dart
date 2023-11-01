@@ -215,8 +215,12 @@ abstract class _AddMedicationViewModel with Store {
           margin: EdgeInsets.all(5),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackdemo);
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => AddMedicationPage(pharmacyname:  globalVariables.pharmacynamess!,)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AddMedicationPage(
+                      pharmacyname: globalVariables.pharmacynamess,
+                    )));
         // Get.to(() => BottomNavBar());
       } else {
         var snackdemo = SnackBar(
@@ -234,10 +238,39 @@ abstract class _AddMedicationViewModel with Store {
   Future getMedicinesApi() async {
     final repo = dependency<Repository>();
     var response = await repo.getmedicinelists();
-    if(response == null){}
-    else{
+    if (response == null) {
+    } else {
       globalVariables.getMedicineListFromApi = response;
     }
   }
+
+  Future deleteSingleMedicineApi(String mediId) async {
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            'https://v-xplore.com/dev/rohan/e-prescription/medicine/delete?med_id=${mediId}'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
   }
 
+  Future deleteAllMedicineApi() async {
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            'https://v-xplore.com/dev/rohan/e-prescription/medicine/all/delete?p_id=${globalVariables.patientId}'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+}

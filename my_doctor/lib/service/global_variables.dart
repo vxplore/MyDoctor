@@ -19,7 +19,8 @@ class GlobalVariables {
   }
 
   GlobalVariables._internal();
-  String? pharmacynamess;
+  List<Map<String, dynamic>> finalselectedItems = [];
+  String pharmacynamess = "";
   List<Map<String,dynamic>> medicinelists = [];
   List<Map<String, dynamic>> selectedAllergy = [];
   List<String> selectedDisease = [];

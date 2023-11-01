@@ -55,7 +55,7 @@ class _InvestigationsPageState extends State<InvestigationsPage> {
         resizeToAvoidBottomInset: false,
         backgroundColor: Color(0xffF3FBFF),
         appBar: AppBar(
-          backgroundColor: Color(0xff1468B3),
+          backgroundColor: Colors.white,
           toolbarHeight: 70,
           leading: InkWell(
             onTap: () {
@@ -63,14 +63,14 @@ class _InvestigationsPageState extends State<InvestigationsPage> {
             },
             child: Icon(
               Icons.arrow_back_ios_new,
-              color: Colors.white,
+              color: Colors.black,
               size: 35,
             ),
           ),
           title: Text(
             "Investigations",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 22, color: Colors.white),
+            style: TextStyle(fontSize: 22, color: Colors.purple),
           ),
         ),
         body: SingleChildScrollView(
@@ -239,8 +239,8 @@ class _InvestigationsPageState extends State<InvestigationsPage> {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            Color(0xff1468B3),
-                            Colors.greenAccent
+                            Colors.purple,
+                            Colors.purple
                           ], // Adjust the colors as needed
                         ),
                         borderRadius: BorderRadius.circular(4),
@@ -252,8 +252,9 @@ class _InvestigationsPageState extends State<InvestigationsPage> {
                         child: Text(
                           "Done",
                           style: TextStyle(
-                            color: Colors.white,
-                          ),
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),

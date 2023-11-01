@@ -143,7 +143,7 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
                     // height: 70,
                     width: 390,
                     child:
-                        /* Row(
+                    /* Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
@@ -168,31 +168,31 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
                         )
                       ],
                     ),*/
-                        FocusScope(
+                    FocusScope(
                       child: TextFormField(
                         controller: _controller,
                         onChanged:
-                            noSearch != true ? _filterItems : _filterItems2,
+                        noSearch != true ? _filterItems : _filterItems2,
                         decoration: InputDecoration(
                           contentPadding:
-                              EdgeInsets.only(left: 20.0, top: 15, bottom: 10),
+                          EdgeInsets.only(left: 20.0, top: 15, bottom: 10),
                           isDense: true,
                           border: InputBorder.none,
                           labelStyle:
-                              TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
+                          TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
                           labelText: 'Search for Pharmacy',
                           suffixIcon: showSearchResults == false
                               ? Icon(Icons.search,
-                                  color: Color(0xffDFDFDF), size: 40)
+                              color: Color(0xffDFDFDF), size: 40)
                               : InkWell(
-                                  onTap: () {
-                                    _controller.clear();
-                                    _filterItems('');
-                                    FocusScope.of(context).unfocus();
-                                  },
-                                  child: Icon(Icons.clear,
-                                      color: Color(0xffDFDFDF), size: 40),
-                                ),
+                            onTap: () {
+                              _controller.clear();
+                              _filterItems('');
+                              FocusScope.of(context).unfocus();
+                            },
+                            child: Icon(Icons.clear,
+                                color: Color(0xffDFDFDF), size: 40),
+                          ),
                         ),
                       ),
                     ),
@@ -202,54 +202,54 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
                   visible: showSearchResults,
                   child: Expanded(
                     child: Container(
-                        // height: 195,
+                      // height: 195,
                         child: noSearch == false
                             ? ListView.builder(
-                                itemCount: selectedItems.length,
-                                itemBuilder: (context, index) {
-                                  final item = selectedItems[index];
-                                  final itemName = item['name'] as String;
-                                  final itemId = item['ID'] as String;
-                                  final itemPh = item["phone"] as String;
-                                  return InkWell(
-                                    onTap: () {
-                                      /* setState(() {
+                          itemCount: selectedItems.length,
+                          itemBuilder: (context, index) {
+                            final item = selectedItems[index];
+                            final itemName = item['name'] as String;
+                            final itemId = item['ID'] as String;
+                            final itemPh = item["phone"] as String;
+                            return InkWell(
+                              onTap: () {
+                                /* setState(() {
                                         finalselectedItems.add(
                                             {"name": itemName, "ID": itemId});
                                         print(finalselectedItems);
                                       });*/
-                                      if (!finalselectedItems.any(
-                                          (selectedItem) =>
-                                              (selectedItem['name']
-                                                  as String) ==
-                                              itemName)) {
-                                        setState(() {
-                                          finalselectedItems.add({
-                                            "name": itemName,
-                                            "ID": itemId,
-                                            "phone": itemPh
-                                          });
-                                          print(finalselectedItems);
-                                          showSearchResults = false;
-                                          _controller.clear();
-                                          FocusScope.of(context).unfocus();
-                                        });
-                                      }
-                                    },
-                                    child: ListTile(
-                                      title: Text(itemName),
-                                    ),
-                                  );
-                                },
-                              )
+                                if (!finalselectedItems.any(
+                                        (selectedItem) =>
+                                    (selectedItem['name']
+                                    as String) ==
+                                        itemName)) {
+                                  setState(() {
+                                    finalselectedItems.add({
+                                      "name": itemName,
+                                      "ID": itemId,
+                                      "phone": itemPh
+                                    });
+                                    print(finalselectedItems);
+                                    showSearchResults = false;
+                                    _controller.clear();
+                                    FocusScope.of(context).unfocus();
+                                  });
+                                }
+                              },
+                              child: ListTile(
+                                title: Text(itemName),
+                              ),
+                            );
+                          },
+                        )
                             : Center(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text("No result found"),
-                                    InkWell(
-                                      onTap: () {
-                                        /* setState(() {
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text("No result found"),
+                              InkWell(
+                                onTap: () {
+                                  /* setState(() {
                                           final newEntryss = {
                                             "name": _controller.text,
                                             "ID": ""
@@ -257,12 +257,12 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
 
                                           finalselectedItems.add(newEntryss);
                                         });*/
-                                        if (!finalselectedItems.any(
-                                            (selectedItem) =>
-                                                (selectedItem['name']
-                                                    as String) ==
-                                                _controller.text)) {
-                                          /*  setState(() {
+                                  if (!finalselectedItems.any(
+                                          (selectedItem) =>
+                                      (selectedItem['name']
+                                      as String) ==
+                                          _controller.text)) {
+                                    /*  setState(() {
                                       finalselectedItems
                                           .add({"name": _controller.text, "ID": ""});
                                       print(finalselectedItems);
@@ -270,21 +270,21 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
                                       FocusScope.of(context).unfocus();
                                       showSearchResults = false;
                                     });*/
-                                          _showAddItemDialog();
-                                        }
-                                      },
-                                      child: Text(
-                                          "Click here to add this as new pharmacy",
-                                          style: TextStyle(
-                                              color: Colors.red,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              decoration:
-                                                  TextDecoration.underline)),
-                                    ),
-                                  ],
-                                ),
-                              )),
+                                    _showAddItemDialog();
+                                  }
+                                },
+                                child: Text(
+                                    "Click here to add this as new pharmacy",
+                                    style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        decoration:
+                                        TextDecoration.underline)),
+                              ),
+                            ],
+                          ),
+                        )),
                   ),
                 ),
                 Padding(
@@ -350,7 +350,7 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
                                       "name": finalselectedItems[index]["name"],
                                       "ID": finalselectedItems[index]["ID"],
                                       "phone": finalselectedItems[index]
-                                          ["phone"]
+                                      ["phone"]
                                     });
                                     var snackdemo = SnackBar(
                                       content: Text("Added Successfully"),
@@ -390,7 +390,7 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
                     onPressed: () {
                       print("selected pharmacy :$selectedPharmacy");
                       globalVariables.pharmacynamess = selectedPharmacy["name"];
-                       NavigationService()
+                      NavigationService()
                           .navigateToScreen(AddMedicationPage(pharmacyname: globalVariables.pharmacynamess! ,));
                     },
                     style: ElevatedButton.styleFrom(
@@ -416,7 +416,7 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
     return showDialog<String>(
       context: context,
       builder: (context) {
-        String? itemName; // Initialize itemName variable here.
+        String? itemName = _controller.text; // Initialize itemName variable here.
         String? itemName2;
         return AlertDialog(
           title: Text("Add New Pharmacy"),
@@ -449,7 +449,7 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
             ),
             TextButton(
               onPressed: () {
-               /* if (_controller.text!=""&&itemName != null &&
+                /* if (_controller.text!=""&&itemName != null &&
                     itemName!.isNotEmpty &&
                     itemName2 != null &&
                     itemName2!.isNotEmpty)*/ {

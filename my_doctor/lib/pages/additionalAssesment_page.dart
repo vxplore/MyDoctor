@@ -112,7 +112,7 @@ class _AdditionalAssesmentPageState extends State<AdditionalAssesmentPage> {
                                   children: [
                                     Icon(
                                       Icons.youtube_searched_for,
-                                      color: Colors.black,
+                                      color: Color(0xff33cccc),
                                       size: 30,
                                     ),
                                     SizedBox(
@@ -154,7 +154,7 @@ class _AdditionalAssesmentPageState extends State<AdditionalAssesmentPage> {
                                   children: [
                                     Icon(
                                       Icons.article,
-                                      color: Colors.black,
+                                      color: Colors.purple,
                                       size: 30,
                                     ),
                                     SizedBox(
@@ -196,7 +196,7 @@ class _AdditionalAssesmentPageState extends State<AdditionalAssesmentPage> {
                                   children: [
                                     Icon(
                                       Icons.medication,
-                                      color: Colors.black,
+                                      color: Colors.orange,
                                       size: 30,
                                     ),
                                     SizedBox(
@@ -234,17 +234,19 @@ class _AdditionalAssesmentPageState extends State<AdditionalAssesmentPage> {
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
+                                    side: BorderSide(color: Color(0xff1468B3)),
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(5))),
                                 padding: const EdgeInsets.all(12),
-                                backgroundColor: Color(0xff1468B3)),
+                                backgroundColor: Colors.white),
                             onPressed: () {},
                             child: Text(
                               "Save Draft",
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 20),
+                                color: Color(0xff1468B3),
+                                fontWeight: FontWeight.normal,
+                                fontSize: 20,
+                              ),
                             )),
                       ),
                       Spacer(),

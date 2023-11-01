@@ -14,6 +14,7 @@ import 'addMedicationStep_page.dart';
 
 class AddMedicationPage extends StatefulWidget {
   final String pharmacyname;
+
   const AddMedicationPage({super.key, required this.pharmacyname});
 
   @override
@@ -29,7 +30,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
     super.initState();
     Timer.periodic(Duration(seconds: 1), (timer) async {
       if (timer.tick == 1) {
-         vm.getMedicinesApi();
+        vm.getMedicinesApi();
         vm.getMedicineDosageFormApi();
         vm.getMedicineNameApi();
         vm.getMedicineDosageQuantityApi();
@@ -50,6 +51,14 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
               globalVariables.getMedicineDosageDurationFromApi;
         });
       }
+    });
+  }
+
+  Future<void> updateMedicineListOnDelete() async {
+    final updatedResults = await vm.getMedicinesApi();
+    Future.delayed(Duration(seconds: 1));
+    setState(() {
+      globalVariables.getMedicineList = globalVariables.getMedicineListFromApi;
     });
   }
 
@@ -177,83 +186,131 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                                   textAlign: TextAlign.center,
                                   "No medicine prescribe yet!!!\n\nClick on + button to add medicine"),
                             )
-                          : ListView.builder(
-                              itemCount: globalVariables
-                                  .getMedicineList!.medicine.length,
-                              scrollDirection: Axis.vertical,
-                              physics: BouncingScrollPhysics(),
-                              itemBuilder: (BuildContext context, int index) {
-                                return Card(
-                                  shape: BeveledRectangleBorder(
-                                      borderRadius: BorderRadius.zero),
-                                  elevation: 5,
+                          : Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment.topRight,
                                   child: Container(
-                                    padding:
-                                        EdgeInsets.only(left: 14, right: 7),
-                                    height: 80,
-                                    color: Colors.white,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 20, top: 17, bottom: 13),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                    padding: EdgeInsets.all(4),
+                                    height: 25,
+                                    child: InkWell(
+                                      onTap: () async {
+                                        await vm.deleteAllMedicineApi();
+                                        await updateMedicineListOnDelete();
+                                      },
+                                      child: Text("Delete All Medicine",
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  height: 400,
+                                  child: ListView.builder(
+                                    itemCount: globalVariables
+                                        .getMedicineList!.medicine.length,
+                                    scrollDirection: Axis.vertical,
+                                    physics: BouncingScrollPhysics(),
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Card(
+                                        shape: BeveledRectangleBorder(
+                                            borderRadius: BorderRadius.zero),
+                                        elevation: 5,
+                                        child: Container(
+                                          padding: EdgeInsets.only(
+                                              left: 14, right: 7),
+                                          height: 80,
+                                          color: Colors.white,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                // "Tablet",
-                                                "${globalVariables.getMedicineList!.medicine[index].type}",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                    color: Color(0xff0266D5)),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 20,
+                                                    top: 17,
+                                                    bottom: 13),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      // "Tablet",
+                                                      "${globalVariables.getMedicineList!.medicine[index].type}",
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                          color: Color(
+                                                              0xff0266D5)),
+                                                    ),
+                                                    Spacer(),
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          // "Paracetamol",
+                                                          "${globalVariables.getMedicineList!.medicine[index].name}",
+                                                          style: TextStyle(
+                                                              fontSize: 17,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal,
+                                                              color:
+                                                                  Colors.black),
+                                                        ),
+                                                        Text(
+                                                          // "(300mg)",
+                                                          " (${globalVariables.getMedicineList!.medicine[index].dose})",
+                                                          style: TextStyle(
+                                                              fontSize: 17,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal,
+                                                              color: Color(
+                                                                  0xffA2A2A2)),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                               Spacer(),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    // "Paracetamol",
-                                                    "${globalVariables.getMedicineList!.medicine[index].name}",
-                                                    style: TextStyle(
-                                                        fontSize: 17,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                        color: Colors.black),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 16,
+                                                    top: 26,
+                                                    bottom: 26),
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    var mediId = globalVariables
+                                                        .getMedicineList!
+                                                        .medicine[index]
+                                                        .id;
+                                                    await vm
+                                                        .deleteSingleMedicineApi(
+                                                            mediId);
+                                                    await updateMedicineListOnDelete();
+                                                  },
+                                                  child: Icon(
+                                                    Icons.close,
+                                                    color: Colors.black,
+                                                    size: 30,
                                                   ),
-                                                  Text(
-                                                    // "(300mg)",
-                                                    " (${globalVariables.getMedicineList!.medicine[index].dose})",
-                                                    style: TextStyle(
-                                                        fontSize: 17,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                        color:
-                                                            Color(0xffA2A2A2)),
-                                                  ),
-                                                ],
+                                                ),
                                               ),
                                             ],
                                           ),
                                         ),
-                                        Spacer(),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 16, top: 26, bottom: 26),
-                                          child: Icon(
-                                            Icons.close,
-                                            color: Colors.black,
-                                            size: 30,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      );
+                                    },
                                   ),
-                                );
-                              },
+                                ),
+                              ],
                             ),
                     ),
                   ),
@@ -275,7 +332,8 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                           MaterialPageRoute(
                               builder: (context) => SearchForLaboratoryPage()),
                         );*/
-                              NavigationService().navigateToScreen(SuggestPharmacyPage());
+                              NavigationService()
+                                  .navigateToScreen(SuggestPharmacyPage());
                             },
                             child: Column(
                               children: [
@@ -287,7 +345,9 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                 SizedBox(height: 5,),
+                                SizedBox(
+                                  height: 5,
+                                ),
                                 Text(
                                   textAlign: TextAlign.center,
                                   widget.pharmacyname,
