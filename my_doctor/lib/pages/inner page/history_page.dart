@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -155,8 +157,9 @@ class _HistoryPageState extends State<HistoryPage> {
                   });
                   Navigator.of(context).pop(); // Close the dialog.
                 }
+                var jsonStr = jsonEncode(globalVariables.selectedDisease);
                 print(
-                    "${globalVariables.selectedDisease}"); // Return the itemName.
+                    "${jsonStr}"); // Return the itemName.
               },
               child: Text("Add"),
             ),

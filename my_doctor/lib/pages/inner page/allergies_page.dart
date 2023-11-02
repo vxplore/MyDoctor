@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -588,8 +590,9 @@ class _AllergiesPageState extends State<AllergiesPage> {
                   });
                   Navigator.of(context).pop(); // Close the dialog.
                 }
+                var jsonStr = jsonEncode(globalVariables.selectedAllergy);
                 print(
-                    "${globalVariables.selectedAllergy}"); // Return the itemName.
+                    "${jsonStr}"); // Return the itemName.
               },
               child: Text("Add"),
             ),

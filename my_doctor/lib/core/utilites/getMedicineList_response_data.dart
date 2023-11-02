@@ -34,6 +34,11 @@ class Medicine {
   String startFrom;
   String remarks;
   String language;
+  String medNameId;
+  String medFormId;
+  String medDoseId;
+  String medDurationId;
+  String medRegimenId;
   String duration;
   String regimen;
   String type;
@@ -46,6 +51,11 @@ class Medicine {
     required this.startFrom,
     required this.remarks,
     required this.language,
+    required this.medNameId,
+    required this.medFormId,
+    required this.medDoseId,
+    required this.medDurationId,
+    required this.medRegimenId,
     required this.duration,
     required this.regimen,
     required this.type,
@@ -63,6 +73,11 @@ class Medicine {
     startFrom: json["startFrom"],
     remarks: json["remarks"],
     language: json["language"],
+    medNameId: json["medNameId"],
+    medFormId: json["medFormId"],
+    medDoseId: json["medDoseId"],
+    medDurationId: json["medDurationId"],
+    medRegimenId: json["medRegimenId"],
     duration: json["duration"],
     regimen: json["regimen"],
     type: json["type"],
@@ -76,6 +91,11 @@ class Medicine {
     "startFrom": startFrom,
     "remarks": remarks,
     "language": language,
+    "medNameId": medNameId,
+    "medFormId": medFormId,
+    "medDoseId": medDoseId,
+    "medDurationId": medDurationId,
+    "medRegimenId": medRegimenId,
     "duration": duration,
     "regimen": regimen,
     "type": type,

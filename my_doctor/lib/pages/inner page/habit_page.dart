@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -155,8 +157,9 @@ class _HistoryPageState extends State<HabitPage> {
                   });
                   Navigator.of(context).pop(); // Close the dialog.
                 }
+                var jsonStr = jsonEncode(globalVariables.selectedHabits);
                 print(
-                    "${globalVariables.selectedHabits}"); // Return the itemName.
+                    "${jsonStr}"); // Return the itemName.
               },
               child: Text("Add"),
             ),

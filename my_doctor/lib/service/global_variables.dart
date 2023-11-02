@@ -19,6 +19,7 @@ class GlobalVariables {
   }
 
   GlobalVariables._internal();
+  List<Map<String, dynamic>> selectedItems = [];
   List<Map<String, dynamic>> finalselectedItems = [];
   String pharmacynamess = "";
   List<Map<String,dynamic>> medicinelists = [];
@@ -27,15 +28,16 @@ class GlobalVariables {
   List<String> selectedHabits = [];
   List<Specialization> res = List.empty();
   bool isOtpFromForgotPassword = false;
+  String? medId;
   String? patientId;
   String? patientImg;
   String? patientName;
   String? patientAge;
   String? patientAgeType;
   String? patientsGender;
-  String? dosageFormId;
-  String? dosageform;
-  String? dose;
+   String? dosageFormId;
+   String? dosageform;
+  String? dose ;
   String? doseId;
   String? names;
   String? nameId;

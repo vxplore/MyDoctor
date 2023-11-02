@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:my_doctor/custom%20widget/custom_circularProgress.dart';
 import 'package:my_doctor/pages/additionalAssesment_page.dart';
 import 'package:my_doctor/pages/suggest_pharmacy_page.dart';
+import 'package:my_doctor/pages/updateMedicationStep_page.dart';
 import 'package:my_doctor/service/global_variables.dart';
 import 'package:my_doctor/service/navigation_service.dart';
 import 'package:my_doctor/view_models/addMedication_view_model.dart';
@@ -217,93 +218,164 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                                     physics: BouncingScrollPhysics(),
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                      return Card(
-                                        shape: BeveledRectangleBorder(
-                                            borderRadius: BorderRadius.zero),
-                                        elevation: 5,
-                                        child: Container(
-                                          padding: EdgeInsets.only(
-                                              left: 14, right: 7),
-                                          height: 80,
-                                          color: Colors.white,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 20,
-                                                    top: 17,
-                                                    bottom: 13),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      // "Tablet",
-                                                      "${globalVariables.getMedicineList!.medicine[index].type}",
-                                                      style: TextStyle(
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                          color: Color(
-                                                              0xff0266D5)),
-                                                    ),
-                                                    Spacer(),
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          // "Paracetamol",
-                                                          "${globalVariables.getMedicineList!.medicine[index].name}",
-                                                          style: TextStyle(
-                                                              fontSize: 17,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .normal,
-                                                              color:
-                                                                  Colors.black),
-                                                        ),
-                                                        Text(
-                                                          // "(300mg)",
-                                                          " (${globalVariables.getMedicineList!.medicine[index].dose})",
-                                                          style: TextStyle(
-                                                              fontSize: 17,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .normal,
-                                                              color: Color(
-                                                                  0xffA2A2A2)),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Spacer(),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 16,
-                                                    top: 26,
-                                                    bottom: 26),
-                                                child: InkWell(
-                                                  onTap: () async {
-                                                    var mediId = globalVariables
-                                                        .getMedicineList!
-                                                        .medicine[index]
-                                                        .id;
-                                                    await vm
-                                                        .deleteSingleMedicineApi(
-                                                            mediId);
-                                                    await updateMedicineListOnDelete();
-                                                  },
-                                                  child: Icon(
-                                                    Icons.close,
-                                                    color: Colors.black,
-                                                    size: 30,
+                                      return InkWell(
+                                        onTap: () async {
+                                          setState(() {
+                                            globalVariables.medId =
+                                                globalVariables.getMedicineList!
+                                                    .medicine[index].id;
+                                            globalVariables.names =
+                                                globalVariables.getMedicineList!
+                                                    .medicine[index].name;
+                                            globalVariables.nameId =
+                                                globalVariables.getMedicineList!
+                                                    .medicine[index].medNameId;
+                                            globalVariables.dose =
+                                                globalVariables.getMedicineList!
+                                                    .medicine[index].dose;
+                                            globalVariables.doseId =
+                                                globalVariables.getMedicineList!
+                                                    .medicine[index].medDoseId;
+                                            globalVariables.durations =
+                                                globalVariables.getMedicineList!
+                                                    .medicine[index].duration;
+                                            globalVariables.durationsId =
+                                                globalVariables
+                                                    .getMedicineList!
+                                                    .medicine[index]
+                                                    .medDurationId;
+                                            globalVariables.dosageform =
+                                                globalVariables.getMedicineList!
+                                                    .medicine[index].type;
+                                            globalVariables.dosageFormId =
+                                                globalVariables.getMedicineList!
+                                                    .medicine[index].medFormId;
+                                            globalVariables.doseregimen =
+                                                globalVariables.getMedicineList!
+                                                    .medicine[index].regimen;
+                                            globalVariables.doseregimenId =
+                                                globalVariables
+                                                    .getMedicineList!
+                                                    .medicine[index]
+                                                    .medRegimenId;
+                                            globalVariables
+                                                    .dataFromDialogdoseregimen =
+                                                globalVariables.getMedicineList!
+                                                    .medicine[index].medTime;
+                                            globalVariables
+                                                    .startMediactionFrom =
+                                                globalVariables.getMedicineList!
+                                                    .medicine[index].startFrom;
+                                            globalVariables.medicineRemarks =
+                                                globalVariables.getMedicineList!
+                                                    .medicine[index].remarks;
+                                            globalVariables.selectedLanguage =
+                                                globalVariables.getMedicineList!
+                                                    .medicine[index].language;
+                                          });
+
+                                          await Future.delayed(
+                                              Duration(seconds: 1));
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    UpdateMedicationStepsPage()),
+                                          );
+                                        },
+                                        child: Card(
+                                          shape: BeveledRectangleBorder(
+                                              borderRadius: BorderRadius.zero),
+                                          elevation: 5,
+                                          child: Container(
+                                            padding: EdgeInsets.only(
+                                                left: 14, right: 7),
+                                            height: 80,
+                                            color: Colors.white,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 20,
+                                                          top: 17,
+                                                          bottom: 13),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        // "Tablet",
+                                                        "${globalVariables.getMedicineList!.medicine[index].type}",
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal,
+                                                            color: Color(
+                                                                0xff0266D5)),
+                                                      ),
+                                                      Spacer(),
+                                                      Row(
+                                                        children: [
+                                                          Text(
+                                                            // "Paracetamol",
+                                                            "${globalVariables.getMedicineList!.medicine[index].name}",
+                                                            style: TextStyle(
+                                                                fontSize: 17,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                                color: Colors
+                                                                    .black),
+                                                          ),
+                                                          Text(
+                                                            // "(300mg)",
+                                                            " (${globalVariables.getMedicineList!.medicine[index].dose})",
+                                                            style: TextStyle(
+                                                                fontSize: 17,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                                color: Color(
+                                                                    0xffA2A2A2)),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                                Spacer(),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 16,
+                                                          top: 26,
+                                                          bottom: 26),
+                                                  child: InkWell(
+                                                    onTap: () async {
+                                                      var mediId =
+                                                          globalVariables
+                                                              .getMedicineList!
+                                                              .medicine[index]
+                                                              .id;
+                                                      await vm
+                                                          .deleteSingleMedicineApi(
+                                                              mediId);
+                                                      await updateMedicineListOnDelete();
+                                                    },
+                                                    child: Icon(
+                                                      Icons.close,
+                                                      color: Colors.black,
+                                                      size: 30,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       );

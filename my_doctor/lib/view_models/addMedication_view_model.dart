@@ -235,6 +235,49 @@ abstract class _AddMedicationViewModel with Store {
     }
   }
 
+  Future updateMedicineApi()async{
+    print("add medicine patientid :: ${globalVariables.patientId}");
+    print("add medicine medicineid :: ${globalVariables.medId}");
+    print("add medicine medNameId :: ${globalVariables.nameId}");
+    print("add medicine medName :: ${globalVariables.names}");
+    print("add medicine medFormId :: ${globalVariables.dosageFormId}");
+    print(
+        "add medicine medTimeId :: ${globalVariables.dataFromDialogdoseregimen}");
+    print("add medicine medDoseId :: ${globalVariables.doseId}");
+    print("add medicine medDurationId :: ${globalVariables.durationsId}");
+    print("add medicine medRegimenId :: ${globalVariables.doseregimenId}");
+    print("add medicine startFrom :: ${globalVariables.startMediactionFrom}");
+    print("add medicine remarks :: ${globalVariables.medicineRemarks}");
+    print("add medicine language :: ${globalVariables.selectedLanguage}");
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse('https://v-xplore.com/dev/rohan/e-prescription/medicine/update'));
+    request.body = json.encode({
+      "med_id": globalVariables.medId,
+      "medNameId": globalVariables.nameId,
+      "medFormId": globalVariables.dosageFormId,
+      "medTime": globalVariables.dataFromDialogdoseregimen,
+      "medDoseId": globalVariables.doseId,
+      "medDurationId": globalVariables.durationsId,
+      "medRegimenId": globalVariables.doseregimenId,
+      "startFrom": globalVariables.startMediactionFrom,
+      "remarks": globalVariables.medicineRemarks,
+      "language": globalVariables.selectedLanguage
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+
+  }
+
   Future getMedicinesApi() async {
     final repo = dependency<Repository>();
     var response = await repo.getmedicinelists();
