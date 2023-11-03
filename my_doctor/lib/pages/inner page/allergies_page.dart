@@ -590,9 +590,9 @@ class _AllergiesPageState extends State<AllergiesPage> {
                   });
                   Navigator.of(context).pop(); // Close the dialog.
                 }
-                var jsonStr = jsonEncode(globalVariables.selectedAllergy);
+                globalVariables.selectedAllergyJson = jsonEncode(globalVariables.selectedAllergy);
                 print(
-                    "${jsonStr}"); // Return the itemName.
+                    "${globalVariables.selectedAllergyJson}"); // Return the itemName.
               },
               child: Text("Add"),
             ),

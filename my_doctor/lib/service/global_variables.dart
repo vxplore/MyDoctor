@@ -24,6 +24,9 @@ class GlobalVariables {
   String pharmacynamess = "";
   List<Map<String,dynamic>> medicinelists = [];
   List<Map<String, dynamic>> selectedAllergy = [];
+  String selectedAllergyJson = "";
+  String selectedDiseaseJson = "";
+  String selectedHabitsJson = "";
   List<String> selectedDisease = [];
   List<String> selectedHabits = [];
   List<Specialization> res = List.empty();

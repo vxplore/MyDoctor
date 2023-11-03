@@ -29,22 +29,30 @@ class GetallpatientsResponseData {
 }
 
 class Patient {
-  String age;
-  String profileImage;
   String name;
-  String phoneNumber;
+  String phoneNo;
   String gender;
-  String id;
+  String patientId;
+  String age;
   String ageType;
+  String email;
+  String height;
+  String weight;
+  String bmi;
+  String profileImage;
 
   Patient({
-    required this.age,
-    required this.profileImage,
     required this.name,
-    required this.phoneNumber,
+    required this.phoneNo,
     required this.gender,
-    required this.id,
+    required this.patientId,
+    required this.age,
     required this.ageType,
+    required this.email,
+    required this.height,
+    required this.weight,
+    required this.bmi,
+    required this.profileImage,
   });
 
   factory Patient.fromJson(String str) => Patient.fromMap(json.decode(str));
@@ -52,22 +60,30 @@ class Patient {
   String toJson() => json.encode(toMap());
 
   factory Patient.fromMap(Map<String, dynamic> json) => Patient(
-    age: json["age"],
-    profileImage: json["profileImage"],
     name: json["name"],
-    phoneNumber: json["phoneNumber"],
+    phoneNo: json["phone_no"],
     gender: json["gender"],
-    id: json["id"],
+    patientId: json["patient_id"],
+    age: json["age"],
     ageType: json["age_type"],
+    email: json["email"],
+    height: json["height"],
+    weight: json["weight"],
+    bmi: json["bmi"],
+    profileImage: json["profileImage"],
   );
 
   Map<String, dynamic> toMap() => {
-    "age": age,
-    "profileImage": profileImage,
     "name": name,
-    "phoneNumber": phoneNumber,
+    "phone_no": phoneNo,
     "gender": gender,
-    "id": id,
+    "patient_id": patientId,
+    "age": age,
     "age_type": ageType,
+    "email": email,
+    "height": height,
+    "weight": weight,
+    "bmi": bmi,
+    "profileImage": profileImage,
   };
 }

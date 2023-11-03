@@ -157,9 +157,9 @@ class _HistoryPageState extends State<HabitPage> {
                   });
                   Navigator.of(context).pop(); // Close the dialog.
                 }
-                var jsonStr = jsonEncode(globalVariables.selectedHabits);
+                globalVariables.selectedHabitsJson = jsonEncode(globalVariables.selectedHabits);
                 print(
-                    "${jsonStr}"); // Return the itemName.
+                    "${globalVariables.selectedHabitsJson}"); // Return the itemName.
               },
               child: Text("Add"),
             ),

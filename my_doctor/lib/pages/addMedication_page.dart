@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_doctor/custom%20widget/custom_circularProgress.dart';
 import 'package:my_doctor/pages/additionalAssesment_page.dart';
+import 'package:my_doctor/pages/prescription_webview_page.dart';
 import 'package:my_doctor/pages/suggest_pharmacy_page.dart';
 import 'package:my_doctor/pages/updateMedicationStep_page.dart';
 import 'package:my_doctor/service/global_variables.dart';
@@ -67,7 +68,11 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        NavigationService().navigateToScreen(AdditionalAssesmentPage());
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>PrescriptionWebViewPage()),
+        );
         return false;
       },
       child: Scaffold(
@@ -483,7 +488,13 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                             ),
                             padding: const EdgeInsets.all(12),
                             backgroundColor: Color(0xff1468B3)),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PrescriptionWebViewPage()),
+                          );
+                        },
                         child: Text(
                           "Done",
                           style: TextStyle(

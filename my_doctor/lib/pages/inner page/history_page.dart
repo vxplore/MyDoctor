@@ -157,9 +157,9 @@ class _HistoryPageState extends State<HistoryPage> {
                   });
                   Navigator.of(context).pop(); // Close the dialog.
                 }
-                var jsonStr = jsonEncode(globalVariables.selectedDisease);
+                globalVariables.selectedDiseaseJson = jsonEncode(globalVariables.selectedDisease);
                 print(
-                    "${jsonStr}"); // Return the itemName.
+                    "${ globalVariables.selectedDiseaseJson}"); // Return the itemName.
               },
               child: Text("Add"),
             ),

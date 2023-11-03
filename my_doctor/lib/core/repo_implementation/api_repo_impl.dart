@@ -187,7 +187,13 @@ class ApiRepositoryImpl extends ApiRepository {
       'age': age,
       'number': globalVariables.mobileNumberController.text,
       'gender': gender,
-      'ageType': ageTypes
+      'ageType': ageTypes,
+      'height': '6',
+      'weight': '120',
+      'BMI': '12',
+      'allergy': globalVariables.selectedAllergyJson,
+      'diseases_history': globalVariables.selectedDiseaseJson,
+      'habits': globalVariables.selectedHabitsJson
     });
     if (img == "") {
       return await request.send();

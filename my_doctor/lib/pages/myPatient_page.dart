@@ -161,7 +161,7 @@ class _MyPatientPageState extends State<MyPatientPage> {
                                         globalVariables.getAllPatients!
                                             .patients[index].gender;
                                     globalVariables.patientId = globalVariables
-                                        .getAllPatients!.patients[index].id;
+                                        .getAllPatients!.patients[index].patientId;
                                     globalVariables.patientImg = globalVariables
                                         .getAllPatients!
                                         .patients[index]

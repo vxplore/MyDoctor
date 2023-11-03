@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_doctor/custom%20widget/button.dart';
 import 'package:my_doctor/pages/patient_complaints_page.dart';
 import 'package:my_doctor/pages/patient_lookUp_page.dart';
+import 'package:my_doctor/pages/prescription_webview_page.dart';
 
 import '../custom widget/showPatientLookUpDialog.dart';
 import '../service/navigation_service.dart';
@@ -261,11 +262,16 @@ class _AdditionalAssesmentPageState extends State<AdditionalAssesmentPage> {
                                 padding: const EdgeInsets.all(12),
                                 backgroundColor: Color(0xff1468B3)),
                             onPressed: () {
-                              showDialog(
+                              /*showDialog(
                                   context: context,
                                   builder: (context) =>
                                       ShowPatientLookUpDialog(),
-                                  barrierDismissible: false);
+                                  barrierDismissible: false);*/
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PrescriptionWebViewPage()),
+                              );
                             },
                             child: Text(
                               "Next",

@@ -480,6 +480,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.8.1"
+  lint:
+    dependency: transitive
+    description:
+      name: lint
+      sha256: f4bd4dbaa39f4ae8836f2d1275f2f32bc68b3a8cce0a0735dd1f7a601f06682a
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.2"
   lints:
     dependency: transitive
     description:
@@ -552,6 +560,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
+  multiple_search_selection:
+    dependency: "direct main"
+    description:
+      name: multiple_search_selection
+      sha256: f8bb7dc7a7e88d6b9003436e9b31097260b8dbf141f758304395f3c69b06a750
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.4"
   package_config:
     dependency: transitive
     description:
