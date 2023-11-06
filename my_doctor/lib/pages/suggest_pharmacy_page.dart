@@ -27,55 +27,34 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
     {'name': 'Grapes', 'ID': '005', "phone": "235355550"},
   ];
 
-  final TextEditingController _controller = TextEditingController();
-  List<Map<String, dynamic>> selectedItems = [];
-  List<Map<String, dynamic>> finalselectedItems = [];
   Map<String, dynamic> selectedPharmacy = {};
-  bool showSearchResults = false;
-  bool noSearch = false;
 
-  void _filterItems(String query) {
-    setState(() {
-      selectedItems.clear();
+  List<Map<String, dynamic>> finalselectedItems = [];
 
-      if (query.isNotEmpty) {
-        String lowercaseQuery = query.toLowerCase();
-        for (Map<String, dynamic> item in items) {
-          final itemName = item['name'] as String;
-          if (itemName.toLowerCase().contains(lowercaseQuery)) {
-            selectedItems.add(item);
-            noSearch = false;
-          } else {
-            noSearch = !noSearch;
-          }
-        }
-        showSearchResults = true;
-      } else {
-        showSearchResults = false;
-      }
-    });
+  List<Map<String, dynamic>> _foundUsers = [];
+  late TextEditingController _searchController;
+
+  @override
+  void initState() {
+    // _foundUsers = _allUsers;
+    _searchController = TextEditingController();
+    super.initState();
   }
 
-  void _filterItems2(String query) {
-    setState(() {
-      selectedItems.clear();
+  final TextEditingController _controller = TextEditingController();
 
-      if (query.isNotEmpty) {
-        String lowercaseQuery = query.toLowerCase();
-        for (Map<String, dynamic> item in items) {
-          final itemName = item['name'] as String;
-          if (itemName.toLowerCase().contains(lowercaseQuery)) {
-            selectedItems.add(item);
-            noSearch = !noSearch;
-          }
-          if (!itemName.toLowerCase().contains(lowercaseQuery)){
-            noSearch = false;
-          }
-        }
-        showSearchResults = true;
-      } else {
-        showSearchResults = false;
-      }
+  void _runFilter(String enteredKeyword) {
+    List<Map<String, dynamic>> results = [];
+    if (enteredKeyword.isEmpty) {
+      // results = _allUsers;
+    } else {
+      results = items
+          .where((user) =>
+              user["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
     });
   }
 
@@ -145,151 +124,80 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
                     ),
                     // height: 70,
                     width: 390,
-                    child:
-                    /* Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Text(
-                            "Search for Complaints",
-                            style:
-                                TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
-                          ),
-                        ),
-                        Spacer(),
-                        IconButton(
-                          onPressed: () {
-                            // method to show the search bar
-                            showSearch(
-                                context: context,
-                                // delegate to customize the search bar
-                                delegate: CustomSearchDelegate());
-                          },
-                          icon: const Icon(Icons.search,
-                              color: Color(0xffDFDFDF), size: 40),
-                        )
-                      ],
-                    ),*/
-                    FocusScope(
-                      child: TextFormField(
-                        controller: _controller,
-                        onChanged:
-                        noSearch != true ? _filterItems : _filterItems2,
+                    child: FocusScope(
+                      child: TextField(
+                        onChanged: (value) => _runFilter(value),
+                        controller: _searchController,
                         decoration: InputDecoration(
                           contentPadding:
-                          EdgeInsets.only(left: 20.0, top: 15, bottom: 10),
+                              EdgeInsets.only(left: 20.0, top: 15, bottom: 10),
                           isDense: true,
                           border: InputBorder.none,
                           labelStyle:
-                          TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
+                              TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
                           labelText: 'Search for Pharmacy',
-                          suffixIcon: showSearchResults == false
+                          suffixIcon: _searchController.text == ""
                               ? Icon(Icons.search,
-                              color: Color(0xffDFDFDF), size: 40)
+                                  color: Color(0xffDFDFDF), size: 40)
                               : InkWell(
-                            onTap: () {
-                              _controller.clear();
-                              _filterItems('');
-                              FocusScope.of(context).unfocus();
-                            },
-                            child: Icon(Icons.clear,
-                                color: Color(0xffDFDFDF), size: 40),
-                          ),
+                                  onTap: () {
+                                    _searchController.clear();
+                                    FocusScope.of(context).unfocus();
+                                  },
+                                  child: Icon(Icons.clear,
+                                      color: Color(0xffDFDFDF), size: 40),
+                                ),
                         ),
                       ),
                     ),
                   ),
                 ),
-                Visibility(
-                  visible: showSearchResults,
-                  child: Expanded(
-                    child: Container(
-                      // height: 195,
-                        child: noSearch == false
+                _searchController.text != ""
+                    ? Container(
+                        height: 195,
+                        width: 500,
+                        child: _foundUsers.isNotEmpty
                             ? ListView.builder(
-                          itemCount: selectedItems.length,
-                          itemBuilder: (context, index) {
-                            final item = selectedItems[index];
-                            final itemName = item['name'] as String;
-                            final itemId = item['ID'] as String;
-                            final itemPh = item["phone"] as String;
-                            return InkWell(
-                              onTap: () {
-                                /* setState(() {
-                                        finalselectedItems.add(
-                                            {"name": itemName, "ID": itemId});
-                                        print(finalselectedItems);
-                                      });*/
-                                if (!finalselectedItems.any(
-                                        (selectedItem) =>
-                                    (selectedItem['name']
-                                    as String) ==
-                                        itemName)) {
-                                  setState(() {
-                                    finalselectedItems.add({
-                                      "name": itemName,
-                                      "ID": itemId,
-                                      "phone": itemPh
+                                itemCount: _foundUsers.length,
+                                itemBuilder: (context, index) => ListTile(
+                                  onTap: () {
+                                    setState(() {
+                                      finalselectedItems.add(
+                                        {
+                                          "name": _foundUsers[index]["name"],
+                                          "ID": _foundUsers[index]["ID"],
+                                          "phone": _foundUsers[index]["phone"]
+                                        },
+                                      );
                                     });
-                                    print(finalselectedItems);
-                                    showSearchResults = false;
-                                    _controller.clear();
+                                    _searchController.clear();
                                     FocusScope.of(context).unfocus();
-                                  });
-                                }
-                              },
-                              child: ListTile(
-                                title: Text(itemName),
-                              ),
-                            );
-                          },
-                        )
-                            : Center(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text("No result found"),
-                              InkWell(
+                                  },
+                                  title: Text(_foundUsers[index]['name']),
+                                ),
+                              )
+                            : InkWell(
                                 onTap: () {
-                                  /* setState(() {
-                                          final newEntryss = {
-                                            "name": _controller.text,
-                                            "ID": ""
-                                          };
-
-                                          finalselectedItems.add(newEntryss);
-                                        });*/
-                                  if (!finalselectedItems.any(
-                                          (selectedItem) =>
-                                      (selectedItem['name']
-                                      as String) ==
-                                          _controller.text)) {
-                                    /*  setState(() {
-                                      finalselectedItems
-                                          .add({"name": _controller.text, "ID": ""});
-                                      print(finalselectedItems);
-                                      _controller.clear();
-                                      FocusScope.of(context).unfocus();
-                                      showSearchResults = false;
-                                    });*/
-                                    _showAddItemDialog();
-                                  }
+                                  _showAddItemDialog();
                                 },
-                                child: Text(
-                                    "Click here to add this as new pharmacy",
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'No results found. Click here to add as new pharmacy',
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 20,
                                         fontWeight: FontWeight.bold,
-                                        decoration:
-                                        TextDecoration.underline)),
+                                        fontSize: 20,
+                                        decoration: TextDecoration.underline,
+                                        color: Colors.red),
+                                  ),
+                                ),
                               ),
-                            ],
-                          ),
-                        )),
-                  ),
-                ),
+                      )
+                    : Container(
+                        height: 0,
+                        width: 0,
+                      ),
                 Padding(
                   padding: EdgeInsets.only(left: 19, top: 25),
                   child: Text(
@@ -300,30 +208,9 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
                 SizedBox(
                   height: 20,
                 ),
-                /*InkWell(
-                  onTap: () {
-                   */ /* Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChiefComplaintsDetailsPage()),
-                    );*/ /*
-                  },
-                  child: Container(
-                    height: 65,
-                    width: 420,
-                    color: Colors.white,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 20, top: 20, right: 18),
-                      child: Text(
-                        "Tooth pain",
-                        style: TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
-                      ),
-                    ),
-                  ),
-                ),*/
                 Container(
                   padding: EdgeInsets.all(12),
-                  height: showSearchResults == false ? 480 : 290,
+                  height: _searchController.text != "" ? 285 : 480,
                   child: ListView.separated(
                     separatorBuilder: (context, index) {
                       return Divider(
@@ -353,7 +240,7 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
                                       "name": finalselectedItems[index]["name"],
                                       "ID": finalselectedItems[index]["ID"],
                                       "phone": finalselectedItems[index]
-                                      ["phone"]
+                                          ["phone"]
                                     });
                                     var snackdemo = SnackBar(
                                       content: Text("Added Successfully"),
@@ -393,8 +280,9 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
                     onPressed: () {
                       print("selected pharmacy :$selectedPharmacy");
                       globalVariables.pharmacynamess = selectedPharmacy["name"];
-                      NavigationService()
-                          .navigateToScreen(AddMedicationPage(pharmacyname: globalVariables.pharmacynamess! ,));
+                      NavigationService().navigateToScreen(AddMedicationPage(
+                        pharmacyname: globalVariables.pharmacynamess!,
+                      ));
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xff1468B3),
@@ -416,10 +304,12 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
   }
 
   Future<String?> _showAddItemDialog() async {
+    _controller.text = _searchController.text;
     return showDialog<String>(
       context: context,
       builder: (context) {
-        String? itemName = _controller.text; // Initialize itemName variable here.
+        String? itemName =
+            _searchController.text; // Initialize itemName variable here.
         String? itemName2;
         return AlertDialog(
           title: Text("Add New Pharmacy"),
@@ -452,10 +342,11 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
             ),
             TextButton(
               onPressed: () {
-                /* if (_controller.text!=""&&itemName != null &&
+                if (_controller.text != "" &&
+                    itemName != null &&
                     itemName!.isNotEmpty &&
                     itemName2 != null &&
-                    itemName2!.isNotEmpty)*/ {
+                    itemName2!.isNotEmpty) {
                   setState(() {
                     final newEntryss = {
                       "name": itemName,
@@ -468,7 +359,9 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
                   print(finalselectedItems);
                   _controller.clear();
                   FocusScope.of(context).unfocus();
-                  showSearchResults = false;
+                  _searchController.clear();
+                  FocusScope.of(context).unfocus();
+                  // showSearchResults = false;
                   Navigator.of(context).pop(); // Close the dialog.
                 }
               },
@@ -480,87 +373,3 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
     );
   }
 }
-
-/*
-class CustomSearchDelegate extends SearchDelegate {
-// Demo list to show querying
-  List<String> searchTerms = [
-    "Apple",
-    "Banana",
-    "Mango",
-    "Pear",
-    "Watermelons",
-    "Blueberries",
-    "Pineapples",
-    "Strawberries"
-  ];
-
-// first overwrite to
-// clear the search text
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    return [
-      IconButton(
-        onPressed: () {
-          close(context, null);
-          query = '';
-        },
-        icon: Icon(Icons.clear),
-      ),
-    ];
-  }
-
-// second overwrite to pop out of search menu
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        close(context, null);
-      },
-      icon: Icon(Icons.arrow_back),
-    );
-  }
-
-// third overwrite to show query result
-  @override
-  Widget buildResults(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var fruit in searchTerms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
-      }
-    }
-    return ListView.builder(
-      itemCount: matchQuery.length,
-      itemBuilder: (context, index) {
-        var result = matchQuery[index];
-        return ListTile(
-          title: Text(result),
-        );
-      },
-    );
-  }
-
-// last overwrite to show the
-// querying process at the runtime
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var fruit in searchTerms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
-      }
-    }
-    return ListView.builder(
-      itemCount: matchQuery.length,
-      itemBuilder: (context, index) {
-        var result = matchQuery[index];
-        return ListTile(
-          title: Text(result),
-        );
-      },*/
-/**//*
-
-    );
-  }
-}*/

@@ -26,53 +26,32 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
     {'name': 'Grapes', 'ID': '005'},
   ];
 
-  final TextEditingController _controller = TextEditingController();
-  List<Map<String, dynamic>> selectedItems = [];
   List<Map<String, dynamic>> finalselectedItems = [];
-  bool showSearchResults = false;
-  bool noSearch = false;
-  void _filterItems(String query) {
-    setState(() {
-      selectedItems.clear();
 
-      if (query.isNotEmpty) {
-        String lowercaseQuery = query.toLowerCase();
-        for (Map<String, dynamic> item in items) {
-          final itemName = item['name'] as String;
-          if (itemName.toLowerCase().contains(lowercaseQuery)) {
-            selectedItems.add(item);
-            noSearch = false;
-          } else  {
-            noSearch = !noSearch;
-          }
-        }
-        showSearchResults = true;
-      } else {
-        showSearchResults = false;
-      }
-    });
-  }
-  void _filterItems2(String query) {
-    setState(() {
-      selectedItems.clear();
+  List<Map<String, dynamic>> _foundUsers = [];
+  late TextEditingController _searchController;
 
-      if (query.isNotEmpty) {
-        String lowercaseQuery = query.toLowerCase();
-        for (Map<String, dynamic> item in items) {
-          final itemName = item['name'] as String;
-          if (itemName.toLowerCase().contains(lowercaseQuery)) {
-            selectedItems.add(item);
-            noSearch = !noSearch;
-          }
-        }
-        showSearchResults = true;
-      } else {
-        showSearchResults = false;
-      }
-    });
+  @override
+  void initState() {
+    // _foundUsers = _allUsers;
+    _searchController = TextEditingController();
+    super.initState();
   }
 
-
+  void _runFilter(String enteredKeyword) {
+    List<Map<String, dynamic>> results = [];
+    if (enteredKeyword.isEmpty) {
+      // results = _allUsers;
+    } else {
+      results = items
+          .where((user) =>
+              user["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +101,9 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
           ),
         ),
         body: SingleChildScrollView(
+          padding: EdgeInsets.only(
+              top: 10, bottom: MediaQuery.of(context).viewInsets.bottom),
+          // scrollDirection: Axis.vertical,
           child: Container(
             width: 500,
             height: 760,
@@ -140,50 +122,26 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                     ),
                     // height: 70,
                     width: 390,
-                    child:
-                        /* Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Text(
-                            "Search for Complaints",
-                            style:
-                                TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
-                          ),
-                        ),
-                        Spacer(),
-                        IconButton(
-                          onPressed: () {
-                            // method to show the search bar
-                            showSearch(
-                                context: context,
-                                // delegate to customize the search bar
-                                delegate: CustomSearchDelegate());
-                          },
-                          icon: const Icon(Icons.search,
-                              color: Color(0xffDFDFDF), size: 40),
-                        )
-                      ],
-                    ),*/
-                        FocusScope(
-                      child: TextFormField(
-                        controller: _controller,
-                        onChanged: noSearch!= true ? _filterItems : _filterItems2,
+                    child: FocusScope(
+                      child: TextField(
+                        onChanged: (value) => _runFilter(value),
+                        controller: _searchController,
+                        scrollPadding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(left: 20.0,top: 15,bottom: 10),
+                          contentPadding:
+                              EdgeInsets.only(left: 20.0, top: 15, bottom: 10),
                           isDense: true,
                           border: InputBorder.none,
                           labelStyle:
                               TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
-                          labelText: '  Search for Complaints',
-                          suffixIcon: showSearchResults == false
+                          labelText: 'Search for Complains',
+                          suffixIcon: _searchController.text == ""
                               ? Icon(Icons.search,
                                   color: Color(0xffDFDFDF), size: 40)
                               : InkWell(
                                   onTap: () {
-                                    _controller.clear();
-                                    _filterItems('');
+                                    _searchController.clear();
                                     FocusScope.of(context).unfocus();
                                   },
                                   child: Icon(Icons.clear,
@@ -194,85 +152,60 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                     ),
                   ),
                 ),
-                Visibility(
-                  visible: showSearchResults,
-                  child: Expanded(
-                    child: Container(
-                        // height: 195,
-                        child: noSearch == false
+                _searchController.text != ""
+                    ? Container(
+                        height: 195,
+                        width: 500,
+                        child: _foundUsers.isNotEmpty
                             ? ListView.builder(
-                                itemCount: selectedItems.length,
-                                itemBuilder: (context, index) {
-                                  final item = selectedItems[index];
-                                  final itemName = item['name'] as String;
-                                  final itemId = item['ID'] as String;
-                                  return InkWell(
-                                    onTap: () {
-                                     /* setState(() {
-                                        finalselectedItems.add(
-                                            {"name": itemName, "ID": itemId});
-                                        print(finalselectedItems);
-                                      });*/
-                                      if (!finalselectedItems.any((selectedItem) =>
-                                      (selectedItem['name'] as String) == itemName)) {
-                                        setState(() {
-                                          finalselectedItems
-                                              .add({"name": itemName, "ID": itemId});
-                                          print(finalselectedItems);
-                                          showSearchResults = false;
-                                          _controller.clear();
-                                          FocusScope.of(context).unfocus();
-                                        });
-                                      }
-                                    },
-                                    child: ListTile(
-                                      title: Text(itemName),
-                                    ),
-                                  );
-                                },
-                              )
-                            : Center(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text("No result found"),
-                                    InkWell(
-                                      onTap: () {
-                                       /* setState(() {
-                                          final newEntryss = {
-                                            "name": _controller.text,
-                                            "ID": ""
-                                          };
-
-                                          finalselectedItems.add(newEntryss);
-                                        });*/
-                                        if (!finalselectedItems.any((selectedItem) =>
-                                        (selectedItem['name'] as String) == _controller.text)) {
-                                          setState(() {
-                                            finalselectedItems
-                                                .add({"name": _controller.text, "ID": ""});
-                                            print(finalselectedItems);
-                                            _controller.clear();
-                                            FocusScope.of(context).unfocus();
-                                            showSearchResults = false;
-                                          });
-                                        }
-
-                                      },
-                                      child: Text(
-                                          "Click here to add this as new complain",
-                                          style: TextStyle(
-                                              color: Colors.red,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              decoration:
-                                                  TextDecoration.underline)),
-                                    ),
-                                  ],
+                                itemCount: _foundUsers.length,
+                                itemBuilder: (context, index) => ListTile(
+                                  onTap: () {
+                                    setState(() {
+                                      finalselectedItems.add(
+                                        {
+                                          "name": _foundUsers[index]["name"],
+                                          "ID": _foundUsers[index]["ID"],
+                                        },
+                                      );
+                                    });
+                                    _searchController.clear();
+                                    FocusScope.of(context).unfocus();
+                                  },
+                                  title: Text(_foundUsers[index]['name']),
                                 ),
-                              )),
-                  ),
-                ),
+                              )
+                            : InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    finalselectedItems.add(
+                                      {
+                                        "name": _searchController.text,
+                                        "ID": ""
+                                      },
+                                    );
+                                    _searchController.clear();
+                                    FocusScope.of(context).unfocus();
+                                  });
+                                },
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'No results found. Click here to add as new complain',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        decoration: TextDecoration.underline,
+                                        color: Colors.red),
+                                  ),
+                                ),
+                              ),
+                      )
+                    : Container(
+                        height: 0,
+                        width: 0,
+                      ),
                 Padding(
                   padding: EdgeInsets.only(left: 19, top: 25),
                   child: Text(
@@ -283,30 +216,9 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                 SizedBox(
                   height: 20,
                 ),
-                /*InkWell(
-                  onTap: () {
-                   */ /* Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChiefComplaintsDetailsPage()),
-                    );*/ /*
-                  },
-                  child: Container(
-                    height: 65,
-                    width: 420,
-                    color: Colors.white,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 20, top: 20, right: 18),
-                      child: Text(
-                        "Tooth pain",
-                        style: TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
-                      ),
-                    ),
-                  ),
-                ),*/
                 Container(
                   padding: EdgeInsets.all(12),
-                  height: showSearchResults == false ? 480 : 290,
+                  height: _searchController.text != "" ? 285 : 480,
                   child: ListView.separated(
                     separatorBuilder: (context, index) {
                       return Divider(
@@ -347,7 +259,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                     },
                   ),
                 ),
-                Spacer(),
+                // Spacer(),
                 Container(
                   margin: EdgeInsets.all(17),
                   width: double.infinity,
@@ -363,7 +275,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4))),
-                    child:  Text(finalselectedItems.isEmpty?"Skip":"Done"),
+                    child: Text(finalselectedItems.isEmpty ? "Skip" : "Done"),
                   ),
                 ),
                 SizedBox(
@@ -377,7 +289,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
     );
   }
 
-  Future<String?> _showAddItemDialog() async {
+/*  Future<String?> _showAddItemDialog() async {
     return showDialog<String>(
       context: context,
       builder: (context) {
@@ -415,7 +327,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
         );
       },
     );
-  }
+  }*/
 }
 
 class CustomSearchDelegate extends SearchDelegate {

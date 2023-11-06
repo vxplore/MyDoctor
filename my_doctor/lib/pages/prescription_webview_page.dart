@@ -48,147 +48,161 @@ class _PrescriptionWebViewPageState extends State<PrescriptionWebViewPage> {
 
   Future<void> _launchUrl(String urls) async {
     if (!await launchUrl(Uri.parse(urls))) {
-      throw Exception(
-          'Could not launch $Uri.parse($urls');
+      throw Exception('Could not launch $Uri.parse($urls');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffFFFFFF),
-      appBar: AppBar(
-        backgroundColor: Color(0xff1468B3),
-        toolbarHeight: 80,
-        leadingWidth: 30,
-        leading: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => PatientPrescriptionPage(
-                      globalVariables.patientName!,
-                      globalVariables.patientAge!,
-                      globalVariables.patientAgeType!,
-                      globalVariables.patientsGender!,
-                      globalVariables.patientImg!)),
-            );
-          },
-          child: Icon(
-            Icons.arrow_back_ios_new,
-            color: Colors.white,
-            size: 35,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => PatientPrescriptionPage(
+                  globalVariables.patientName!,
+                  globalVariables.patientAge!,
+                  globalVariables.patientAgeType!,
+                  globalVariables.patientsGender!,
+                  globalVariables.patientImg!)),
+        );
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: Color(0xffFFFFFF),
+        appBar: AppBar(
+          backgroundColor: Color(0xff1468B3),
+          toolbarHeight: 80,
+          leadingWidth: 30,
+          leading: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => PatientPrescriptionPage(
+                        globalVariables.patientName!,
+                        globalVariables.patientAge!,
+                        globalVariables.patientAgeType!,
+                        globalVariables.patientsGender!,
+                        globalVariables.patientImg!)),
+              );
+            },
+            child: Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.white,
+              size: 35,
+            ),
           ),
-        ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "INTERACTIVE Rx PREVIEW FOR",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, color: Color(0xffDCDCDC)),
-            ),
-            Text(
-              "${globalVariables.patientName}",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 22, color: Colors.white),
-            ),
-          ],
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 21),
-            child: InkWell(
-              onTap: () {
-                _launchUrl("https://pub.dev/packages/url_launcher");
-              },
-              child: Icon(
-                Icons.print,
-                color: Colors.white,
-                size: 30,
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "INTERACTIVE Rx PREVIEW FOR",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14, color: Color(0xffDCDCDC)),
               ),
-            ),
+              Text(
+                "${globalVariables.patientName}",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 22, color: Colors.white),
+              ),
+            ],
           ),
-        ],
-      ),
-      resizeToAvoidBottomInset: false,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: Container(
-        height: 750,
-        width: 500,
-        child: Column(
-          children: [
-            Container(
-                height: 650,
-                width: 500,
-                child: WebViewWidget(controller: _controller)),
-            Container(
-              height: 95,
-              width: 500,
-              color: Color(0xffFFFFFF),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 65,
-                      width: 198,
-                      color: Colors.grey.shade100,
-                      child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "SAVE DRAFT",
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15),
-                          )),
-                    ),
-                    Container(
-                      height: 65,
-                      width: 197,
-                      color: Colors.cyanAccent.shade400,
-                      child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "FINISH",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15),
-                          )),
-                    ),
-                  ],
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 21),
+              child: InkWell(
+                onTap: () {
+                  _launchUrl("https://pub.dev/packages/url_launcher");
+                },
+                child: Icon(
+                  Icons.print,
+                  color: Colors.white,
+                  size: 30,
                 ),
               ),
-            )
+            ),
           ],
         ),
-      ),
-      floatingActionButton: Container(
-        height: 75,
-        width: 80,
-        child: FloatingActionButton(
-          shape:
-            const StadiumBorder(side: BorderSide(color: Colors.white, width: 2)),
-          // isExtended: true,
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-            size: 50,
+        resizeToAvoidBottomInset: false,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        body: Container(
+          height: 750,
+          width: 500,
+          child: Column(
+            children: [
+              Container(
+                  height: 650,
+                  width: 500,
+                  child: WebViewWidget(controller: _controller)),
+              Container(
+                height: 95,
+                width: 500,
+                color: Color(0xffFFFFFF),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 65,
+                        width: 198,
+                        color: Colors.grey.shade100,
+                        child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "SAVE DRAFT",
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            )),
+                      ),
+                      Container(
+                        height: 65,
+                        width: 197,
+                        color: Colors.cyanAccent.shade400,
+                        child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "FINISH",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            )),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
           ),
-          backgroundColor: Color(0xff1468B3),
-          onPressed: () {
-            /* Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => PatientComplaintsPage()),
-            );*/
-            showDialog(
-                context: context,
-                builder: (context) => ShowPatientLookUpDialog(),
-                barrierDismissible: false);
-          },
+        ),
+        floatingActionButton: Container(
+          height: 75,
+          width: 80,
+          child: FloatingActionButton(
+            shape: const StadiumBorder(
+                side: BorderSide(color: Colors.white, width: 2)),
+            // isExtended: true,
+            child: Icon(
+              Icons.add,
+              color: Colors.white,
+              size: 50,
+            ),
+            backgroundColor: Color(0xff1468B3),
+            onPressed: () {
+              /* Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => PatientComplaintsPage()),
+              );*/
+              showDialog(
+                  context: context,
+                  builder: (context) => ShowPatientLookUpDialog(),
+                  barrierDismissible: false);
+            },
+          ),
         ),
       ),
     );

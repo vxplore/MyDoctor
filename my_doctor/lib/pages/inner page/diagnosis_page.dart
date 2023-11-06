@@ -16,31 +16,30 @@ class _DiagnosisPageState extends State<DiagnosisPage> {
     {'name': 'Grapes', 'ID': '005'},
   ];
 
-  final TextEditingController _controller = TextEditingController();
-  List<Map<String, dynamic>> selectedItems = [];
   List<Map<String, dynamic>> finalselectedItems = [];
-  bool showSearchResults = false;
-  bool noSearch = false;
 
-  void _filterItems(String query) {
+  List<Map<String, dynamic>> _foundUsers = [];
+  late TextEditingController _searchController;
+
+  @override
+  void initState() {
+    // _foundUsers = _allUsers;
+    _searchController = TextEditingController();
+    super.initState();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List<Map<String, dynamic>> results = [];
+    if (enteredKeyword.isEmpty) {
+      // results = _allUsers;
+    } else {
+      results = items
+          .where((user) =>
+              user["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
     setState(() {
-      selectedItems.clear();
-
-      if (query.isNotEmpty) {
-        String lowercaseQuery = query.toLowerCase();
-        for (Map<String, dynamic> item in items) {
-          final itemName = item['name'] as String;
-          if (itemName.toLowerCase().contains(lowercaseQuery)) {
-            selectedItems.add(item);
-            noSearch = false;
-          } else {
-            noSearch = true;
-          }
-        }
-        showSearchResults = true;
-      } else {
-        showSearchResults = false;
-      }
+      _foundUsers = results;
     });
   }
 
@@ -93,21 +92,23 @@ class _DiagnosisPageState extends State<DiagnosisPage> {
                     // height: 70,
                     width: 390,
                     child: FocusScope(
-                      child: TextFormField(
-                        controller: _controller,
-                        onChanged: _filterItems,
+                      child: TextField(
+                        onChanged: (value) => _runFilter(value),
+                        controller: _searchController,
                         decoration: InputDecoration(
+                          contentPadding:
+                              EdgeInsets.only(left: 20.0, top: 15, bottom: 10),
+                          isDense: true,
                           border: InputBorder.none,
                           labelStyle:
                               TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
-                          labelText: '  Search for Diagnosis',
-                          suffixIcon: showSearchResults == false
+                          labelText: 'Search for Diagnosis',
+                          suffixIcon: _searchController.text == ""
                               ? Icon(Icons.search,
                                   color: Color(0xffDFDFDF), size: 40)
                               : InkWell(
                                   onTap: () {
-                                    _controller.clear();
-                                    _filterItems('');
+                                    _searchController.clear();
                                     FocusScope.of(context).unfocus();
                                   },
                                   child: Icon(Icons.clear,
@@ -118,60 +119,60 @@ class _DiagnosisPageState extends State<DiagnosisPage> {
                     ),
                   ),
                 ),
-                Visibility(
-                  visible: showSearchResults,
-                  child: Container(
-                      height: 195,
-                      child: noSearch == false
-                          ? ListView.builder(
-                              itemCount: selectedItems.length,
-                              itemBuilder: (context, index) {
-                                final item = selectedItems[index];
-                                final itemName = item['name'] as String;
-                                final itemId = item['ID'] as String;
-                                return InkWell(
+                _searchController.text != ""
+                    ? Container(
+                        height: 195,
+                        width: 500,
+                        child: _foundUsers.isNotEmpty
+                            ? ListView.builder(
+                                itemCount: _foundUsers.length,
+                                itemBuilder: (context, index) => ListTile(
                                   onTap: () {
                                     setState(() {
                                       finalselectedItems.add(
-                                          {"name": itemName, "ID": itemId});
-                                      print(finalselectedItems);
+                                        {
+                                          "name": _foundUsers[index]["name"],
+                                          "ID": _foundUsers[index]["ID"],
+                                        },
+                                      );
                                     });
+                                    _searchController.clear();
+                                    FocusScope.of(context).unfocus();
                                   },
-                                  child: ListTile(
-                                    title: Text(itemName),
+                                  title: Text(_foundUsers[index]['name']),
+                                ),
+                              )
+                            : InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    finalselectedItems.add(
+                                      {
+                                        "name": _searchController.text,
+                                        "ID": ""
+                                      },
+                                    );
+                                    _searchController.clear();
+                                    FocusScope.of(context).unfocus();
+                                  });
+                                },
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'No results found. Click here to add as new diagnosis',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        decoration: TextDecoration.underline,
+                                        color: Colors.red),
                                   ),
-                                );
-                              },
-                            )
-                          : Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text("No result found"),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        final newEntryss = {
-                                          "name": _controller.text,
-                                          "ID": ""
-                                        };
-
-                                        finalselectedItems.add(newEntryss);
-                                      });
-                                    },
-                                    child: Text(
-                                        "Click here to add this as new diagnosis",
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            decoration:
-                                                TextDecoration.underline)),
-                                  ),
-                                ],
+                                ),
                               ),
-                            )),
-                ),
+                      )
+                    : Container(
+                        height: 0,
+                        width: 0,
+                      ),
                 Padding(
                   padding: EdgeInsets.only(left: 19, top: 25),
                   child: Text(
@@ -184,7 +185,7 @@ class _DiagnosisPageState extends State<DiagnosisPage> {
                 ),
                 Container(
                   padding: EdgeInsets.all(12),
-                  height: showSearchResults == false ? 480 : 290,
+                  height: _searchController.text != "" ? 285 : 480,
                   child: ListView.separated(
                     separatorBuilder: (context, index) {
                       return Divider(

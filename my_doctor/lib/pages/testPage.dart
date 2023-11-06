@@ -121,7 +121,8 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
         child: Column(
           children: [
             FocusScope(
-              child: TextField(
+              child:
+              TextField(
                 onChanged: (value) => _runFilter(value),
                 controller: _searchController,
                 // focusNode: _searchFocusNode,

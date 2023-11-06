@@ -70,8 +70,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
       onWillPop: () async {
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) =>PrescriptionWebViewPage()),
+          MaterialPageRoute(builder: (context) => PrescriptionWebViewPage()),
         );
         return false;
       },
@@ -437,7 +436,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                             ),
                           ),
                           Spacer(),
-                          InkWell(
+                          GestureDetector(
                             onTap: () async {
                               await Future.delayed(
                                   Duration(milliseconds: 1300));
@@ -492,7 +491,8 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PrescriptionWebViewPage()),
+                                builder: (context) =>
+                                    PrescriptionWebViewPage()),
                           );
                         },
                         child: Text(
