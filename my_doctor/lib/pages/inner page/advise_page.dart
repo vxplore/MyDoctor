@@ -16,51 +16,30 @@ class _AdvicePageState extends State<AdvicePage> {
     {'name': 'Grapes', 'ID': '005'},
   ];
 
-  final TextEditingController _controller = TextEditingController();
-  List<Map<String, dynamic>> selectedItems = [];
   List<Map<String, dynamic>> finalselectedItems = [];
-  bool showSearchResults = false;
-  bool noSearch = false;
 
+  List<Map<String, dynamic>> _foundUsers = [];
+  late TextEditingController _searchController;
 
-  void _filterItems(String query) {
-    setState(() {
-      selectedItems.clear();
-
-      if (query.isNotEmpty) {
-        String lowercaseQuery = query.toLowerCase();
-        for (Map<String, dynamic> item in items) {
-          final itemName = item['name'] as String;
-          if (itemName.toLowerCase().contains(lowercaseQuery)) {
-            selectedItems.add(item);
-            noSearch = false;
-          } else  {
-          noSearch = !noSearch;
-          }
-        }
-        showSearchResults = true;
-      } else {
-        showSearchResults = false;
-      }
-    });
+  @override
+  void initState() {
+    // _foundUsers = _allUsers;
+    _searchController = TextEditingController();
+    super.initState();
   }
-  void _filterItems2(String query) {
-    setState(() {
-       selectedItems.clear();
 
-      if (query.isNotEmpty) {
-        String lowercaseQuery = query.toLowerCase();
-        for (Map<String, dynamic> item in items) {
-          final itemName = item['name'] as String;
-          if (itemName.toLowerCase().contains(lowercaseQuery)) {
-            selectedItems.add(item);
-             noSearch = !noSearch;
-          }
-        }
-        showSearchResults = true;
-      } else {
-        showSearchResults = false;
-      }
+  void _runFilter(String enteredKeyword) {
+    List<Map<String, dynamic>> results = [];
+    if (enteredKeyword.isEmpty) {
+      // results = _allUsers;
+    } else {
+      results = items
+          .where((user) =>
+              user["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
     });
   }
 
@@ -72,7 +51,7 @@ class _AdvicePageState extends State<AdvicePage> {
         return false;
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         backgroundColor: Color(0xffF3FBFF),
         appBar: AppBar(
           backgroundColor: Color(0xff1468B3),
@@ -94,6 +73,9 @@ class _AdvicePageState extends State<AdvicePage> {
           ),
         ),
         body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          reverse: true,
+          physics: ScrollPhysics(),
           child: Container(
             width: 500,
             height: 760,
@@ -110,27 +92,26 @@ class _AdvicePageState extends State<AdvicePage> {
                         width: 0.5, // Border width
                       ),
                     ),
-                    // height: 70,
+                    height: 70,
                     width: 390,
                     child: FocusScope(
-                      child: TextFormField(
-                        textAlign: TextAlign.left,
-                        controller:  _controller,
-                        onChanged: noSearch!= true ? _filterItems : _filterItems2,
+                      child: TextField(
+                        onChanged: (value) => _runFilter(value),
+                        controller: _searchController,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(left: 20.0,top: 15,bottom: 10),
+                          contentPadding:
+                              EdgeInsets.only(left: 20.0, top: 15, bottom: 10),
                           isDense: true,
                           border: InputBorder.none,
                           labelStyle:
                               TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
-                          labelText: 'Search for Advice',
-                          suffixIcon: showSearchResults == false
+                          labelText: 'Search for Diagnosis',
+                          suffixIcon: _searchController.text == ""
                               ? Icon(Icons.search,
                                   color: Color(0xffDFDFDF), size: 40)
                               : InkWell(
                                   onTap: () {
-                                    _controller.clear();
-                                    _filterItems('');
+                                    _searchController.clear();
                                     FocusScope.of(context).unfocus();
                                   },
                                   child: Icon(Icons.clear,
@@ -141,94 +122,106 @@ class _AdvicePageState extends State<AdvicePage> {
                     ),
                   ),
                 ),
-                Visibility(
-                  visible: showSearchResults,
-                  child: Container(
-                      height: 195,
-                      child: noSearch == false
-                          ? ListView.builder(
-                              itemCount: selectedItems.length,
-                              itemBuilder: (context, index) {
-                                final item = selectedItems[index];
-                                final itemName = item['name'] as String;
-                                final itemId = item['ID'] as String;
-                                return InkWell(
+                _searchController.text != ""
+                    ? Container(
+                        height: 195,
+                        width: 500,
+                        child: _foundUsers.isNotEmpty
+                            ? ListView.builder(
+                                itemCount: _foundUsers.length,
+                                itemBuilder: (context, index) => ListTile(
                                   onTap: () {
                                     /*setState(() {
-                                finalselectedItems.add(
-                                    {"name": itemName, "ID": itemId});
-                                print(finalselectedItems);
-                              });*/
-                                    if (!finalselectedItems.any(
-                                        (selectedItem) =>
-                                            (selectedItem['name'] as String) ==
-                                            itemName)) {
+                                      finalselectedItems.add(
+                                        {
+                                          "name": _foundUsers[index]["name"],
+                                          "ID": _foundUsers[index]["ID"],
+                                        },
+                                      );
+                                    });*/
+                                    bool isDuplicate = finalselectedItems.any(
+                                        (item) =>
+                                            item["name"] ==
+                                            _foundUsers[index]["name"]);
+
+                                    if (!isDuplicate) {
                                       setState(() {
                                         finalselectedItems.add(
-                                            {"name": itemName, "ID": itemId});
-                                        showSearchResults = false;
-                                        _controller.clear();
-                                        FocusScope.of(context).unfocus();
-                                        print(finalselectedItems);
+                                          {
+                                            "name": _foundUsers[index]["name"],
+                                            "ID": _foundUsers[index]["ID"],
+                                          },
+                                        );
                                       });
                                     }
+                                    _searchController.clear();
+                                    FocusScope.of(context).unfocus();
                                   },
-                                  child: ListTile(
-                                    title: Text(itemName),
-                                  ),
-                                );
-                              },
-                            )
-                          : Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text("No result found"),
-                                  InkWell(
-                                    onTap: () {
-                                      /* setState(() {
-                                  final newEntryss = {
-                                    "name": _controller.text,
-                                    "ID": ""
-                                  };
+                                  title: Text(_foundUsers[index]['name']),
+                                ),
+                              )
+                            : InkWell(
+                                onTap: () {
+                                  /*setState(() {
+                                    finalselectedItems.add(
+                                      {
+                                        "name": _searchController.text,
+                                        "ID": ""
+                                      },
+                                    );
+                                    _searchController.clear();
+                                    FocusScope.of(context).unfocus();
+                                  });*/
+                                  bool isDuplicate = finalselectedItems.any(
+                                      (item) =>
+                                          item["name"] ==
+                                          _searchController.text);
 
-                                  finalselectedItems.add(newEntryss);
-                                });*/
-                                      if (!finalselectedItems.any(
-                                          (selectedItem) =>
-                                              (selectedItem['name']
-                                                  as String) ==
-                                              _controller.text)) {
-                                        setState(() {
-                                          finalselectedItems.add({
-                                            "name": _controller.text,
-                                            "ID": ""
-                                          });
-                                          showSearchResults = false;
-                                          _controller.clear();
-                                          FocusScope.of(context).unfocus();
-                                          print(finalselectedItems);
-                                        });
-                                      }
-                                    },
-                                    child: Text(
-                                        "Click here to add this as new advice",
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            decoration:
-                                                TextDecoration.underline)),
+                                  if (!isDuplicate) {
+                                    setState(() {
+                                      finalselectedItems.add(
+                                        {
+                                          "name": _searchController.text,
+                                          "ID": "",
+                                        },
+                                      );
+                                      items.add(
+                                        {
+                                          "name": _searchController.text,
+                                          "ID": "",
+                                        },
+                                      );
+                                      _searchController.clear();
+                                      FocusScope.of(context).unfocus();
+                                    });
+                                  }
+                                },
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'No results found. Click here to add as new advice',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        decoration: TextDecoration.underline,
+                                        color: Colors.red),
                                   ),
-                                ],
+                                ),
                               ),
-                            )),
-                ),
+                      )
+                    : Container(
+                        height: 0,
+                        width: 0,
+                      ),
                 Padding(
                   padding: EdgeInsets.only(left: 19, top: 25),
-                  child: Text(
-                    "Advices",
-                    style: TextStyle(fontSize: 24, color: Color(0xffC4C4C4)),
+                  child: Container(
+                    height: 30,
+                    child: Text(
+                      "Advices",
+                      style: TextStyle(fontSize: 24, color: Color(0xffC4C4C4)),
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -236,7 +229,7 @@ class _AdvicePageState extends State<AdvicePage> {
                 ),
                 Container(
                   padding: EdgeInsets.all(12),
-                  height: showSearchResults == false ? 480 : 290,
+                  height: _searchController.text != "" ? 285 : 480,
                   child: ListView.separated(
                     separatorBuilder: (context, index) {
                       return Divider(
@@ -277,7 +270,7 @@ class _AdvicePageState extends State<AdvicePage> {
                     },
                   ),
                 ),
-                Spacer(),
+                // Spacer(),
                 InkWell(
                   onTap: () {
                     debugPrint("advices: $finalselectedItems");

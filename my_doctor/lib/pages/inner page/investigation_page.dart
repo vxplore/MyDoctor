@@ -129,14 +129,27 @@ class _InvestigationsPageState extends State<InvestigationsPage> {
                     itemCount: _foundUsers.length,
                     itemBuilder: (context, index) => ListTile(
                       onTap: () {
-                        setState(() {
-                          finalselectedItems.add(
-                            {
-                              "name": _foundUsers[index]["name"],
-                              "ID": _foundUsers[index]["ID"],
-                            },
-                          );
-                        });
+                        /*setState(() {
+                                      finalselectedItems.add(
+                                        {
+                                          "name": _foundUsers[index]["name"],
+                                          "ID": _foundUsers[index]["ID"],
+                                        },
+                                      );
+                                    });*/
+                        bool isDuplicate = finalselectedItems.any((item) =>
+                        item["name"] == _foundUsers[index]["name"]);
+
+                        if (!isDuplicate) {
+                          setState(() {
+                            finalselectedItems.add(
+                              {
+                                "name": _foundUsers[index]["name"],
+                                "ID": _foundUsers[index]["ID"],
+                              },
+                            );
+                          });
+                        }
                         _searchController.clear();
                         FocusScope.of(context).unfocus();
                       },
@@ -145,17 +158,37 @@ class _InvestigationsPageState extends State<InvestigationsPage> {
                   )
                       : InkWell(
                     onTap: () {
-                      setState(() {
-                        finalselectedItems.add(
-                          {
-                            "name": _searchController.text,
-                            "ID": ""
-                          },
-                        );
-                        _searchController.clear();
-                        FocusScope.of(context).unfocus();
-                      });
+                      /*setState(() {
+                                    finalselectedItems.add(
+                                      {
+                                        "name": _searchController.text,
+                                        "ID": ""
+                                      },
+                                    );
+                                    _searchController.clear();
+                                    FocusScope.of(context).unfocus();
+                                  });*/
+                      bool isDuplicate = finalselectedItems.any((item) =>
+                      item["name"] == _searchController.text);
 
+                      if (!isDuplicate) {
+                        setState(() {
+                          finalselectedItems.add(
+                            {
+                              "name":  _searchController.text,
+                              "ID": "",
+                            },
+                          );
+                          items.add(
+                            {
+                              "name":  _searchController.text,
+                              "ID": "",
+                            },
+                          );
+                          _searchController.clear();
+                          FocusScope.of(context).unfocus();
+                        });
+                      }
                     },
                     child: Align(
                       alignment: Alignment.center,

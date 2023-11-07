@@ -19,10 +19,12 @@ class GlobalVariables {
   }
 
   GlobalVariables._internal();
+
   List<Map<String, dynamic>> selectedItems = [];
   List<Map<String, dynamic>> finalselectedItems = [];
   String pharmacynamess = "";
-  List<Map<String,dynamic>> medicinelists = [];
+  String labNamess = "";
+  List<Map<String, dynamic>> medicinelists = [];
   List<Map<String, dynamic>> selectedAllergy = [];
   String selectedAllergyJson = "";
   String selectedDiseaseJson = "";
@@ -38,9 +40,10 @@ class GlobalVariables {
   String? patientAge;
   String? patientAgeType;
   String? patientsGender;
-   String? dosageFormId;
-   String? dosageform;
-  String? dose ;
+  String? dosageFormId;
+  String? dosageform;
+  String? dose;
+ String docname = "";
   String? doseId;
   String? names;
   String? nameId;

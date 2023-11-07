@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_doctor/service/global_variables.dart';
 
 class AddNotesPage extends StatefulWidget {
@@ -38,6 +39,9 @@ class _AddNotesPageState extends State<AddNotesPage> {
         ),
       ),
       body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        reverse: true,
+        physics: ScrollPhysics(),
         child: Container(
           padding: EdgeInsets.all(12),
           height: 760,
@@ -77,12 +81,14 @@ class _AddNotesPageState extends State<AddNotesPage> {
                         child: Card(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: TextField(
-                              controller: _controller,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Type your note..."),
-                              maxLines: null,
+                            child: FocusScope(
+                              child: TextField(
+                                controller: _controller,
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: "Type your note..."),
+                                maxLines: null,
+                              ),
                             ),
                           ),
                         ),
@@ -94,9 +100,14 @@ class _AddNotesPageState extends State<AddNotesPage> {
                     InkWell(
                       onTap: () {
                         setState(() {
-                          notes.add(_controller.text);
+                          if (_controller.text != ""){
+                            notes.add(_controller.text);
+                          }
+
                           debugPrint("notes: $notes");
                           _controller.clear();
+                          FocusScope.of(context).unfocus();
+                          SystemChannels.textInput.invokeMethod('TextInput.hide');
                         });
                       },
                       child: CircleAvatar(
@@ -112,6 +123,7 @@ class _AddNotesPageState extends State<AddNotesPage> {
                   ],
                 ),
               ),
+
             ],
           ),
         ),

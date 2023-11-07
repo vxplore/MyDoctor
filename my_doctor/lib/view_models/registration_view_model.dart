@@ -6,6 +6,7 @@ import 'package:my_doctor/core/repository/api_repo.dart';
 import 'package:my_doctor/core/utilites/register_response_data.dart';
 import 'package:my_doctor/pages/otp_page.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_doctor/service/global_variables.dart';
 import '../core/di/di.dart';
 import '../core/repository/preference_repo.dart';
 import '../core/repository/repository.dart';
@@ -28,6 +29,7 @@ abstract class _RegistrationViewModel with Store {
   TextEditingController reenterpassowrdController = TextEditingController();
 
   nextStep() {
+    globalVariables.docname = nameController.text;
     NavigationService().navigateToScreen(OtpPage(mobileController.text));
   }
 

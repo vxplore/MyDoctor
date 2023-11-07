@@ -161,14 +161,29 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                                 itemCount: _foundUsers.length,
                                 itemBuilder: (context, index) => ListTile(
                                   onTap: () {
-                                    setState(() {
+                                    /*setState(() {
                                       finalselectedItems.add(
                                         {
                                           "name": _foundUsers[index]["name"],
                                           "ID": _foundUsers[index]["ID"],
                                         },
                                       );
-                                    });
+                                    });*/
+                                    bool isDuplicate = finalselectedItems.any(
+                                        (item) =>
+                                            item["name"] ==
+                                            _foundUsers[index]["name"]);
+
+                                    if (!isDuplicate) {
+                                      setState(() {
+                                        finalselectedItems.add(
+                                          {
+                                            "name": _foundUsers[index]["name"],
+                                            "ID": _foundUsers[index]["ID"],
+                                          },
+                                        );
+                                      });
+                                    }
                                     _searchController.clear();
                                     FocusScope.of(context).unfocus();
                                   },
@@ -177,7 +192,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                               )
                             : InkWell(
                                 onTap: () {
-                                  setState(() {
+                                  /*setState(() {
                                     finalselectedItems.add(
                                       {
                                         "name": _searchController.text,
@@ -186,7 +201,30 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                                     );
                                     _searchController.clear();
                                     FocusScope.of(context).unfocus();
-                                  });
+                                  });*/
+                                  bool isDuplicate = finalselectedItems.any(
+                                      (item) =>
+                                          item["name"] ==
+                                          _searchController.text);
+
+                                  if (!isDuplicate) {
+                                    setState(() {
+                                      finalselectedItems.add(
+                                        {
+                                          "name": _searchController.text,
+                                          "ID": "",
+                                        },
+                                      );
+                                      items.add(
+                                        {
+                                          "name": _searchController.text,
+                                          "ID": "",
+                                        },
+                                      );
+                                      _searchController.clear();
+                                      FocusScope.of(context).unfocus();
+                                    });
+                                  }
                                 },
                                 child: Align(
                                   alignment: Alignment.center,

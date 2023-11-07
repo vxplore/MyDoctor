@@ -6,19 +6,20 @@ import 'package:my_doctor/pages/dashboardPage.dart';
 import 'package:my_doctor/pages/main_dashboard_page.dart';
 import 'package:my_doctor/pages/myPatient_page.dart';
 import 'package:my_doctor/pages/patient_prescription_page.dart';
+import 'package:my_doctor/pages/recommandedLabTest_page.dart';
 import 'package:my_doctor/service/navigation_service.dart';
 
 import '../service/global_variables.dart';
 import 'chief_complaintsDetails_page.dart';
 
-class SuggestPharmacyPage extends StatefulWidget {
-  const SuggestPharmacyPage({super.key});
+class SuggestLaboratoryPage extends StatefulWidget {
+  const SuggestLaboratoryPage({super.key});
 
   @override
-  State<SuggestPharmacyPage> createState() => _SuggestPharmacyPageState();
+  State<SuggestLaboratoryPage> createState() => _SuggestLaboratoryPageState();
 }
 
-class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
+class _SuggestLaboratoryPageState extends State<SuggestLaboratoryPage> {
   final List<Map<String, dynamic>> items = [
     {'name': 'Apple', 'ID': '001', "phone": "235355554"},
     {'name': 'Strawberry', 'ID': '002', "phone": "23535559"},
@@ -27,7 +28,7 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
     {'name': 'Grapes', 'ID': '005', "phone": "235355550"},
   ];
 
-  Map<String, dynamic> selectedPharmacy = {};
+  Map<String, dynamic> selectedLaboratory = {};
 
   List<Map<String, dynamic>> finalselectedItems = [];
 
@@ -62,8 +63,8 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        NavigationService().navigateToScreen(AddMedicationPage(
-          pharmacyname: "",
+        NavigationService().navigateToScreen(RecommendedLabTestPage(
+          labname: "",
         ));
         return false;
       },
@@ -75,8 +76,8 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
           toolbarHeight: 70,
           leading: InkWell(
             onTap: () {
-              NavigationService().navigateToScreen(AddMedicationPage(
-                pharmacyname: "",
+              NavigationService().navigateToScreen(RecommendedLabTestPage(
+                labname: "",
               ));
             },
             child: Icon(
@@ -86,7 +87,7 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
             ),
           ),
           title: Text(
-            "Suggest Pharmacy",
+            "Suggest Laboratory",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 22, color: Colors.white),
           ),
@@ -121,7 +122,7 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
                           border: InputBorder.none,
                           labelStyle:
                               TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
-                          labelText: 'Search for Pharmacy',
+                          labelText: 'Search for Laboratory',
                           suffixIcon: _searchController.text == ""
                               ? Icon(Icons.search,
                                   color: Color(0xffDFDFDF), size: 40)
@@ -185,7 +186,7 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: const Text(
-                                    'No results found. Click here to add as new pharmacy',
+                                    'No results found. Click here to add as new laboratory',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -203,7 +204,7 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
                 Padding(
                   padding: EdgeInsets.only(left: 19, top: 25),
                   child: Text(
-                    "Pharmacy",
+                    "Laboratory",
                     style: TextStyle(fontSize: 24, color: Color(0xffC4C4C4)),
                   ),
                 ),
@@ -238,7 +239,7 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
                               Spacer(),
                               InkWell(
                                   onTap: () {
-                                    selectedPharmacy.addAll({
+                                    selectedLaboratory.addAll({
                                       "name": finalselectedItems[index]["name"],
                                       "ID": finalselectedItems[index]["ID"],
                                       "phone": finalselectedItems[index]
@@ -280,10 +281,11 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
                   height: 55,
                   child: ElevatedButton(
                     onPressed: () {
-                      print("selected pharmacy :$selectedPharmacy");
-                      globalVariables.pharmacynamess = selectedPharmacy["name"];
-                      NavigationService().navigateToScreen(AddMedicationPage(
-                        pharmacyname: globalVariables.pharmacynamess!,
+                      print("selected laboratory :$selectedLaboratory");
+                      globalVariables.labNamess = selectedLaboratory["name"];
+                      NavigationService()
+                          .navigateToScreen(RecommendedLabTestPage(
+                        labname: globalVariables.labNamess!,
                       ));
                     },
                     style: ElevatedButton.styleFrom(
@@ -314,21 +316,21 @@ class _SuggestPharmacyPageState extends State<SuggestPharmacyPage> {
             _searchController.text; // Initialize itemName variable here.
         String? itemName2;
         return AlertDialog(
-          title: Text("Add New Pharmacy"),
+          title: Text("Add New Laboratory"),
           content: Container(
             height: 150,
             child: Column(
               children: [
                 TextField(
                   controller: _controller,
-                  decoration: InputDecoration(labelText: "Pharmacy Name"),
+                  decoration: InputDecoration(labelText: "Laboratory Name"),
                   onChanged: (value) {
                     itemName = value; // Assign the entered value to itemName.
                   },
                 ),
                 TextField(
-                  decoration: InputDecoration(labelText: "Pharmacy Phone"),
-                    keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(labelText: "Laboratory Phone"),
                   onChanged: (value) {
                     itemName2 = value; // Assign the entered value to itemName.
                   },

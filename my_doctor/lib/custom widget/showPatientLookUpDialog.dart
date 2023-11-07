@@ -59,7 +59,9 @@ class _ShowPatientLookUpDialogState extends State<ShowPatientLookUpDialog> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AddMedicationPage(pharmacyname: '',)),
+                                    builder: (context) => AddMedicationPage(
+                                          pharmacyname: '',
+                                        )),
                               );
                             },
                             child: Text(
@@ -112,7 +114,9 @@ class _ShowPatientLookUpDialogState extends State<ShowPatientLookUpDialog> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => RecomandedLabTestPage()),
+                                builder: (context) => RecommendedLabTestPage(
+                                      labname: '',
+                                    )),
                           );
                         },
                         child: Row(
@@ -123,7 +127,7 @@ class _ShowPatientLookUpDialogState extends State<ShowPatientLookUpDialog> {
                               color: Color(0xff939393),
                             ),
                             Text(
-                              "Recommend Lab Test",
+                              "Recommended Lab Test",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 18, color: Color(0xff787878)),
@@ -174,13 +178,14 @@ class _ShowPatientLookUpDialogState extends State<ShowPatientLookUpDialog> {
                             Icons.textsms,
                             color: Color(0xff4E89B1),
                           ),
-                          InkWell(onTap: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AdvicePage()),
-                            );
-                          },
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AdvicePage()),
+                              );
+                            },
                             child: Text(
                               "Provide Advice",
                               textAlign: TextAlign.center,

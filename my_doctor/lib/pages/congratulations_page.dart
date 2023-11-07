@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_doctor/pages/main_dashboard_page.dart';
 
 import '../custom widget/button.dart';
+import '../service/global_variables.dart';
 
 class CongratulationsPage extends StatefulWidget {
   const CongratulationsPage({super.key});
@@ -48,7 +49,8 @@ class _CongratulationsPageState extends State<CongratulationsPage> {
                     color: Color(0xff1468B3)),
               ),
               Text(
-                "Dr. Nitish Kumar",
+                // "Dr. Nitish Kumar",
+                "Dr. ${globalVariables.docname}",
                 style: TextStyle(
                     fontSize: 27,
                     fontWeight: FontWeight.bold,
@@ -259,14 +261,15 @@ class _CongratulationsPageState extends State<CongratulationsPage> {
               Align(
                 alignment: Alignment.center,
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 30),
+                    margin: EdgeInsets.only(bottom: 30),
                     height: 70,
                     width: 500,
                     child: ourButton(
                         onPress: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => MainDashboardPage()),
+                            MaterialPageRoute(
+                                builder: (context) => MainDashboardPage()),
                           );
                         },
                         color: Color(0xff1468B3),

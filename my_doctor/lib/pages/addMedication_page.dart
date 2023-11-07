@@ -84,7 +84,11 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
             padding: const EdgeInsets.only(left: 18),
             child: InkWell(
               onTap: () {
-                NavigationService().navigateToScreen(AdditionalAssesmentPage());
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PrescriptionWebViewPage()),
+                );
               },
               child: Icon(
                 Icons.arrow_back_ios_new,
