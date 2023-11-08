@@ -44,10 +44,14 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
       globalVariables.getDoctorDetails == null
           ? MyCircularIndicator()
           : DashBoardPage(),
-      MyPatientPage(),
-      AppointmentTab(),
-      VideoConsultTab(),
-      BillingTabPage()
+      globalVariables.getDoctorDetails == null
+          ? MyCircularIndicator(): MyPatientPage(),
+      globalVariables.getDoctorDetails == null
+          ? MyCircularIndicator(): AppointmentTab(),
+      globalVariables.getDoctorDetails == null
+          ? MyCircularIndicator(): VideoConsultTab(),
+      globalVariables.getDoctorDetails == null
+          ? MyCircularIndicator(): BillingTabPage()
       /*Icon(
         Icons.chat,
         size: 150,

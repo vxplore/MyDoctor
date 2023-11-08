@@ -16,6 +16,37 @@ class DoctorProfilePage extends StatefulWidget {
 }
 
 class _DoctorProfilePageState extends State<DoctorProfilePage> {
+  String firstInitial = "";
+  String middleInitial = "";
+  String lastInitial = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    nameCutter();
+  }
+
+  void nameCutter() {
+    List<String> nameParts = globalVariables.getDoctorDetails!.doctor.name
+        .split(' '); // Split the full name into parts
+
+    if (nameParts.length == 2) {
+      firstInitial = nameParts[0][0];
+      lastInitial = nameParts[1][0];
+
+      print("First Name Initial: $firstInitial");
+      print("Last Name Initial: $lastInitial");
+    } else if (nameParts.length == 3) {
+      firstInitial = nameParts[0][0];
+      middleInitial = nameParts[1][0];
+      lastInitial = nameParts[2][0];
+      // print("Invalid full name format");
+      print("First Name Initial: $firstInitial");
+      print("2nd Name Initial: $middleInitial");
+      print("Last Name Initial: $lastInitial");
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -108,7 +139,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  "${globalVariables.getDoctorDetails!.doctor.name[0]}",
+                                  "${firstInitial}${middleInitial}${lastInitial}",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 40,

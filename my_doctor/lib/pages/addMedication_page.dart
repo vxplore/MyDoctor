@@ -34,7 +34,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
       if (timer.tick == 1) {
         vm.getMedicinesApi();
         vm.getMedicineDosageFormApi();
-        vm.getMedicineNameApi();
+        // vm.getMedicineNameApi();
         vm.getMedicineDosageQuantityApi();
         vm.getMedicineDosageRegimenApi();
         vm.getMedicineDosageDurationApi();
@@ -43,8 +43,8 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
           globalVariables.getMedicineList =
               globalVariables.getMedicineListFromApi;
           globalVariables.getDosageForm = globalVariables.getDosageFormFromApi;
-          globalVariables.getMedicineName =
-              globalVariables.getMedicineNameFromApi;
+         /* globalVariables.getMedicineName =
+              globalVariables.getMedicineNameFromApi;*/
           globalVariables.getMedicineDosageQuantity =
               globalVariables.getMedicineDosageQuantityFromApi;
           globalVariables.getMedicineDosageRegimen =

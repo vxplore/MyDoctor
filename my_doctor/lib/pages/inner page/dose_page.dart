@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/utilites/getMedicineDosageQuantity_response_data.dart';
 import '../../service/global_variables.dart';
 import '../patient_complaints_page.dart';
 
@@ -13,9 +14,34 @@ class DosePage extends StatefulWidget {
 }
 
 class _DosePageState extends State<DosePage> {
+  List<Datum> _foundUsers = [];
+  late TextEditingController _searchController;
+
+  @override
+  void initState() {
+    // _foundUsers = _allUsers;
+    _searchController = TextEditingController();
+    super.initState();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List<Datum> results = [];
+    if (enteredKeyword.isEmpty) {
+      // results = _allUsers;
+    } else {
+      results = globalVariables.getMedicineDosageQuantity!.data
+          .where((user) =>
+          user.dose.toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundUsers = results;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.only(left: 19, right: 18),
@@ -28,13 +54,8 @@ class _DosePageState extends State<DosePage> {
               style: TextStyle(color: Color(0xff0266D5), fontSize: 25),
             ),
             const SizedBox(height: 16),
-            InkWell(
-              onTap: () {
-                showSearch(
-                    context: context,
-                    // delegate to customize the search bar
-                    delegate: CustomSearchDelegate());
-              },
+            Padding(
+              padding: const EdgeInsets.only(left: 15, right: 14, top: 20),
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -43,34 +64,72 @@ class _DosePageState extends State<DosePage> {
                     width: 0.5, // Border width
                   ),
                 ),
-                height: 70,
-                width: 500,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 19),
-                      child: Text(
-                        "Search Dose",
-                        style:
-                            TextStyle(fontSize: 21, color: Color(0xffA5A5A5)),
+                // height: 70,
+                width: 390,
+                child: FocusScope(
+                  child: TextField(
+                    onChanged: (value) => _runFilter(value),
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      contentPadding:
+                      EdgeInsets.only(left: 20.0, top: 15, bottom: 10),
+                      isDense: true,
+                      border: InputBorder.none,
+                      labelStyle:
+                      TextStyle(fontSize: 18, color: Color(0xffBBBBBB)),
+                      labelText: 'Search for Dose',
+                      suffixIcon: _searchController.text == ""
+                          ? Icon(Icons.search,
+                          color: Color(0xffDFDFDF), size: 40)
+                          : InkWell(
+                        onTap: () {
+                          _searchController.clear();
+                          FocusScope.of(context).unfocus();
+                        },
+                        child: Icon(Icons.clear,
+                            color: Color(0xffDFDFDF), size: 40),
                       ),
                     ),
-                    Spacer(),
-                    IconButton(
-                      onPressed: () {
-                        // method to show the search bar
-                        showSearch(
-                            context: context,
-                            // delegate to customize the search bar
-                            delegate: CustomSearchDelegate());
-                      },
-                      icon: const Icon(Icons.search,
-                          color: Color(0xffDFDFDF), size: 40),
-                    )
-                  ],
+                  ),
                 ),
               ),
+            ),
+            _searchController.text != ""
+                ? Container(
+              height: 195,
+              width: 500,
+              child: _foundUsers.isNotEmpty
+                  ? ListView.builder(
+                itemCount: _foundUsers.length,
+                itemBuilder: (context, index) => ListTile(
+                  onTap: () {
+                    setState(() {
+                      globalVariables.dose =_foundUsers[index].dose;
+                      globalVariables.doseId = _foundUsers[index].id;
+                      widget.onNext();
+                    });
+                    print("button pressed: ${globalVariables.dose}");
+                    print("button pressed: ${globalVariables.doseId}");
+                  },
+                  title: Text(_foundUsers[index].dose),
+                ),
+              )
+                  : Align(
+                alignment: Alignment.topCenter,
+                child: const Text(
+                  'No results found',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      decoration: TextDecoration.underline,
+                      color: Colors.red),
+                ),
+              ),
+            )
+                : Container(
+              height: 0,
+              width: 0,
             ),
             SizedBox(
               height: 25,

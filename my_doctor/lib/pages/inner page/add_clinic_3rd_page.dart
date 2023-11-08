@@ -215,7 +215,7 @@ class _AddClinicThirdPageState extends State<AddClinicThirdPage> {
                   children: [
                     for (var day in schedule.keys)
                       Container(
-                        margin: EdgeInsets.all(16.0),
+                         margin: EdgeInsets.all(4.0),
                         // Add margin to the container
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12.0),
@@ -224,7 +224,7 @@ class _AddClinicThirdPageState extends State<AddClinicThirdPage> {
                           // Set a white background for the card
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
+                              color: Colors.grey.withOpacity(0.2),
                               spreadRadius: 3,
                               blurRadius: 7,
                               offset: Offset(0, 3),
@@ -278,7 +278,7 @@ class _AddClinicThirdPageState extends State<AddClinicThirdPage> {
                                       ).toList(),
                                     ),
                                   ),
-                                  // SizedBox(width: 10.0), // Add spacing between dropdowns
+                                   SizedBox(width: 5.0), // Add spacing between dropdowns
                                   Expanded(
                                     child: DropdownButton<String>(
                                       value: startMinute[day],
@@ -298,7 +298,7 @@ class _AddClinicThirdPageState extends State<AddClinicThirdPage> {
                                       ).toList(),
                                     ),
                                   ),
-                                  // SizedBox(width: 10.0), // Add spacing between dropdowns
+                                   SizedBox(width: 5.0), // Add spacing between dropdowns
                                   Expanded(
                                     child: DropdownButton<String>(
                                       value: startAmPm[day],
@@ -337,7 +337,7 @@ class _AddClinicThirdPageState extends State<AddClinicThirdPage> {
                                       ).toList(),
                                     ),
                                   ),
-                                  // SizedBox(width: 10.0), // Add spacing between dropdowns
+                                   SizedBox(width: 5.0), // Add spacing between dropdowns
                                   Expanded(
                                     child: DropdownButton<String>(
                                       value: endMinute[day],
@@ -357,7 +357,7 @@ class _AddClinicThirdPageState extends State<AddClinicThirdPage> {
                                       ).toList(),
                                     ),
                                   ),
-                                  // SizedBox(width: 1.0), // Add spacing between dropdowns
+                                   SizedBox(width: 5.0), // Add spacing between dropdowns
                                   Expanded(
                                     child: DropdownButton<String>(
                                       value: endAmPm[day],
@@ -384,6 +384,16 @@ class _AddClinicThirdPageState extends State<AddClinicThirdPage> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   addTimeSlot(day);
+                                  setState(() {
+                                    for (var day in schedule.keys) {
+                                      startHour[day] = '1'; // Set your initial values here
+                                      startMinute[day] = '00'; // Set your initial values here
+                                      startAmPm[day] = 'AM'; // Set your initial values here
+                                      endHour[day] = '1'; // Set your initial values here
+                                      endMinute[day] = '00'; // Set your initial values here
+                                      endAmPm[day] = 'AM'; // Set your initial values here
+                                    }
+                                  });
                                 },
                                 child: Text('Add Timing'),
                               ),

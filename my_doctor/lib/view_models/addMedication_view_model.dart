@@ -54,7 +54,7 @@ abstract class _AddMedicationViewModel with Store {
     }
   }
 
-  Future<GetmedicinenameResponseData?> getMedicineNameApi() async {
+  Future<GetmedicinenameResponseData?> getMedicineNameApi(String mediFormId) async {
     /* var request = http.Request(
         'GET',
         Uri.parse(
@@ -62,7 +62,7 @@ abstract class _AddMedicationViewModel with Store {
 
     http.StreamedResponse response = await request.send();*/
     final getMedicineNameApirepo = dependency<ApiRepository>();
-    var result = await getMedicineNameApirepo.getmedicinename();
+    var result = await getMedicineNameApirepo.getmedicinename(mediFormId);
     var rr = "";
     if (result.statusCode == 200) {
       rr = await result.stream.bytesToString();

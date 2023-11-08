@@ -30,7 +30,7 @@ abstract class ApiRepository {
 
   Future<http.StreamedResponse> getmedicinedosageform();
 
-  Future<http.StreamedResponse> getmedicinename();
+  Future<http.StreamedResponse> getmedicinename(String mediFormId);
 
   Future<http.StreamedResponse> getmedicinedosagequantity();
 

@@ -4,7 +4,9 @@ import 'package:my_doctor/custom%20widget/custom_circularProgress.dart';
 import 'package:my_doctor/pages/doctor_profile_page.dart';
 import 'package:my_doctor/pages/login_page.dart';
 import 'package:my_doctor/service/global_variables.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vibration/vibration.dart';
 import '../core/di/di.dart';
 import '../core/repository/preference_repo.dart';
 import '../service/navigation_service.dart';
@@ -20,8 +22,41 @@ class DashBoardPage extends StatefulWidget {
 class _DashBoardPageState extends State<DashBoardPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  String firstInitial = "";
+  String middleInitial = "";
+  String lastInitial = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    nameCutter();
+  }
+
+  void nameCutter() {
+    List<String> nameParts = globalVariables.getDoctorDetails!.doctor.name
+        .split(' '); // Split the full name into parts
+
+    if (nameParts.length == 2) {
+      firstInitial = nameParts[0][0];
+      lastInitial = nameParts[1][0];
+
+      print("First Name Initial: $firstInitial");
+      print("Last Name Initial: $lastInitial");
+    } else if (nameParts.length == 3) {
+      firstInitial = nameParts[0][0];
+      middleInitial = nameParts[1][0];
+      lastInitial = nameParts[2][0];
+      // print("Invalid full name format");
+      print("First Name Initial: $firstInitial");
+      print("2nd Name Initial: $middleInitial");
+      print("Last Name Initial: $lastInitial");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Color(0xffF3FBFF),
@@ -50,10 +85,19 @@ class _DashBoardPageState extends State<DashBoardPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Icon(
-                            Icons.share,
-                            size: 40,
-                            color: Colors.white,
+                          InkWell(onTap: () async {
+                            Share.share('hey! check out this new app https://play.google.com/store/search?q=pub%3ADivTag&c=apps', subject: 'DivTag Apps Link');
+                           /* final String appLink = 'https://play.google.com/store/apps/details?id=com.example.myapp';
+                            final String message = 'Check out my new app: $appLink';
+
+                            // Share the app link and message using the share dialog
+                            await FlutterShare.share(title: 'Share App', text: message, linkUrl: appLink);*/
+                          },
+                            child: Icon(
+                              Icons.share,
+                              size: 40,
+                              color: Colors.white,
+                            ),
                           ),
                         ],
                       ),
@@ -76,7 +120,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               alignment: Alignment.center,
                               child: Text(
                                 // "AM",
-                                "${globalVariables.getDoctorDetails!.doctor.name[0]}",
+                                // "${globalVariables.getDoctorDetails!.doctor.name[0]}",
+                                "${firstInitial}${middleInitial}${lastInitial}",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 30,
@@ -228,6 +273,45 @@ class _DashBoardPageState extends State<DashBoardPage> {
                         fontSize: 25,
                         fontWeight: FontWeight.normal),
                   ),
+                ),
+              ),
+              SizedBox(height: 200,),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    InkWell(onTap: () async {
+                      Vibration.vibrate(duration: 1000);
+
+                      String email = Uri.encodeComponent("mail@fluttercampus.com");
+                      /* String subject = Uri.encodeComponent("Hello Flutter");
+                      String body = Uri.encodeComponent("Hi! I'm Flutter Developer");
+                      print(subject); //output: Hello%20Flutter
+                       Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");*/
+                      Uri mail = Uri.parse("mailto:$email");
+                      if (await launchUrl(mail)) {
+                        //email app opened
+                      }else{
+                        //email app is not opened
+                      }
+                    },
+                      child: Text(
+                        "feedback",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal),
+                      ),
+                    ),
+                    Spacer(),
+                    Text(
+                      "Version:1.00",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal),
+                    ),
+                  ],
                 ),
               ),
             ],

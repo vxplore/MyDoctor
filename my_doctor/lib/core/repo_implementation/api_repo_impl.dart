@@ -135,11 +135,11 @@ class ApiRepositoryImpl extends ApiRepository {
   }
 
   @override
-  Future<http.StreamedResponse> getmedicinename() async {
+  Future<http.StreamedResponse> getmedicinename(String mediId) async {
     var request = http.Request(
         'GET',
         Uri.parse(
-            'https://v-xplore.com/dev/rohan/e-prescription/medicine/name'));
+            'https://v-xplore.com/dev/rohan/e-prescription/medicine/type?typeId=${mediId}'));
 
     return await request.send();
   }

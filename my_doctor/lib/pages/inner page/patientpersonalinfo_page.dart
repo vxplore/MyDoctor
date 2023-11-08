@@ -255,6 +255,7 @@ final vm = AddPatientPersonalInfoViewModel();
                           padding: EdgeInsets.all(0),
                           child: TextField(
                             controller: globalVariables.ageController,
+                            keyboardType: TextInputType.number,
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Age*',
