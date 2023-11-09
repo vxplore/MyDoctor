@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:vibration/vibration.dart';
 import '../core/di/di.dart';
 import '../core/repository/preference_repo.dart';
+import '../custom widget/logout_dialog.dart';
 import '../service/global_variables.dart';
 import '../service/navigation_service.dart';
 import 'doctor_profile_page.dart';
@@ -247,10 +248,10 @@ class _AppointmentTabState extends State<AppointmentTab> {
                 padding: EdgeInsets.all(8),
                 child: InkWell(
                   onTap: () async {
-                    SharedPreferences pref =
-                        await SharedPreferences.getInstance();
-                    pref.remove("UserId");
-                    NavigationService().navigateToScreen(LoginPage());
+                    showDialog(
+                        context: context,
+                        builder: (context) => LogoutDialog(),
+                        barrierDismissible: false);
                   },
                   child: Text(
                     "Logout",

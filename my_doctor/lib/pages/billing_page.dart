@@ -2,7 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_doctor/pages/doctor_bank_details_page.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vibration/vibration.dart';
+import '../custom widget/logout_dialog.dart';
+import '../service/global_variables.dart';
+import 'doctor_profile_page.dart';
 import 'inner page/all_bill_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../service/navigation_service.dart';
@@ -40,7 +45,7 @@ class _BillingTabPageState extends State<BillingTabPage> {
                   "All",
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.black,
+                      color: Colors.white,
                       fontWeight: FontWeight.normal),
                 ),
               ),
@@ -60,7 +65,7 @@ class _BillingTabPageState extends State<BillingTabPage> {
                   "Transferred",
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.black,
+                      color: Colors.white,
                       fontWeight: FontWeight.normal),
                 ),
               ),
@@ -80,7 +85,7 @@ class _BillingTabPageState extends State<BillingTabPage> {
                   "Unpaid",
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.black,
+                      color: Colors.white,
                       fontWeight: FontWeight.normal),
                 ),
               ),
@@ -100,7 +105,7 @@ class _BillingTabPageState extends State<BillingTabPage> {
                   "Prescrip Pay Link",
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.black,
+                      color: Colors.white,
                       fontWeight: FontWeight.normal),
                 ),
               ),
@@ -120,7 +125,7 @@ class _BillingTabPageState extends State<BillingTabPage> {
                   "Video Consultation",
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.black,
+                      color: Colors.white,
                       fontWeight: FontWeight.normal),
                 ),
               ),
@@ -140,7 +145,7 @@ class _BillingTabPageState extends State<BillingTabPage> {
                   "Refunds",
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.black,
+                      color: Colors.white,
                       fontWeight: FontWeight.normal),
                 ),
               ),
@@ -160,7 +165,7 @@ class _BillingTabPageState extends State<BillingTabPage> {
                   "Offline Receipts",
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.black,
+                      color: Colors.white,
                       fontWeight: FontWeight.normal),
                 ),
               ),
@@ -172,6 +177,37 @@ class _BillingTabPageState extends State<BillingTabPage> {
   DateTime? seletedYear;
   int? yearss;
   String? monthss;
+  String firstInitial = "";
+  String middleInitial = "";
+  String lastInitial = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    nameCutter();
+  }
+
+  void nameCutter() {
+    List<String> nameParts = globalVariables.getDoctorDetails!.doctor.name
+        .split(' '); // Split the full name into parts
+
+    if (nameParts.length == 2) {
+      firstInitial = nameParts[0][0];
+      lastInitial = nameParts[1][0];
+
+      print("First Name Initial: $firstInitial");
+      print("Last Name Initial: $lastInitial");
+    } else if (nameParts.length == 3) {
+      firstInitial = nameParts[0][0];
+      middleInitial = nameParts[1][0];
+      lastInitial = nameParts[2][0];
+      // print("Invalid full name format");
+      print("First Name Initial: $firstInitial");
+      print("2nd Name Initial: $middleInitial");
+      print("Last Name Initial: $lastInitial");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +227,7 @@ class _BillingTabPageState extends State<BillingTabPage> {
                 Container(
                   height: 250,
                   width: 300,
-                  color: Colors.purple,
+                  color: Colors.red,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -203,10 +239,17 @@ class _BillingTabPageState extends State<BillingTabPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Icon(
-                              Icons.share,
-                              size: 40,
-                              color: Colors.white,
+                            InkWell(
+                              onTap: () {
+                                Share.share(
+                                    'hey! check out this new app https://play.google.com/store/search?q=pub%3ADivTag&c=apps',
+                                    subject: 'DivTag Apps Link');
+                              },
+                              child: Icon(
+                                Icons.share,
+                                size: 40,
+                                color: Colors.white,
+                              ),
                             ),
                           ],
                         ),
@@ -228,7 +271,7 @@ class _BillingTabPageState extends State<BillingTabPage> {
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  "AM",
+                                  "${firstInitial}${middleInitial}${lastInitial}",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 30,
@@ -240,7 +283,7 @@ class _BillingTabPageState extends State<BillingTabPage> {
                               width: 5,
                             ),
                             Text(
-                              "Dr.\nArpan Manna",
+                              "Dr.\n${globalVariables.getDoctorDetails!.doctor.name}",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 28,
@@ -255,22 +298,28 @@ class _BillingTabPageState extends State<BillingTabPage> {
                         SizedBox(
                           height: 20,
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              "VIEW & EDIT PROFILE",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Spacer(),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 20,
-                              color: Colors.white,
-                            ),
-                          ],
+                        InkWell(
+                          onTap: () {
+                            NavigationService()
+                                .navigateToScreen(DoctorProfilePage());
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                "VIEW & EDIT PROFILE",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -356,10 +405,10 @@ class _BillingTabPageState extends State<BillingTabPage> {
                   padding: EdgeInsets.all(8),
                   child: InkWell(
                     onTap: () async {
-                      SharedPreferences pref =
-                          await SharedPreferences.getInstance();
-                      pref.remove("UserId");
-                      NavigationService().navigateToScreen(LoginPage());
+                      showDialog(
+                          context: context,
+                          builder: (context) => LogoutDialog(),
+                          barrierDismissible: false);
                     },
                     child: Text(
                       "Logout",
@@ -368,6 +417,48 @@ class _BillingTabPageState extends State<BillingTabPage> {
                           fontSize: 25,
                           fontWeight: FontWeight.normal),
                     ),
+                  ),
+                ),
+                SizedBox(
+                  height: 200,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: () async {
+                          Vibration.vibrate(duration: 1000);
+
+                          String email = Uri.encodeComponent("myDoc@gmail.com");
+                          /* String subject = Uri.encodeComponent("Hello Flutter");
+                      String body = Uri.encodeComponent("Hi! I'm Flutter Developer");
+                      print(subject); //output: Hello%20Flutter
+                       Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");*/
+                          Uri mail = Uri.parse("mailto:$email");
+                          if (await launchUrl(mail)) {
+                            //email app opened
+                          } else {
+                            //email app is not opened
+                          }
+                        },
+                        child: Text(
+                          "feedback",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                      Spacer(),
+                      Text(
+                        "Version:1.00",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -450,12 +541,18 @@ class _BillingTabPageState extends State<BillingTabPage> {
                 onTap: () {
                   // Navigator.pop(context);
                   showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Align(
-                          alignment: Alignment.topRight,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 30.0),
+                    context: context,
+                    builder: (context) {
+                      return Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 0.0),
+                          child: Container(
+                            height: 400,
+                            width: 200,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(100))),
                             child: Column(
                               children: [
                                 SizedBox(
@@ -474,6 +571,8 @@ class _BillingTabPageState extends State<BillingTabPage> {
                                         Container(
                                           width: 150,
                                           child: Card(
+                                            color: Colors.white,
+                                            elevation: 0,
                                             child: InkWell(
                                               onTap: () {
                                                 NavigationService()
@@ -495,6 +594,8 @@ class _BillingTabPageState extends State<BillingTabPage> {
                                         Container(
                                           width: 150,
                                           child: Card(
+                                            color: Colors.white,
+                                            elevation: 0,
                                             child: InkWell(
                                               onTap: () async {
                                                 final Uri url = Uri(
@@ -525,9 +626,10 @@ class _BillingTabPageState extends State<BillingTabPage> {
                               ],
                             ),
                           ),
-                        );
-                      },
-                      barrierDismissible: false);
+                        ),
+                      );
+                    },
+                  );
                 },
                 child: Icon(
                   Icons.more_vert,
@@ -539,7 +641,7 @@ class _BillingTabPageState extends State<BillingTabPage> {
           bottom: PreferredSize(
             preferredSize: _tabBar.preferredSize,
             child: ColoredBox(
-              color: Colors.white,
+              color: Colors.grey.shade400,
               child: _tabBar,
             ),
           ),

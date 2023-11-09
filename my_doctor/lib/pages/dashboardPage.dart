@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:my_doctor/custom%20widget/custom_circularProgress.dart';
 import 'package:my_doctor/pages/doctor_profile_page.dart';
 import 'package:my_doctor/pages/login_page.dart';
+import 'package:my_doctor/pages/settings_page.dart';
+import 'package:my_doctor/pages/support_page.dart';
 import 'package:my_doctor/service/global_variables.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vibration/vibration.dart';
 import '../core/di/di.dart';
 import '../core/repository/preference_repo.dart';
+import '../custom widget/logout_dialog.dart';
 import '../service/navigation_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -56,7 +59,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Color(0xffF3FBFF),
@@ -85,14 +87,17 @@ class _DashBoardPageState extends State<DashBoardPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          InkWell(onTap: () async {
-                            Share.share('hey! check out this new app https://play.google.com/store/search?q=pub%3ADivTag&c=apps', subject: 'DivTag Apps Link');
-                           /* final String appLink = 'https://play.google.com/store/apps/details?id=com.example.myapp';
+                          InkWell(
+                            onTap: () async {
+                              Share.share(
+                                  'hey! check out this new app https://play.google.com/store/search?q=pub%3ADivTag&c=apps',
+                                  subject: 'DivTag Apps Link');
+                              /* final String appLink = 'https://play.google.com/store/apps/details?id=com.example.myapp';
                             final String message = 'Check out my new app: $appLink';
 
                             // Share the app link and message using the share dialog
                             await FlutterShare.share(title: 'Share App', text: message, linkUrl: appLink);*/
-                          },
+                            },
                             child: Icon(
                               Icons.share,
                               size: 40,
@@ -180,12 +185,21 @@ class _DashBoardPageState extends State<DashBoardPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    Text(
-                      "Support",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.normal),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SupportPage()),
+                        );
+                      },
+                      child: Text(
+                        "Support",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 25,
+                            fontWeight: FontWeight.normal),
+                      ),
                     ),
                     Spacer(),
                     InkWell(
@@ -221,14 +235,22 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(8),
-                child: Text(
-                  "Settings",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25,
-                      fontWeight: FontWeight.normal),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingsPage()),
+                  );
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Text(
+                    "Settings",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 25,
+                        fontWeight: FontWeight.normal),
+                  ),
                 ),
               ),
               Padding(
@@ -261,10 +283,10 @@ class _DashBoardPageState extends State<DashBoardPage> {
                 padding: EdgeInsets.all(8),
                 child: InkWell(
                   onTap: () async {
-                    SharedPreferences pref =
-                        await SharedPreferences.getInstance();
-                    pref.remove("UserId");
-                    NavigationService().navigateToScreen(LoginPage());
+                    showDialog(
+                        context: context,
+                        builder: (context) => LogoutDialog(),
+                        barrierDismissible: false);
                   },
                   child: Text(
                     "Logout",
@@ -275,26 +297,29 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 200,),
+              SizedBox(
+                height: 200,
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    InkWell(onTap: () async {
-                      Vibration.vibrate(duration: 1000);
+                    InkWell(
+                      onTap: () async {
+                        Vibration.vibrate(duration: 1000);
 
-                      String email = Uri.encodeComponent("mail@fluttercampus.com");
-                      /* String subject = Uri.encodeComponent("Hello Flutter");
+                        String email = Uri.encodeComponent("myDoc@gmail.com");
+                        /* String subject = Uri.encodeComponent("Hello Flutter");
                       String body = Uri.encodeComponent("Hi! I'm Flutter Developer");
                       print(subject); //output: Hello%20Flutter
                        Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");*/
-                      Uri mail = Uri.parse("mailto:$email");
-                      if (await launchUrl(mail)) {
-                        //email app opened
-                      }else{
-                        //email app is not opened
-                      }
-                    },
+                        Uri mail = Uri.parse("mailto:$email");
+                        if (await launchUrl(mail)) {
+                          //email app opened
+                        } else {
+                          //email app is not opened
+                        }
+                      },
                       child: Text(
                         "feedback",
                         style: TextStyle(

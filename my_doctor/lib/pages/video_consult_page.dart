@@ -8,6 +8,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vibration/vibration.dart';
+import '../custom widget/logout_dialog.dart';
 import '../service/global_variables.dart';
 import '../service/navigation_service.dart';
 import 'doctor_profile_page.dart';
@@ -244,10 +245,10 @@ class _VideoConsultTabState extends State<VideoConsultTab> {
                 padding: EdgeInsets.all(8),
                 child: InkWell(
                   onTap: () async {
-                    SharedPreferences pref =
-                    await SharedPreferences.getInstance();
-                    pref.remove("UserId");
-                    NavigationService().navigateToScreen(LoginPage());
+                    showDialog(
+                        context: context,
+                        builder: (context) => LogoutDialog(),
+                        barrierDismissible: false);
                   },
                   child: Text(
                     "Logout",
