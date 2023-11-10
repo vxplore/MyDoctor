@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:my_doctor/pages/assistant_role_page.dart';
 import 'package:my_doctor/pages/notification_page.dart';
+import 'package:my_doctor/pages/out_of_clinic_page.dart';
 import 'package:my_doctor/pages/subscription_page.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -49,34 +51,41 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  Image.asset(
-                    "assets/images/out_of_clinic_icon.png",
-                    height: 40,
-                    width: 40,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Out of Clinic",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 25, color: Colors.black),
-                      ),
-                      Text(
-                        "Schedule the days when clinic is not conducted",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 14.sp, color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                ],
+            InkWell(onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => OutOfClinicPage()),
+              );
+            },
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      "assets/images/out_of_clinic_icon.png",
+                      height: 40,
+                      width: 40,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Out of Clinic",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 25, color: Colors.black),
+                        ),
+                        Text(
+                          "Schedule the days when clinic is not conducted",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 14.sp, color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             InkWell(
@@ -117,34 +126,41 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  Image.asset(
-                    "assets/images/assistant_icon.png",
-                    height: 40,
-                    width: 40,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Manage Assistants",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 25, color: Colors.black),
-                      ),
-                      Text(
-                        "Manage your Assistant's & their roles",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 14.sp, color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                ],
+            InkWell(onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AssistantRolePage()),
+              );
+            },
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      "assets/images/assistant_icon.png",
+                      height: 40,
+                      width: 40,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Manage Assistants",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 25, color: Colors.black),
+                        ),
+                        Text(
+                          "Manage your Assistant's & their roles",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 14.sp, color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             InkWell(
