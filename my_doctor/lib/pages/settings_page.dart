@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_doctor/pages/assistant_role_page.dart';
+import 'package:my_doctor/pages/manage_assistant-page.dart';
 import 'package:my_doctor/pages/notification_page.dart';
 import 'package:my_doctor/pages/out_of_clinic_page.dart';
 import 'package:my_doctor/pages/subscription_page.dart';
@@ -129,7 +130,7 @@ class _SettingsPageState extends State<SettingsPage> {
             InkWell(onTap: (){
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AssistantRolePage()),
+                MaterialPageRoute(builder: (context) => ManageAssistantPage()),
               );
             },
               child: Padding(

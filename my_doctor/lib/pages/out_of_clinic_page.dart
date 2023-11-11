@@ -46,6 +46,10 @@ class _OutOfClinicPageState extends State<OutOfClinicPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
+        setState(() {
+          globalVariables.selectedAssistantRoleNames = "";
+          globalVariables.selectedClinicNames = [];
+        });
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SettingsPage()),
@@ -62,15 +66,33 @@ class _OutOfClinicPageState extends State<OutOfClinicPage> {
           ),
           leading: InkWell(
             onTap: () {
-              Navigator.pop(context);
+              setState(() {
+                globalVariables.selectedAssistantRoleNames = "";
+                globalVariables.selectedClinicNames = [];
+              });
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsPage()),
+              );
             },
             child: Image.asset(
               "assets/images/cross_icon.png",
             ),
           ),
           actions: [
-            Image.asset(
-              "assets/images/done2_icon.png",
+            InkWell(onTap: (){
+              setState(() {
+                globalVariables.selectedAssistantRoleNames = "";
+                globalVariables.selectedClinicNames = [];
+              });
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsPage()),
+              );
+            },
+              child: Image.asset(
+                "assets/images/done2_icon.png",
+              ),
             ),
           ],
         ),

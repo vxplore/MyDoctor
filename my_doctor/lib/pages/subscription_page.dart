@@ -91,11 +91,12 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                       "MEMBERSHIP",
                       style: TextStyle(fontSize: 20, color: Colors.grey),
                     ),
-                    Container(
-                      width: 500,
-                      child: Card(
-                        color: Colors.white,
-                        elevation: 2,
+                    Material(
+                      elevation: 5,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Colors.white,
+                      child: Container(
+                        width: 500,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -150,11 +151,12 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                       "ACCOUNT & SECURITY",
                       style: TextStyle(fontSize: 20, color: Colors.grey),
                     ),
-                    Container(
-                      width: 500,
-                      child: Card(
-                        color: Colors.white,
-                        elevation: 2,
+                    Material(
+                      color: Colors.white,
+                        elevation: 5,
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      child: Container(
+                        width: 500,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(

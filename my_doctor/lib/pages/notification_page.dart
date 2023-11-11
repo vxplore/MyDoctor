@@ -47,6 +47,7 @@ class _NotificationPageState extends State<NotificationPage> {
                       globalVariables.patientsGender!,
                       globalVariables.patientImg!)),
             );*/
+            Navigator.pop(context);
           },
           child: Icon(
             Icons.arrow_back_ios_new,
