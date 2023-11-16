@@ -61,11 +61,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
           context,
           MaterialPageRoute(
               builder: (context) => PatientPrescriptionPage(
-                  globalVariables.patientName!,
-                  globalVariables.patientAge!,
-                  globalVariables.patientAgeType!,
-                  globalVariables.patientsGender!,
-                  globalVariables.patientImg!)),
+                 )),
         );
         return false;
       },
@@ -81,11 +77,7 @@ class _PatientComplaintsPageState extends State<PatientComplaintsPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => PatientPrescriptionPage(
-                        globalVariables.patientName!,
-                        globalVariables.patientAge!,
-                        globalVariables.patientAgeType!,
-                        globalVariables.patientsGender!,
-                        globalVariables.patientImg!)),
+                      )),
               );
             },
             child: Icon(

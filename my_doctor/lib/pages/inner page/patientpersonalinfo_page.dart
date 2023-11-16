@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_doctor/custom%20widget/button.dart';
@@ -20,9 +21,11 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
   bool isMaleSelected = false;
   bool isFemaleSelected = false;
   bool isOthersSelected = false;
+
   // String dropdownvalue = "Years";
   String? bloodGroupValue;
   DateTime? seletedYear;
+
   // var profileImagePath = '';
   // TextEditingController ageController = TextEditingController();
 
@@ -104,7 +107,47 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
   /* initialValue(val) {
     return TextEditingController(text: val);
   }*/
-final vm = AddPatientPersonalInfoViewModel();
+  @override
+  void initState() {
+    // TODO: implement initState
+    if (globalVariables.patientsGender == "Male") {
+      globalVariables.patientGender = "Male";
+      isMaleSelected = true;
+      isFemaleSelected = false;
+      isOthersSelected = false;
+    } else if (globalVariables.patientsGender == "Female") {
+      globalVariables.patientGender = "Female";
+      isMaleSelected = false;
+      isFemaleSelected = true;
+      isOthersSelected = false;
+    } else if (globalVariables.patientsGender == "Others") {
+      globalVariables.patientGender = "Others";
+      isMaleSelected = false;
+      isFemaleSelected = false;
+      isOthersSelected = true;
+    }
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+
+      // add your code here.
+
+      globalVariables.emailsController.text = globalVariables.patientEmails == ""
+          ? ""
+          : globalVariables.patientEmails;
+      globalVariables.mobileNumberController.text =
+      globalVariables.patientPhNumber == ""
+          ? ""
+          : globalVariables.patientPhNumber;
+      globalVariables.fullNameController.text =
+      globalVariables.patientName == "" ? "" : globalVariables.patientName;
+      globalVariables.ageController.text =
+      globalVariables.patientAge == "" ? "" : globalVariables.patientAge;
+    });
+
+  }
+
+  final vm = AddPatientPersonalInfoViewModel();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,20 +173,32 @@ final vm = AddPatientPersonalInfoViewModel();
                         border: Border.all(color: Colors.grey)),
                     child: CircleAvatar(
                       maxRadius: 70,
-                      child: globalVariables.profileImagePath == ""
+                      child: (globalVariables.profileImagePath == "" &&
+                              globalVariables.patientImg == null)
                           ? Image.asset(
                               "assets/images/instadoclogo.png",
                               fit: BoxFit.fill,
                             )
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: Image.file(
-                                File(globalVariables.profileImagePath),
-                                fit: BoxFit.cover,
-                                width: MediaQuery.of(context).size.width,
-                                height: 300,
-                              ),
-                            ),
+                          : (globalVariables.profileImagePath != "" ||
+                                  globalVariables.patientImg == null)
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: Image.file(
+                                    File(globalVariables.profileImagePath),
+                                    fit: BoxFit.cover,
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 300,
+                                  ),
+                                )
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: Image.network(
+                                    globalVariables.patientImg!,
+                                    fit: BoxFit.cover,
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 300,
+                                  ),
+                                ),
                     ),
                   ),
                   Container(
@@ -183,7 +238,7 @@ final vm = AddPatientPersonalInfoViewModel();
                   Container(
                     height: 70,
                     width: 342,
-                    child:  Padding(
+                    child: Padding(
                       padding: EdgeInsets.all(0),
                       child: TextField(
                         controller: globalVariables.mobileNumberController,
@@ -218,7 +273,7 @@ final vm = AddPatientPersonalInfoViewModel();
                   Container(
                     height: 70,
                     width: 342,
-                    child:  Padding(
+                    child: Padding(
                       padding: EdgeInsets.all(0),
                       child: TextField(
                         controller: globalVariables.fullNameController,
@@ -277,7 +332,9 @@ final vm = AddPatientPersonalInfoViewModel();
                     isExpanded: true,
                     style: TextStyle(fontSize: 20, color: Colors.black),
                     // Initial Value
-                    value: globalVariables.dropdownvalue,
+                    value: globalVariables.patientAgeTypeprefil == ""
+                        ? globalVariables.dropdownvalue
+                        : globalVariables.patientAgeTypeprefil,
 
                     // Down Arrow Icon
                     icon: const Icon(Icons.keyboard_arrow_down),
@@ -293,6 +350,7 @@ final vm = AddPatientPersonalInfoViewModel();
                     // change button value to selected value
                     onChanged: (String? newValue) {
                       setState(() {
+                        globalVariables.patientAgeTypeprefil = "";
                         globalVariables.dropdownvalue = newValue!;
                       });
                       print(globalVariables.dropdownvalue);
@@ -340,8 +398,7 @@ final vm = AddPatientPersonalInfoViewModel();
                   calculatedAgeinDays =
                       (DateTime.now().day - seletedYear!.day).toString();
                   print(seletedYear?.year);
-
-
+                  globalVariables.patientAgeTypeprefil = "";
                   if (calculatedAgeinYears != "0") {
                     globalVariables.dropdownvalue = "Years";
                   } else if (calculatedAgeinMonths != "0" &&
@@ -535,10 +592,11 @@ final vm = AddPatientPersonalInfoViewModel();
                           Container(
                             height: 70,
                             width: 1.sw,
-                            child: const Padding(
+                            child: Padding(
                               padding: EdgeInsets.all(0),
                               child: TextField(
-                                obscureText: true,
+                                controller: globalVariables.emailsController,
+                                obscureText: false,
                                 decoration: InputDecoration(),
                               ),
                             ),

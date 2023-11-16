@@ -224,42 +224,15 @@ class _MyPatientPageState extends State<MyPatientPage> {
                                                 itemBuilder: (context, index) {
                                                   return InkWell(
                                                     onTap: () {
-                                                      globalVariables
-                                                              .patientName =
-                                                          _foundUsers[index]
-                                                              .name;
-                                                      globalVariables
-                                                              .patientAge =
-                                                          _foundUsers[index]
-                                                              .age;
-                                                      globalVariables
-                                                              .patientAgeType =
-                                                          _foundUsers[index]
-                                                              .ageType;
-                                                      globalVariables
-                                                              .patientsGender =
-                                                          _foundUsers[index]
-                                                              .gender;
+
                                                       globalVariables
                                                               .patientId =
                                                           _foundUsers[index]
                                                               .patientId;
-                                                      globalVariables
-                                                              .patientImg =
-                                                          _foundUsers[index]
-                                                              .profileImage;
+
                                                       NavigationService().navigateToScreen(
                                                           PatientPrescriptionPage(
-                                                              _foundUsers[index]
-                                                                  .name,
-                                                              _foundUsers[index]
-                                                                  .age,
-                                                              _foundUsers[index]
-                                                                  .ageType,
-                                                              _foundUsers[index]
-                                                                  .gender,
-                                                              _foundUsers[index]
-                                                                  .profileImage));
+                                                             ));
                                                     },
                                                     child: Container(
                                                       height: 90,
@@ -412,49 +385,14 @@ class _MyPatientPageState extends State<MyPatientPage> {
                                           (BuildContext context, int index) {
                                         return InkWell(
                                           onTap: () {
-                                            globalVariables.patientName =
-                                                globalVariables.getAllPatients!
-                                                    .patients[index].name;
-                                            globalVariables.patientAge =
-                                                globalVariables.getAllPatients!
-                                                    .patients[index].age;
-                                            globalVariables.patientAgeType =
-                                                globalVariables.getAllPatients!
-                                                    .patients[index].ageType;
-                                            globalVariables.patientsGender =
-                                                globalVariables.getAllPatients!
-                                                    .patients[index].gender;
+
                                             globalVariables.patientId =
                                                 globalVariables.getAllPatients!
                                                     .patients[index].patientId;
-                                            globalVariables.patientImg =
-                                                globalVariables
-                                                    .getAllPatients!
-                                                    .patients[index]
-                                                    .profileImage;
                                             NavigationService()
                                                 .navigateToScreen(
                                                     PatientPrescriptionPage(
-                                                        globalVariables
-                                                            .getAllPatients!
-                                                            .patients[index]
-                                                            .name,
-                                                        globalVariables
-                                                            .getAllPatients!
-                                                            .patients[index]
-                                                            .age,
-                                                        globalVariables
-                                                            .getAllPatients!
-                                                            .patients[index]
-                                                            .ageType,
-                                                        globalVariables
-                                                            .getAllPatients!
-                                                            .patients[index]
-                                                            .gender,
-                                                        globalVariables
-                                                            .getAllPatients!
-                                                            .patients[index]
-                                                            .profileImage));
+                                                     ));
                                           },
                                           child: Container(
                                             height: 120,

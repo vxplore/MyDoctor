@@ -44,9 +44,9 @@ abstract class _AddPatientPersonalInfoViewModel with Store {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackdemo);
     } else {
-      if (response.data.isAdded == true) {
+      if (response.isAdded == true) {
         var snackdemo = SnackBar(
-          content: Text("${response.data.message}"),
+          content: Text("${response.message}"),
           backgroundColor: Colors.green,
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -56,7 +56,7 @@ abstract class _AddPatientPersonalInfoViewModel with Store {
         // Get.to(() => BottomNavBar());
       } else {
         var snackdemo = SnackBar(
-          content: Text("${response.data.message}"),
+          content: Text("${response.message}"),
           backgroundColor: Colors.red,
           elevation: 10,
           behavior: SnackBarBehavior.floating,

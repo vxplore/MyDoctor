@@ -37,9 +37,12 @@ class GlobalVariables {
   String? medId;
   String? patientId;
   String? patientImg;
-  String? patientName;
-  String? patientAge;
-  String? patientAgeType;
+  String patientPhNumber = "";
+  String patientEmails = "";
+  String patientName = "";
+  String patientAge = "";
+  String patientAgeType = "";
+  String patientAgeTypeprefil = "";
   String? patientsGender;
   String? dosageFormId;
   String? dosageform;
@@ -66,6 +69,7 @@ class GlobalVariables {
   TextEditingController ageController = TextEditingController();
   TextEditingController fullNameController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
+  TextEditingController emailsController = TextEditingController();
   var specialityapiName = [""];
   var specialityName = [""];
   String specialtyId = "";

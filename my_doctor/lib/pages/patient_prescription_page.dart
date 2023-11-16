@@ -1,22 +1,24 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_doctor/custom%20widget/custom_circularProgress.dart';
 import 'package:my_doctor/pages/myPatient_page.dart';
 import 'package:my_doctor/pages/patient_complaints_page.dart';
+import 'package:my_doctor/pages/updatePatient_page.dart';
 import 'package:my_doctor/service/global_variables.dart';
+import 'package:my_doctor/view_models/patient_prescription_view_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../core/utilites/getPatientDetails_response_data.dart';
 import '../service/navigation_service.dart';
+import 'addPatient_page.dart';
 import 'main_dashboard_page.dart';
 
 class PatientPrescriptionPage extends StatefulWidget {
-  final String name;
-  final String age;
-  final String ageType;
-  final String gender;
-  final String image;
 
-  PatientPrescriptionPage(String this.name, String this.age,
-      String this.ageType, String this.gender, String this.image,
+
+  PatientPrescriptionPage(
       {super.key});
 
   @override
@@ -25,10 +27,53 @@ class PatientPrescriptionPage extends StatefulWidget {
 }
 
 class _PatientPrescriptionPageState extends State<PatientPrescriptionPage> {
+  var vm = PatientPrescriptionViewModel();
+  GetpatientdetailsResponseData? patientDetails;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Timer.periodic(Duration(seconds: 1), (timer) async {
+      if(timer.tick == 1){
+        timer.cancel();
+        patientDetails = await vm.getPatientDetails();
+        Future.delayed(Duration(seconds: 1));
+        setState(() {
+          globalVariables.patientEmails =   patientDetails!.patient.email;
+          globalVariables.patientPhNumber =   patientDetails!.patient.phoneNo;
+          globalVariables
+              .patientAgeTypeprefil =
+              patientDetails!.patient.ageType;
+          globalVariables.patientName =
+              patientDetails!.patient.name;
+          globalVariables.patientAge =
+              patientDetails!.patient.age;
+          globalVariables.patientAgeType =
+              patientDetails!.patient.ageType;
+          globalVariables.patientsGender =
+              patientDetails!.patient.gender;
+          globalVariables.patientImg =
+              patientDetails!.patient
+                  .profileImage;
+        });
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
+        setState(() {
+          globalVariables.patientsGender = null;
+          globalVariables.patientAgeType = "";
+          globalVariables.patientGender = "";
+          globalVariables.profileImagePath = "";
+          globalVariables.ageController.text = "";
+          globalVariables.dropdownvalue = "Years";
+          globalVariables.selectedDisease = [];
+          globalVariables.selectedAllergy = [];
+          globalVariables.selectedHabits = [];
+        });
         NavigationService().replaceScreen(MyPatientPage());
         return false;
       },
@@ -39,6 +84,17 @@ class _PatientPrescriptionPageState extends State<PatientPrescriptionPage> {
           toolbarHeight: 135,
           leading: InkWell(
             onTap: () {
+              setState(() {
+                globalVariables.patientsGender = null;
+                globalVariables.patientAgeType = "";
+                globalVariables.patientGender = "";
+                globalVariables.profileImagePath = "";
+                globalVariables.ageController.text = "";
+                globalVariables.dropdownvalue = "Years";
+                globalVariables.selectedDisease = [];
+                globalVariables.selectedAllergy = [];
+                globalVariables.selectedHabits = [];
+              });
               NavigationService().replaceScreen(MyPatientPage());
             },
             child: Icon(
@@ -48,7 +104,7 @@ class _PatientPrescriptionPageState extends State<PatientPrescriptionPage> {
             ),
           ),
           leadingWidth: 30,
-          title: Row(
+          title: patientDetails == null ?Container(height: 0,width: 0,): Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Stack(
@@ -64,7 +120,8 @@ class _PatientPrescriptionPageState extends State<PatientPrescriptionPage> {
                         borderRadius: BorderRadius.circular(100),
                         child: Image.network(
                           // "assets/images/instadoclogo.png",
-                          widget.image,
+                          // widget.image,
+                          patientDetails!.patient.profileImage,
                           fit: BoxFit.fill,
                           width: MediaQuery.of(context).size.width,
                         ),
@@ -97,7 +154,8 @@ class _PatientPrescriptionPageState extends State<PatientPrescriptionPage> {
                   children: [
                     Text(
                       // "Nitish Kumar",
-                      "${widget.name}",
+                      // "${widget.name}",
+                      "${patientDetails!.patient.name}",
                       style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.normal,
@@ -107,7 +165,8 @@ class _PatientPrescriptionPageState extends State<PatientPrescriptionPage> {
                       children: [
                         Text(
                           // "26 Years -",
-                          "${widget.age} ${widget.ageType} -",
+                          // "${widget.age} ${widget.ageType} -",
+                          "${patientDetails!.patient.age} ${patientDetails!.patient.ageType} -",
                           style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.normal,
@@ -118,7 +177,8 @@ class _PatientPrescriptionPageState extends State<PatientPrescriptionPage> {
                         ),
                         Text(
                           // "Male",
-                          "${widget.gender}",
+                          // "${widget.gender}",
+                          "${patientDetails!.patient.gender}",
                           style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.normal,
@@ -179,11 +239,18 @@ class _PatientPrescriptionPageState extends State<PatientPrescriptionPage> {
                                               },
                                               child: Align(
                                                 alignment: Alignment.center,
-                                                child: Text(
-                                                  "Edit",
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 15),
+                                                child: GestureDetector(onTap: (){
+                                                  setState(() {
+
+                                                  });
+                                                  NavigationService().navigateToScreen(UpdatePatientPage());
+                                                },
+                                                  child: Text(
+                                                    "Edit",
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 15),
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -346,11 +413,12 @@ class _PatientPrescriptionPageState extends State<PatientPrescriptionPage> {
                 )),
           ],
         ),
-        body: Center(
+        body:patientDetails == null ? MyCircularIndicator() : Center(
           child: Padding(
             padding: const EdgeInsets.only(left: 83, right: 71),
             child: Text(
-              "Seems like you have no prescriptions for ${widget.name}",
+              // "Seems like you have no prescriptions for ${widget.name}",
+              "Seems like you have no prescriptions for ${patientDetails!.patient.name}",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14, color: Color(0xff9C9C9C)),
             ),

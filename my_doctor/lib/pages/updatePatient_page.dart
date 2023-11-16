@@ -2,58 +2,60 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_doctor/pages/inner%20page/habit_page.dart';
 import 'package:my_doctor/pages/myPatient_page.dart';
+import 'package:my_doctor/pages/patient_prescription_page.dart';
 import 'package:my_doctor/service/global_variables.dart';
 import 'package:my_doctor/service/navigation_service.dart';
 import 'package:my_doctor/view_models/addPatientPersonalInfo_view_model.dart';
+import 'package:my_doctor/view_models/update_patient_view_model.dart';
 import 'inner page/allergies_page.dart';
 import 'inner page/history_page.dart';
 import 'inner page/patientpersonalinfo_page.dart';
 import 'main_dashboard_page.dart';
 
-class AddPatientPage extends StatefulWidget {
+class UpdatePatientPage extends StatefulWidget {
 
-  const AddPatientPage({super.key});
+  const UpdatePatientPage({super.key});
 
   @override
-  State<AddPatientPage> createState() => _AddPatientPageState();
+  State<UpdatePatientPage> createState() => _UpdatePatientPageState();
 }
 
-class _AddPatientPageState extends State<AddPatientPage> {
-  final vm = AddPatientPersonalInfoViewModel();
+class _UpdatePatientPageState extends State<UpdatePatientPage> {
+  final vm = UpdatePatientViewModel();
 
   TabBar get _tabBar => TabBar(
-        indicatorColor: Color(0xff7C8DA1),
-        unselectedLabelColor: Colors.grey,
-        indicatorSize: TabBarIndicatorSize.tab,
-        tabs: [
-          Tab(
-            height: 65,
-            child: Text(
-              "Personal Info",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 17, color: Color(0xff9D9D9D)),
-            ),
-          ),
-          Tab(
-            child: Text(
-              "Allergies",
-              style: TextStyle(fontSize: 17, color: Color(0xff9D9D9D)),
-            ),
-          ),
-          Tab(
-            child: Text(
-              "History",
-              style: TextStyle(fontSize: 17, color: Color(0xff9D9D9D)),
-            ),
-          ),
-          Tab(
-            child: Text(
-              "Habit",
-              style: TextStyle(fontSize: 17, color: Color(0xff9D9D9D)),
-            ),
-          ),
-        ],
-      );
+    indicatorColor: Color(0xff7C8DA1),
+    unselectedLabelColor: Colors.grey,
+    indicatorSize: TabBarIndicatorSize.tab,
+    tabs: [
+      Tab(
+        height: 65,
+        child: Text(
+          "Personal Info",
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 17, color: Color(0xff9D9D9D)),
+        ),
+      ),
+      Tab(
+        child: Text(
+          "Allergies",
+          style: TextStyle(fontSize: 17, color: Color(0xff9D9D9D)),
+        ),
+      ),
+      Tab(
+        child: Text(
+          "History",
+          style: TextStyle(fontSize: 17, color: Color(0xff9D9D9D)),
+        ),
+      ),
+      Tab(
+        child: Text(
+          "Habit",
+          style: TextStyle(fontSize: 17, color: Color(0xff9D9D9D)),
+        ),
+      ),
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +81,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                 globalVariables.selectedHabits = [];
               });
               print("After clear : ${globalVariables.patientGender}");
-              Navigator.pop(context);
+              NavigationService().navigateToScreen(PatientPrescriptionPage());
             },
             child: Icon(
               Icons.highlight_off,
@@ -88,7 +90,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
             ),
           ),
           title: Text(
-            "Add Patient",
+            "Update Patient Details",
             style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.normal,
@@ -101,13 +103,13 @@ class _AddPatientPageState extends State<AddPatientPage> {
                 ///////Add personal info patient api call////////////////
                 onTap: () async {
                   print("before clear : ${globalVariables.patientGender}");
-                  vm.addPatientPersonalDetails(
+                  vm.updatePatient(
                       globalVariables.profileImagePath,
                       globalVariables.ageController.text,
                       globalVariables.patientGender,
                       globalVariables.dropdownvalue,
                       context);
-
+Future.delayed(Duration(seconds: 1));
                   setState(() {
                     globalVariables.patientsGender = null;
                     globalVariables.patientAgeType = "";
@@ -120,7 +122,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                     globalVariables.selectedHabits = [];
                   });
                   print("After clear : ${globalVariables.patientGender}");
-                  NavigationService().navigateToScreen(MainDashboardPage());
+                  NavigationService().navigateToScreen(PatientPrescriptionPage());
                 },
                 child: Icon(
                   Icons.done_outline,

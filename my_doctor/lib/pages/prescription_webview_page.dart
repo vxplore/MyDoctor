@@ -27,14 +27,18 @@ class _PrescriptionWebViewPageState extends State<PrescriptionWebViewPage> {
         onPageFinished: (String url) {},
         onWebResourceError: (WebResourceError error) {},
         onNavigationRequest: (NavigationRequest request) {
-          if (request.url.startsWith('https://www.youtube.com/')) {
+          if (request.url.startsWith(
+              'https://v-xplore.com/dev/rohan/e-prescription/patient/prescription?id=${globalVariables
+                  .patientId}')) {
             return NavigationDecision.prevent;
           }
           return NavigationDecision.navigate;
         },
       ),
     )
-    ..loadRequest(Uri.parse('https://www.google.com/'));
+    ..loadRequest(Uri.parse(
+        'https://v-xplore.com/dev/rohan/e-prescription/patient/prescription?id=${globalVariables
+            .patientId}'));
 
   /*@override
   void initState() {
@@ -59,12 +63,9 @@ class _PrescriptionWebViewPageState extends State<PrescriptionWebViewPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => PatientPrescriptionPage(
-                  globalVariables.patientName!,
-                  globalVariables.patientAge!,
-                  globalVariables.patientAgeType!,
-                  globalVariables.patientsGender!,
-                  globalVariables.patientImg!)),
+              builder: (context) =>
+                  PatientPrescriptionPage(
+                     )),
         );
         return false;
       },
@@ -79,12 +80,9 @@ class _PrescriptionWebViewPageState extends State<PrescriptionWebViewPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => PatientPrescriptionPage(
-                        globalVariables.patientName!,
-                        globalVariables.patientAge!,
-                        globalVariables.patientAgeType!,
-                        globalVariables.patientsGender!,
-                        globalVariables.patientImg!)),
+                    builder: (context) =>
+                        PatientPrescriptionPage(
+                           )),
               );
             },
             child: Icon(
