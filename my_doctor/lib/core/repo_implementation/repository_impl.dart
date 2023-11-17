@@ -113,7 +113,7 @@ class RepositoryImpl extends Repository {
     if (result.statusCode == 200) {
       rr = await result.stream.bytesToString();
       print(rr);
-      var resp = GetallpatientsResponseData.fromJson(rr);
+      var resp = GetallpatientsResponseData.fromRawJson(rr);
       return resp;
     } else {
       return null;

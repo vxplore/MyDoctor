@@ -624,10 +624,11 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                                     Container(
                                       height: 50,
                                       width: 70,
-                                      child: const Padding(
+                                      child:  Padding(
                                         padding: EdgeInsets.all(0),
                                         child: TextField(
-                                          obscureText: true,
+                                          controller: globalVariables.heightController,
+                                          obscureText: false,
                                           decoration: InputDecoration(),
                                         ),
                                       ),
@@ -654,10 +655,11 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                                     Container(
                                       height: 50,
                                       width: 70,
-                                      child: const Padding(
+                                      child:  Padding(
                                         padding: EdgeInsets.all(0),
                                         child: TextField(
-                                          obscureText: true,
+                                          controller: globalVariables.weightController,
+                                          obscureText: false,
                                           decoration: InputDecoration(),
                                         ),
                                       ),
@@ -684,10 +686,11 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                                     Container(
                                       height: 50,
                                       width: 70,
-                                      child: const Padding(
+                                      child:  Padding(
                                         padding: EdgeInsets.all(0),
                                         child: TextField(
-                                          obscureText: true,
+                                          controller: globalVariables.bmiController,
+                                          obscureText: false,
                                           decoration: InputDecoration(),
                                         ),
                                       ),
@@ -757,10 +760,11 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                           Container(
                             height: 70,
                             width: 1.sw,
-                            child: const Padding(
+                            child:  Padding(
                               padding: EdgeInsets.all(0),
                               child: TextField(
-                                obscureText: true,
+                                controller: globalVariables.referredByController,
+                                obscureText: false,
                                 decoration: InputDecoration(),
                               ),
                             ),
@@ -779,10 +783,11 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                           Container(
                             height: 70,
                             width: 1.sw,
-                            child: const Padding(
+                            child:  Padding(
                               padding: EdgeInsets.all(0),
                               child: TextField(
-                                obscureText: true,
+                                controller: globalVariables.addressController,
+                                obscureText:  false,
                                 decoration: InputDecoration(),
                               ),
                             ),
@@ -809,10 +814,11 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                                     Container(
                                       height: 50,
                                       width: 150,
-                                      child: const Padding(
+                                      child:  Padding(
                                         padding: EdgeInsets.all(0),
                                         child: TextField(
-                                          obscureText: true,
+                                          controller: globalVariables.pinCodeController,
+                                          obscureText: false,
                                           decoration: InputDecoration(),
                                         ),
                                       ),
@@ -833,10 +839,11 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                                     Container(
                                       height: 50,
                                       width: 220,
-                                      child: const Padding(
+                                      child:  Padding(
                                         padding: EdgeInsets.all(0),
                                         child: TextField(
-                                          obscureText: true,
+                                          controller: globalVariables.cityController,
+                                          obscureText: false,
                                           decoration: InputDecoration(),
                                         ),
                                       ),
@@ -859,10 +866,11 @@ class _PatientPersonalInfopageState extends State<PatientPersonalInfopage> {
                           Container(
                             height: 70,
                             width: 1.sw,
-                            child: const Padding(
+                            child:  Padding(
                               padding: EdgeInsets.all(0),
                               child: TextField(
-                                obscureText: true,
+                                controller: globalVariables.countryController,
+                                obscureText: false,
                                 decoration: InputDecoration(),
                               ),
                             ),

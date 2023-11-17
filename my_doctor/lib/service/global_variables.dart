@@ -70,6 +70,14 @@ class GlobalVariables {
   TextEditingController fullNameController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController emailsController = TextEditingController();
+  TextEditingController heightController = TextEditingController();
+  TextEditingController weightController = TextEditingController();
+  TextEditingController bmiController = TextEditingController();
+  TextEditingController referredByController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController pinCodeController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController countryController = TextEditingController();
   var specialityapiName = [""];
   var specialityName = [""];
   String specialtyId = "";
